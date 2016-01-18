@@ -1,3 +1,3 @@
 # Mqtt
-Swift mqtt client for ios or osx
+Swift mqtt client for ios or osx 
 
