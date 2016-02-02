@@ -7,3 +7,20 @@
 //
 
 import Foundation
+struct PubrecPacket: Packet {
+    
+    var fixHeader: PacketFixHeader
+    
+    var packetId: UInt16
+    
+    var varHeader: Array<UInt8> {
+        return packetId.bytes
+    }
+    
+    var payload = Array<UInt8>()
+    
+    init(packetId: UInt16) {
+        fixHeader = PacketFixHeader(type: .PUBREC)
+        self.packetId = packetId
+    }
+}

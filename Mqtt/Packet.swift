@@ -69,6 +69,22 @@ enum Qos: UInt8 {
     case Qos2 = 2
 }
 
+extension Qos: Comparable { }
+
+func < (lhs: Qos, rhs: Qos) -> Bool {
+    return lhs.rawValue < rhs.rawValue
+}
+
+func <= (lhs: Qos, rhs: Qos) -> Bool {
+    return lhs.rawValue <= rhs.rawValue
+}
+func > (lhs: Qos, rhs: Qos) -> Bool {
+    return lhs.rawValue > rhs.rawValue
+}
+func >= (lhs: Qos, rhs: Qos) -> Bool {
+    return lhs.rawValue >= rhs.rawValue
+}
+
 
 /**
  *  Each MQTT Control Packet contains a fixed header
@@ -81,23 +97,13 @@ struct PacketFixHeader {
     /// flags
     var flag: UInt8 = 0x00
     
-    // FIXME: UINT16??
-    /// remaining length
-    // var remain: UInt16 = 0x0000
-    
-    init(type: PacketType = .RESERVED, flag: UInt8 = 0/*, remain: UInt16 = 0*/) {
+    init(type: PacketType = .RESERVED) {
         self.type = type
-        //self.remain = remain
-        
-        if type == .PUBLISH {
-            self.flag = flag
-        }
     }
     
     
     /// Duplicate delivery of a PUBLISH Control Packet
     var dup: Bool {
-        
         get {
             return Bool(intValue: flag & UInt8(0x08))
         }
@@ -138,6 +144,7 @@ extension PacketFixHeader {
     }
     
     var packToBytes: Array<UInt8> {
+        // FIXME: tpye != .PUBLISH, flag = 0
         return [type.rawValue & 0xF0 | flag & 0x0F]// + remain.bytes
     }
 }

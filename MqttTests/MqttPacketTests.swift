@@ -10,7 +10,7 @@ import XCTest
 @testable import Mqtt
 
 
-class MqttTests: XCTestCase {
+class MqttPacketTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -21,7 +21,12 @@ class MqttTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+}
+
+
+// MARK: - Connect Packet
+
+extension MqttPacketTests {
     func testConnectPacket_Init() {
         let clientId = "iPhone6s"
         
@@ -125,7 +130,7 @@ class MqttTests: XCTestCase {
         
         connetPacket.cleanSession = true
         XCTAssert(connetPacket.cleanSession, "clean session should be true")
-
+        
         
         connetPacket.userNameFlag = false
         XCTAssert(!connetPacket.userNameFlag, "username flag should be false")
@@ -148,10 +153,50 @@ class MqttTests: XCTestCase {
         connetPacket.keepAlive = 70
         XCTAssert(connetPacket.keepAlive == 70, "keep alive should be 70")
     }
+
+}
+
+
+
+// MARK: - Connack Packet
+extension MqttPacketTests {
+    
+    func testConnack_Init() {
+        let connackPacket = ConnackPacket()
+        
+        XCTAssert(connackPacket.fixHeader.type == .CONNACK, "fixheader type should be .CONNACK")
+        XCTAssert(connackPacket.connackFlags == 0, "connack flags should be 0")
+        XCTAssert(!connackPacket.sessionPresent, "session present should be 0")
+        XCTAssert(connackPacket.returnCode == .Accepted, "return code default should be .Accepted")
+    }
+    
+    func testConnack_property() {
+        var connackPacket = ConnackPacket()
+        
+        connackPacket.sessionPresent = true
+        XCTAssert(connackPacket.connackFlags == 1, "connack flags should be 1")
+        XCTAssert(connackPacket.sessionPresent, "session present should be true")
+        
+        connackPacket.sessionPresent = false
+        XCTAssert(connackPacket.connackFlags == 0, "connack flags should be 0")
+        XCTAssert(!connackPacket.sessionPresent, "session present should be false")
+        
+        connackPacket.returnCode = .BadUsernameOrPassword
+        XCTAssert(connackPacket.returnCode == .BadUsernameOrPassword, "return code should be .BadUsernameOrPassword")
+        
+        connackPacket.returnCode = .UnAccepableProtocolVersion
+        XCTAssert(connackPacket.returnCode == .UnAccepableProtocolVersion, "return code should be .UnAccepableProtocolVersion")
+        
+        connackPacket.returnCode = .NotAuthorized
+        XCTAssert(connackPacket.returnCode == .NotAuthorized, "return code should be .NotAuthorized")
+        
+        connackPacket.returnCode = .Accepted
+        XCTAssert(connackPacket.returnCode == .Accepted, "return code should be .Accepted")
+    }
 }
 
 //extension MqttTests {
 //    private func length(v: Array<UInt8>) -> Int {
 //        
-//    }
+//
 //}
