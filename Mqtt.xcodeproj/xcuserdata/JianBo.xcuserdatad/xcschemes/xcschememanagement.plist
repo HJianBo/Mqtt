@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>MqttTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>82226E971C4CDFA800A09B67</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>82D0724D1C60463A00D9AF61</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -9,15 +9,46 @@
 /* Begin PBXBuildFile section */
 		82226E9C1C4CDFA800A09B67 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82226E9B1C4CDFA800A09B67 /* Mqtt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA31C4CE06600A09B67 /* MqttClient.swift */; };
-		82226EA61C4CE13300A09B67 /* MqttPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA51C4CE13300A09B67 /* MqttPacket.swift */; };
+		82226EA61C4CE13300A09B67 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA51C4CE13300A09B67 /* Packet.swift */; };
+		82B50F0F1C5B6C4100AC3F03 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B50F0E1C5B6C4100AC3F03 /* Extension.swift */; };
+		82D072511C60463A00D9AF61 /* MqttTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072501C60463A00D9AF61 /* MqttTests.swift */; };
+		82D072531C60463A00D9AF61 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
+		82D0725A1C6097C800D9AF61 /* ConnackPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072591C6097C800D9AF61 /* ConnackPacket.swift */; };
+		82D0725C1C60A16F00D9AF61 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */; };
+		82D0725E1C60A18500D9AF61 /* PubackPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725D1C60A18500D9AF61 /* PubackPacket.swift */; };
+		82D072601C60A19E00D9AF61 /* PubrelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725F1C60A19E00D9AF61 /* PubrelPacket.swift */; };
+		82D072621C60A20A00D9AF61 /* PubrecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072611C60A20A00D9AF61 /* PubrecPacket.swift */; };
+		82D072641C60A22B00D9AF61 /* PubcompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072631C60A22B00D9AF61 /* PubcompPacket.swift */; };
+		82E83F931C5F5964006BFF96 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E83F921C5F5964006BFF96 /* ConnectPacket.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		82D072541C60463A00D9AF61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82226E971C4CDFA800A09B67;
+			remoteInfo = Mqtt;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		82226E981C4CDFA800A09B67 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82226E9B1C4CDFA800A09B67 /* Mqtt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
 		82226E9D1C4CDFA800A09B67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82226EA31C4CE06600A09B67 /* MqttClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
-		82226EA51C4CE13300A09B67 /* MqttPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttPacket.swift; sourceTree = "<group>"; };
+		82226EA51C4CE13300A09B67 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		82B50F0E1C5B6C4100AC3F03 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		82D0724E1C60463A00D9AF61 /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		82D072501C60463A00D9AF61 /* MqttTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttTests.swift; sourceTree = "<group>"; };
+		82D072521C60463A00D9AF61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82D072591C6097C800D9AF61 /* ConnackPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnackPacket.swift; sourceTree = "<group>"; };
+		82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
+		82D0725D1C60A18500D9AF61 /* PubackPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubackPacket.swift; sourceTree = "<group>"; };
+		82D0725F1C60A19E00D9AF61 /* PubrelPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubrelPacket.swift; sourceTree = "<group>"; };
+		82D072611C60A20A00D9AF61 /* PubrecPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubrecPacket.swift; sourceTree = "<group>"; };
+		82D072631C60A22B00D9AF61 /* PubcompPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubcompPacket.swift; sourceTree = "<group>"; };
+		82E83F921C5F5964006BFF96 /* ConnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +59,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82D0724B1C60463A00D9AF61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82D072531C60463A00D9AF61 /* Mqtt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -35,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				82226E9A1C4CDFA800A09B67 /* Mqtt */,
+				82D0724F1C60463A00D9AF61 /* MqttTests */,
 				82226E991C4CDFA800A09B67 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				82226E981C4CDFA800A09B67 /* Mqtt.framework */,
+				82D0724E1C60463A00D9AF61 /* MqttTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -50,12 +91,37 @@
 		82226E9A1C4CDFA800A09B67 /* Mqtt */ = {
 			isa = PBXGroup;
 			children = (
-				82226E9B1C4CDFA800A09B67 /* Mqtt.h */,
+				82D072651C60A24200D9AF61 /* Packet */,
 				82226EA31C4CE06600A09B67 /* MqttClient.swift */,
-				82226EA51C4CE13300A09B67 /* MqttPacket.swift */,
+				82B50F0E1C5B6C4100AC3F03 /* Extension.swift */,
+				82226E9B1C4CDFA800A09B67 /* Mqtt.h */,
 				82226E9D1C4CDFA800A09B67 /* Info.plist */,
 			);
 			path = Mqtt;
+			sourceTree = "<group>";
+		};
+		82D0724F1C60463A00D9AF61 /* MqttTests */ = {
+			isa = PBXGroup;
+			children = (
+				82D072501C60463A00D9AF61 /* MqttTests.swift */,
+				82D072521C60463A00D9AF61 /* Info.plist */,
+			);
+			path = MqttTests;
+			sourceTree = "<group>";
+		};
+		82D072651C60A24200D9AF61 /* Packet */ = {
+			isa = PBXGroup;
+			children = (
+				82226EA51C4CE13300A09B67 /* Packet.swift */,
+				82E83F921C5F5964006BFF96 /* ConnectPacket.swift */,
+				82D072591C6097C800D9AF61 /* ConnackPacket.swift */,
+				82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */,
+				82D0725D1C60A18500D9AF61 /* PubackPacket.swift */,
+				82D072611C60A20A00D9AF61 /* PubrecPacket.swift */,
+				82D0725F1C60A19E00D9AF61 /* PubrelPacket.swift */,
+				82D072631C60A22B00D9AF61 /* PubcompPacket.swift */,
+			);
+			name = Packet;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,16 +156,38 @@
 			productReference = 82226E981C4CDFA800A09B67 /* Mqtt.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		82D0724D1C60463A00D9AF61 /* MqttTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82D072581C60463A00D9AF61 /* Build configuration list for PBXNativeTarget "MqttTests" */;
+			buildPhases = (
+				82D0724A1C60463A00D9AF61 /* Sources */,
+				82D0724B1C60463A00D9AF61 /* Frameworks */,
+				82D0724C1C60463A00D9AF61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82D072551C60463A00D9AF61 /* PBXTargetDependency */,
+			);
+			name = MqttTests;
+			productName = MqttTests;
+			productReference = 82D0724E1C60463A00D9AF61 /* MqttTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		82226E8F1C4CDFA800A09B67 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = beidouapp;
 				TargetAttributes = {
 					82226E971C4CDFA800A09B67 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					82D0724D1C60463A00D9AF61 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -117,12 +205,20 @@
 			projectRoot = "";
 			targets = (
 				82226E971C4CDFA800A09B67 /* Mqtt */,
+				82D0724D1C60463A00D9AF61 /* MqttTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		82226E961C4CDFA800A09B67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82D0724C1C60463A00D9AF61 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -136,12 +232,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82B50F0F1C5B6C4100AC3F03 /* Extension.swift in Sources */,
 				82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */,
-				82226EA61C4CE13300A09B67 /* MqttPacket.swift in Sources */,
+				82D072641C60A22B00D9AF61 /* PubcompPacket.swift in Sources */,
+				82E83F931C5F5964006BFF96 /* ConnectPacket.swift in Sources */,
+				82D0725C1C60A16F00D9AF61 /* PublishPacket.swift in Sources */,
+				82226EA61C4CE13300A09B67 /* Packet.swift in Sources */,
+				82D0725A1C6097C800D9AF61 /* ConnackPacket.swift in Sources */,
+				82D0725E1C60A18500D9AF61 /* PubackPacket.swift in Sources */,
+				82D072601C60A19E00D9AF61 /* PubrelPacket.swift in Sources */,
+				82D072621C60A20A00D9AF61 /* PubrecPacket.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82D0724A1C60463A00D9AF61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82D072511C60463A00D9AF61 /* MqttTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		82D072551C60463A00D9AF61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
+			targetProxy = 82D072541C60463A00D9AF61 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		82226E9E1C4CDFA800A09B67 /* Debug */ = {
@@ -269,6 +389,28 @@
 			};
 			name = Release;
 		};
+		82D072561C60463A00D9AF61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = MqttTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		82D072571C60463A00D9AF61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = MqttTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -286,6 +428,15 @@
 			buildConfigurations = (
 				82226EA11C4CDFA800A09B67 /* Debug */,
 				82226EA21C4CDFA800A09B67 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82D072581C60463A00D9AF61 /* Build configuration list for PBXNativeTarget "MqttTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82D072561C60463A00D9AF61 /* Debug */,
+				82D072571C60463A00D9AF61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
