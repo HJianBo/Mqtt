@@ -3,7 +3,7 @@
 //  Mqtt
 //
 //  Created by Heee on 16/2/2.
-//  Copyright © 2016年 beidouapp. All rights reserved.
+//  Copyright © 2016年 hjianbo.me. All rights reserved.
 //
 
 import Foundation
@@ -28,7 +28,7 @@ struct PublishPacket: Packet {
     
     var payload: Array<UInt8>
     
-    init(packetId: UInt16, topic: String, payload: Array<UInt8>, dup: Bool = false, qos: Qos = .Qos1, retain: Bool = true) {
+    init(packetId: UInt16, topic: String, payload: Array<UInt8>, dup: Bool = false, qos: Qos = .Qos0, retain: Bool = false) {
         fixHeader = PacketFixHeader(type: .PUBLISH)
         
         self.topicName = topic

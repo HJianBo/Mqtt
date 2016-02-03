@@ -3,7 +3,7 @@
 //  Mqtt
 //
 //  Created by Heee on 16/2/2.
-//  Copyright © 2016年 beidouapp. All rights reserved.
+//  Copyright © 2016年 hjianbo.me. All rights reserved.
 //
 
 import Foundation
@@ -18,7 +18,7 @@ struct PubAckPacket: Packet {
         return packetId.bytes
     }
     
-    var payload = Array<UInt8>()
+    var payload = [UInt8]()
     
     init(packetId: UInt16) {
         fixHeader = PacketFixHeader(type: .PUBACK)

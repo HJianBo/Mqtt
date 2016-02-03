@@ -3,7 +3,7 @@
 //  Mqtt
 //
 //  Created by Heee on 16/2/3.
-//  Copyright © 2016年 beidouapp. All rights reserved.
+//  Copyright © 2016年 hjianbo.me. All rights reserved.
 //
 
 import Foundation

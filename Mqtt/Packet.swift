@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: MUST TO SET 0, ASSERT ????
 
 enum PacketType: UInt8 {
     
@@ -94,46 +95,22 @@ struct PacketFixHeader {
     /// mqtt control packet type
     var type: PacketType = .RESERVED
     
+    /// Duplicate delivery of a PUBLISH Control Packet
+    var dup = false
+    
+    ///  PUBLISH Quality of Service
+    var qos: Qos = .Qos0
+    
+    /// PUBLISH Retain flag
+    var retain = false
+    
     /// flags
-    var flag: UInt8 = 0x00
+    var flag: UInt8 {
+        return dup.rawValue*8 + ((qos.rawValue >> 1) & 0x01)*4 + (qos.rawValue & 0x01)*2 + retain.rawValue*1
+    }
     
     init(type: PacketType = .RESERVED) {
         self.type = type
-    }
-    
-    
-    /// Duplicate delivery of a PUBLISH Control Packet
-    var dup: Bool {
-        get {
-            return Bool(intValue: flag & UInt8(0x08))
-        }
-        
-        set {
-            flag = flag | (newValue.rawValue << 3)
-        }
-    }
-    
-    ///  PUBLISH Quality of Service
-    var qos: Qos {
-        
-        get {
-            return Qos(rawValue: flag & UInt8(0x03))!
-        }
-        
-        set {
-            flag = flag | (newValue.rawValue << 1)
-        }
-    }
-    
-    /// PUBLISH Retain flag
-    var retain: Bool {
-        get {
-            return Bool(intValue: flag & UInt8(0x01))
-        }
-        
-        set {
-            flag = flag | newValue.rawValue
-        }
     }
 }
 
