@@ -10,15 +10,22 @@
 		82226E9C1C4CDFA800A09B67 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82226E9B1C4CDFA800A09B67 /* Mqtt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA31C4CE06600A09B67 /* MqttClient.swift */; };
 		82226EA61C4CE13300A09B67 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA51C4CE13300A09B67 /* Packet.swift */; };
+		82A3FE181C61917F00C4FFCD /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE171C61917F00C4FFCD /* SubscribePacket.swift */; };
+		82A3FE1A1C61987D00C4FFCD /* SubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE191C61987D00C4FFCD /* SubAckPacket.swift */; };
+		82A3FE1C1C619C8500C4FFCD /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE1B1C619C8500C4FFCD /* UnsubscribePacket.swift */; };
+		82A3FE1E1C61A35800C4FFCD /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE1D1C61A35800C4FFCD /* UnsubAckPacket.swift */; };
+		82A3FE201C61A47B00C4FFCD /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */; };
+		82A3FE221C61A66000C4FFCD /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */; };
+		82A3FE241C61A74500C4FFCD /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */; };
 		82B50F0F1C5B6C4100AC3F03 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B50F0E1C5B6C4100AC3F03 /* Extension.swift */; };
 		82D072511C60463A00D9AF61 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072501C60463A00D9AF61 /* MqttPacketTests.swift */; };
 		82D072531C60463A00D9AF61 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
-		82D0725A1C6097C800D9AF61 /* ConnackPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072591C6097C800D9AF61 /* ConnackPacket.swift */; };
+		82D0725A1C6097C800D9AF61 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072591C6097C800D9AF61 /* ConnAckPacket.swift */; };
 		82D0725C1C60A16F00D9AF61 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */; };
-		82D0725E1C60A18500D9AF61 /* PubackPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725D1C60A18500D9AF61 /* PubackPacket.swift */; };
-		82D072601C60A19E00D9AF61 /* PubrelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725F1C60A19E00D9AF61 /* PubrelPacket.swift */; };
-		82D072621C60A20A00D9AF61 /* PubrecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072611C60A20A00D9AF61 /* PubrecPacket.swift */; };
-		82D072641C60A22B00D9AF61 /* PubcompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072631C60A22B00D9AF61 /* PubcompPacket.swift */; };
+		82D0725E1C60A18500D9AF61 /* PubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725D1C60A18500D9AF61 /* PubAckPacket.swift */; };
+		82D072601C60A19E00D9AF61 /* PubRelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725F1C60A19E00D9AF61 /* PubRelPacket.swift */; };
+		82D072621C60A20A00D9AF61 /* PubRecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072611C60A20A00D9AF61 /* PubRecPacket.swift */; };
+		82D072641C60A22B00D9AF61 /* PubCompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072631C60A22B00D9AF61 /* PubCompPacket.swift */; };
 		82E83F931C5F5964006BFF96 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E83F921C5F5964006BFF96 /* ConnectPacket.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,16 +45,23 @@
 		82226E9D1C4CDFA800A09B67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82226EA31C4CE06600A09B67 /* MqttClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
 		82226EA51C4CE13300A09B67 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		82A3FE171C61917F00C4FFCD /* SubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
+		82A3FE191C61987D00C4FFCD /* SubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubAckPacket.swift; sourceTree = "<group>"; };
+		82A3FE1B1C619C8500C4FFCD /* UnsubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
+		82A3FE1D1C61A35800C4FFCD /* UnsubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
+		82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
+		82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
+		82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
 		82B50F0E1C5B6C4100AC3F03 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		82D0724E1C60463A00D9AF61 /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D072501C60463A00D9AF61 /* MqttPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttPacketTests.swift; sourceTree = "<group>"; };
 		82D072521C60463A00D9AF61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82D072591C6097C800D9AF61 /* ConnackPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnackPacket.swift; sourceTree = "<group>"; };
+		82D072591C6097C800D9AF61 /* ConnAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
 		82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
-		82D0725D1C60A18500D9AF61 /* PubackPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubackPacket.swift; sourceTree = "<group>"; };
-		82D0725F1C60A19E00D9AF61 /* PubrelPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubrelPacket.swift; sourceTree = "<group>"; };
-		82D072611C60A20A00D9AF61 /* PubrecPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubrecPacket.swift; sourceTree = "<group>"; };
-		82D072631C60A22B00D9AF61 /* PubcompPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubcompPacket.swift; sourceTree = "<group>"; };
+		82D0725D1C60A18500D9AF61 /* PubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubAckPacket.swift; sourceTree = "<group>"; };
+		82D0725F1C60A19E00D9AF61 /* PubRelPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRelPacket.swift; sourceTree = "<group>"; };
+		82D072611C60A20A00D9AF61 /* PubRecPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRecPacket.swift; sourceTree = "<group>"; };
+		82D072631C60A22B00D9AF61 /* PubCompPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubCompPacket.swift; sourceTree = "<group>"; };
 		82E83F921C5F5964006BFF96 /* ConnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,12 +128,19 @@
 			children = (
 				82226EA51C4CE13300A09B67 /* Packet.swift */,
 				82E83F921C5F5964006BFF96 /* ConnectPacket.swift */,
-				82D072591C6097C800D9AF61 /* ConnackPacket.swift */,
+				82D072591C6097C800D9AF61 /* ConnAckPacket.swift */,
 				82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */,
-				82D0725D1C60A18500D9AF61 /* PubackPacket.swift */,
-				82D072611C60A20A00D9AF61 /* PubrecPacket.swift */,
-				82D0725F1C60A19E00D9AF61 /* PubrelPacket.swift */,
-				82D072631C60A22B00D9AF61 /* PubcompPacket.swift */,
+				82D0725D1C60A18500D9AF61 /* PubAckPacket.swift */,
+				82D072611C60A20A00D9AF61 /* PubRecPacket.swift */,
+				82D0725F1C60A19E00D9AF61 /* PubRelPacket.swift */,
+				82D072631C60A22B00D9AF61 /* PubCompPacket.swift */,
+				82A3FE171C61917F00C4FFCD /* SubscribePacket.swift */,
+				82A3FE191C61987D00C4FFCD /* SubAckPacket.swift */,
+				82A3FE1B1C619C8500C4FFCD /* UnsubscribePacket.swift */,
+				82A3FE1D1C61A35800C4FFCD /* UnsubAckPacket.swift */,
+				82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */,
+				82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */,
+				82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */,
 			);
 			name = Packet;
 			sourceTree = "<group>";
@@ -234,14 +255,21 @@
 			files = (
 				82B50F0F1C5B6C4100AC3F03 /* Extension.swift in Sources */,
 				82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */,
-				82D072641C60A22B00D9AF61 /* PubcompPacket.swift in Sources */,
+				82D072641C60A22B00D9AF61 /* PubCompPacket.swift in Sources */,
 				82E83F931C5F5964006BFF96 /* ConnectPacket.swift in Sources */,
+				82A3FE181C61917F00C4FFCD /* SubscribePacket.swift in Sources */,
 				82D0725C1C60A16F00D9AF61 /* PublishPacket.swift in Sources */,
+				82A3FE1A1C61987D00C4FFCD /* SubAckPacket.swift in Sources */,
 				82226EA61C4CE13300A09B67 /* Packet.swift in Sources */,
-				82D0725A1C6097C800D9AF61 /* ConnackPacket.swift in Sources */,
-				82D0725E1C60A18500D9AF61 /* PubackPacket.swift in Sources */,
-				82D072601C60A19E00D9AF61 /* PubrelPacket.swift in Sources */,
-				82D072621C60A20A00D9AF61 /* PubrecPacket.swift in Sources */,
+				82D0725A1C6097C800D9AF61 /* ConnAckPacket.swift in Sources */,
+				82D0725E1C60A18500D9AF61 /* PubAckPacket.swift in Sources */,
+				82D072601C60A19E00D9AF61 /* PubRelPacket.swift in Sources */,
+				82D072621C60A20A00D9AF61 /* PubRecPacket.swift in Sources */,
+				82A3FE1C1C619C8500C4FFCD /* UnsubscribePacket.swift in Sources */,
+				82A3FE1E1C61A35800C4FFCD /* UnsubAckPacket.swift in Sources */,
+				82A3FE201C61A47B00C4FFCD /* PingReqPacket.swift in Sources */,
+				82A3FE241C61A74500C4FFCD /* DisconnectPacket.swift in Sources */,
+				82A3FE221C61A66000C4FFCD /* PingRespPacket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +467,7 @@
 				82D072571C60463A00D9AF61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-struct PubackPacket: Packet {
+struct PubAckPacket: Packet {
     
     var fixHeader: PacketFixHeader
     

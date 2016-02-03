@@ -1,15 +1,18 @@
 //
-//  PubrecPacket.swift
+//  UnsubackPacket.swift
 //  Mqtt
 //
-//  Created by Heee on 16/2/2.
+//  Created by Heee on 16/2/3.
 //  Copyright © 2016年 beidouapp. All rights reserved.
 //
 
 import Foundation
-struct PubrecPacket: Packet {
+
+struct UnsubAckPacket: Packet {
     
     var fixHeader: PacketFixHeader
+    
+    // MARK: Variable Header
     
     var packetId: UInt16
     
@@ -17,10 +20,12 @@ struct PubrecPacket: Packet {
         return packetId.bytes
     }
     
+    // MARK: Payload
     var payload = Array<UInt8>()
     
+    
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .PUBREC)
+        fixHeader = PacketFixHeader(type: .UNSUBACK)
         self.packetId = packetId
     }
 }

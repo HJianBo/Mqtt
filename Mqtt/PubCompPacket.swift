@@ -1,5 +1,5 @@
 //
-//  PubrelPacket.swift
+//  PubcompPacket.swift
 //  Mqtt
 //
 //  Created by Heee on 16/2/2.
@@ -7,7 +7,8 @@
 //
 
 import Foundation
-struct PubrelPacket: Packet {
+
+struct PubCompPacket: Packet {
     
     var fixHeader: PacketFixHeader
     
@@ -20,8 +21,7 @@ struct PubrelPacket: Packet {
     var payload = Array<UInt8>()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .PUBREL)
-        fixHeader.qos = .Qos1
+        fixHeader = PacketFixHeader(type: .PUBCOMP)
         self.packetId = packetId
     }
 }
