@@ -1,5 +1,5 @@
 //
-//  MqttConnectPacket.swift
+//  ConnectPacket.swift
 //  Mqtt
 //
 //  Created by Heee on 16/2/1.

@@ -9,7 +9,8 @@
 import XCTest
 @testable import Mqtt
 
-// TODO: Packet data Tets??????
+// TODO: Packet data Test??????
+// TODO: Packt Property W/R Persmion Test ??
 
 class MqttPacketTests: XCTestCase {
     
@@ -421,37 +422,114 @@ extension MqttPacketTests {
 extension MqttPacketTests {
     
     func testSubAck_init() {
+        let packetId = UInt16(123)
+        let subackPacket = SubAckPacket(packetId: packetId)
         
+        XCTAssert(subackPacket.fixHeader.type == .SUBACK, "packet type should be .SUBACK")
+        XCTAssert(subackPacket.fixHeader.flag == 0x00, "packet falg should be 0x00")
+        XCTAssert(!subackPacket.fixHeader.dup, "packet dup should be false")
+        XCTAssert(!subackPacket.fixHeader.retain, "packet retain should be false")
+        XCTAssert(subackPacket.fixHeader.qos == .Qos0, "packet Qos should be .Qos0")
+        
+        XCTAssert(subackPacket.packetId == packetId, "packet id should be \(packetId)")
+        
+        XCTAssert(subackPacket.returnCodes.count == 0, "packet return code should be 0")
+        XCTAssert(subackPacket.payload.count == 0, "packet payload should be 0")
     }
     
     func testSubAck_property() {
-    
-    }
+        let packetId = UInt16(834)
+        
+        var subackPacket = SubAckPacket(packetId: 123)
+        
+        subackPacket.packetId = packetId
+        XCTAssert(subackPacket.packetId == packetId, "packet id should be \(packetId)")
+        
+        subackPacket.returnCodes.append(.MaxQos0)
+        subackPacket.returnCodes.append(.MaxQos1)
+        subackPacket.returnCodes.append(.MaxQos2)
+        subackPacket.returnCodes.append(.Failure)
+        
+        XCTAssert(subackPacket.returnCodes[0] == .MaxQos0, "packet return code index 0 should be .MaxQos0")
+        XCTAssert(subackPacket.returnCodes[1] == .MaxQos1, "packet return code index 1 should be .MaxQos1")
+        XCTAssert(subackPacket.returnCodes[2] == .MaxQos2, "packet return code index 2 should be .MaxQos2")
+        XCTAssert(subackPacket.returnCodes[3] == .Failure, "packet return code index 3 should be .Failure")
 
+        XCTAssert(subackPacket.payload.count == 4, "packet payload count should be 4")
+        XCTAssert(subackPacket.payload[0] == SubsAckReturnCode.MaxQos0.rawValue, "packet payload 0 should be 0")
+        XCTAssert(subackPacket.payload[1] == SubsAckReturnCode.MaxQos1.rawValue, "packet payload 0 should be 1")
+        XCTAssert(subackPacket.payload[2] == SubsAckReturnCode.MaxQos2.rawValue, "packet payload 0 should be 2")
+        XCTAssert(subackPacket.payload[3] == SubsAckReturnCode.Failure.rawValue, "packet payload 0 should be 128")
+    }
 }
 
 // MARK: - UnSubscribe Packet
 extension MqttPacketTests {
     
     func testUnsubscribe_init() {
-    
+        let packetId = UInt16(893)
+        
+        let unsubsPacket = UnsubscribePacket(packetId: packetId)
+        
+        XCTAssert(unsubsPacket.fixHeader.type == .UNSUBSCRIBE, "packet type should be .UNSUBSCRIBE")
+        XCTAssert(unsubsPacket.fixHeader.flag == 0x02, "packet flag should be 0x02")
+        XCTAssert(!unsubsPacket.fixHeader.dup, "packet dup should be false")
+        XCTAssert(!unsubsPacket.fixHeader.retain, "packet retain should be false")
+        XCTAssert(unsubsPacket.fixHeader.qos == .Qos1, "packet Qos should be .Qos1")
+        
+        XCTAssert(unsubsPacket.packetId == packetId, "packet id should be \(packetId)")
+
+        XCTAssert(unsubsPacket.topics.count == 0, "packet topics count should be 0")
+        XCTAssert(unsubsPacket.payload.count == 0,"packet payload count should be 0")
     }
     
     func testUnsubscribe_property() {
-    
+        let packetId = UInt16(1982)
+        let topics   = ["A/AD", "chat/userid", "$sys/settting/close"]
+        
+        var unsubsPacket = UnsubscribePacket(packetId: 1234)
+        
+        unsubsPacket.packetId = packetId
+        XCTAssert(unsubsPacket.packetId == packetId, "packet id should be \(packetId)")
+        
+        
+        unsubsPacket.topics.append(topics[0])
+        unsubsPacket.topics.append(topics[1])
+        unsubsPacket.topics.append(topics[2])
+        XCTAssert(unsubsPacket.topics[0] == topics[0], "packet topics 0 should be \(topics[0])")
+        XCTAssert(unsubsPacket.topics[1] == topics[1], "packet topics 1 should be \(topics[1])")
+        XCTAssert(unsubsPacket.topics[2] == topics[2], "packet topics 2 should be \(topics[2])")
+        
+        // TODO: Test Payload ???
     }
-    
 }
 
 // MARK: - UnsubAck Packet
 extension MqttPacketTests {
     
     func testUnsubAck_init() {
-    
+        let packetId = UInt16(8892)
+        
+        let unsusackPacket = UnsubAckPacket(packetId: packetId)
+
+        XCTAssert(unsusackPacket.fixHeader.type == .UNSUBACK, "packet type should be .UNSUBACK")
+        XCTAssert(unsusackPacket.fixHeader.flag == 0x00, "packet flag should be 0")
+        XCTAssert(!unsusackPacket.fixHeader.dup, "packet dup should be 0")
+        XCTAssert(unsusackPacket.fixHeader.qos == .Qos0, "packet Qos should be .Qos0")
+        XCTAssert(!unsusackPacket.fixHeader.retain, "packet retain should be false")
+        
+        XCTAssert(unsusackPacket.packetId == packetId, "packet id should be \(packetId)")
+        XCTAssert(unsusackPacket.payload.count == 0, "packet payload count should be 0")
     }
     
     func testUnsubAck_property() {
-    
+
+        let packetId = UInt16(9872)
+        
+        var unsubsackPacket = UnsubscribePacket(packetId: 978)
+        
+        unsubsackPacket.packetId = packetId
+        XCTAssert(unsubsackPacket.packetId == packetId, "packet id should be \(packetId)")
     }
 
 }
@@ -460,11 +538,21 @@ extension MqttPacketTests {
 extension MqttPacketTests {
     
     func testPingReq_init() {
-    
+        
+        let pingreqPacket = PingReqPacket()
+        
+        XCTAssert(pingreqPacket.fixHeader.type == .PINGREQ, "packet type should be .PINGREQ")
+        XCTAssert(pingreqPacket.fixHeader.flag == 0, "packet flag should be 0")
+        XCTAssert(!pingreqPacket.fixHeader.dup, "packet dup should be false")
+        XCTAssert(!pingreqPacket.fixHeader.retain, "packet retain should be false")
+        XCTAssert(pingreqPacket.fixHeader.qos == .Qos0, "packet Qos should be .Qos0")
+        
+        XCTAssert(pingreqPacket.varHeader.count == 0, "packet varheader should be 0")
+        XCTAssert(pingreqPacket.payload.count == 0, "packet payload should be 0")
     }
     
     func testPingReq_property() {
-    
+        // ...
     }
     
 }
@@ -473,11 +561,20 @@ extension MqttPacketTests {
 extension MqttPacketTests {
     
     func testPingResp_init() {
-    
+        let pingrespPacket = PingRespPacket()
+        
+        XCTAssert(pingrespPacket.fixHeader.type == .PINGRESP, "packet type should be .PINGREQ")
+        XCTAssert(pingrespPacket.fixHeader.flag == 0, "packet flag should be 0")
+        XCTAssert(!pingrespPacket.fixHeader.dup, "packet dup should be false")
+        XCTAssert(!pingrespPacket.fixHeader.retain, "packet retain should be false")
+        XCTAssert(pingrespPacket.fixHeader.qos == .Qos0, "packet Qos should be .Qos0")
+        
+        XCTAssert(pingrespPacket.varHeader.count == 0, "packet varheader should be 0")
+        XCTAssert(pingrespPacket.payload.count == 0, "packet payload should be 0")
     }
     
     func testPingResp_property() {
-    
+        // ...
     }
     
 }
@@ -486,11 +583,20 @@ extension MqttPacketTests {
 extension MqttPacketTests {
     
     func testDisconect_init() {
-    
+        let disconnectPacket = DisconnectPacket()
+        
+        XCTAssert(disconnectPacket.fixHeader.type == .DISCONNECT, "packet type should be .PINGREQ")
+        XCTAssert(disconnectPacket.fixHeader.flag == 0, "packet flag should be 0")
+        XCTAssert(!disconnectPacket.fixHeader.dup, "packet dup should be false")
+        XCTAssert(!disconnectPacket.fixHeader.retain, "packet retain should be false")
+        XCTAssert(disconnectPacket.fixHeader.qos == .Qos0, "packet Qos should be .Qos0")
+        
+        XCTAssert(disconnectPacket.varHeader.count == 0, "packet varheader should be 0")
+        XCTAssert(disconnectPacket.payload.count == 0, "packet payload should be 0")
     }
     
     func testDisconnect_property () {
-    
+        // ...
     }
     
 }

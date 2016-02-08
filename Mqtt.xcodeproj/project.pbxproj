@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82098C9D1C68463600BDA71E /* MqttStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82098C9C1C68463600BDA71E /* MqttStream.swift */; };
 		82226E9C1C4CDFA800A09B67 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82226E9B1C4CDFA800A09B67 /* Mqtt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA31C4CE06600A09B67 /* MqttClient.swift */; };
 		82226EA61C4CE13300A09B67 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA51C4CE13300A09B67 /* Packet.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		82098C9C1C68463600BDA71E /* MqttStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttStream.swift; sourceTree = "<group>"; };
 		82226E981C4CDFA800A09B67 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82226E9B1C4CDFA800A09B67 /* Mqtt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
 		82226E9D1C4CDFA800A09B67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				82D072651C60A24200D9AF61 /* Packet */,
 				82226EA31C4CE06600A09B67 /* MqttClient.swift */,
+				82098C9C1C68463600BDA71E /* MqttStream.swift */,
 				82B50F0E1C5B6C4100AC3F03 /* Extension.swift */,
 				82226E9B1C4CDFA800A09B67 /* Mqtt.h */,
 				82226E9D1C4CDFA800A09B67 /* Info.plist */,
@@ -258,6 +261,7 @@
 				82D072641C60A22B00D9AF61 /* PubCompPacket.swift in Sources */,
 				82E83F931C5F5964006BFF96 /* ConnectPacket.swift in Sources */,
 				82A3FE181C61917F00C4FFCD /* SubscribePacket.swift in Sources */,
+				82098C9D1C68463600BDA71E /* MqttStream.swift in Sources */,
 				82D0725C1C60A16F00D9AF61 /* PublishPacket.swift in Sources */,
 				82A3FE1A1C61987D00C4FFCD /* SubAckPacket.swift in Sources */,
 				82226EA61C4CE13300A09B67 /* Packet.swift in Sources */,

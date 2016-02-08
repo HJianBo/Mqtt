@@ -1,5 +1,5 @@
 //
-//  MqttConnackPacket.swift
+//  ConnAckPacket.swift
 //  Mqtt
 //
 //  Created by Heee on 16/2/2.
