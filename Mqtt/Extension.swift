@@ -64,11 +64,41 @@ extension UInt8 {
 }
 
 
-
 extension String {
     
     var mq_stringData: Array<UInt8> {
         let len = UInt16(lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
         return len.bytes + utf8
+    }
+}
+
+
+extension NSStreamStatus: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .NotOpen:  return "NotOpen"
+        case .Opening:  return "Opening"
+        case .Open:     return "Open"
+        case .Reading:  return "Reading"
+        case .Writing:  return "Writing"
+        case .AtEnd:    return "AtEnd"
+        case .Closed:   return "Closed"
+        case .Error:    return "Error"
+        }
+    }
+}
+
+extension NSStreamEvent: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case NSStreamEvent.None:                return "None"
+        case NSStreamEvent.OpenCompleted:       return "OpenComleted"
+        case NSStreamEvent.HasBytesAvailable:   return "HasBytesAvailable"
+        case NSStreamEvent.HasSpaceAvailable:   return "HasSpaceAvailable"
+        case NSStreamEvent.ErrorOccurred:       return "ErrorOccurred"
+        case NSStreamEvent.EndEncountered:      return "EndEncountered"
+        default:
+            assert(false, "unknown")
+        }
     }
 }

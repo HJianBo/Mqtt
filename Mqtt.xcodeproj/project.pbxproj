@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82093A571C735F1F0002A01F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82093A561C735F1F0002A01F /* main.swift */; };
+		82093A5D1C735F3D0002A01F /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
+		82093A651C735FDA0002A01F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82093A641C735FDA0002A01F /* AppDelegate.swift */; };
+		82093A671C735FDA0002A01F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82093A661C735FDA0002A01F /* ViewController.swift */; };
+		82093A6A1C735FDA0002A01F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82093A681C735FDA0002A01F /* Main.storyboard */; };
+		82093A6C1C735FDA0002A01F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82093A6B1C735FDA0002A01F /* Assets.xcassets */; };
+		82093A6F1C735FDA0002A01F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82093A6D1C735FDA0002A01F /* LaunchScreen.storyboard */; };
+		82093A761C735FEA0002A01F /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
+		82093A771C735FEF0002A01F /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
+		82093A781C735FEF0002A01F /* Mqtt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		82098C9D1C68463600BDA71E /* MqttStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82098C9C1C68463600BDA71E /* MqttStream.swift */; };
 		82226E9C1C4CDFA800A09B67 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82226E9B1C4CDFA800A09B67 /* Mqtt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA31C4CE06600A09B67 /* MqttClient.swift */; };
@@ -18,6 +28,7 @@
 		82A3FE201C61A47B00C4FFCD /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */; };
 		82A3FE221C61A66000C4FFCD /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */; };
 		82A3FE241C61A74500C4FFCD /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */; };
+		82A6078B1C6987CC003F9245 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6078A1C6987CC003F9245 /* MqttClientTests.swift */; };
 		82B50F0F1C5B6C4100AC3F03 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B50F0E1C5B6C4100AC3F03 /* Extension.swift */; };
 		82D072511C60463A00D9AF61 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072501C60463A00D9AF61 /* MqttPacketTests.swift */; };
 		82D072531C60463A00D9AF61 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
@@ -31,6 +42,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		82093A5B1C735F330002A01F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82226E971C4CDFA800A09B67;
+			remoteInfo = Mqtt;
+		};
+		82093A741C735FE50002A01F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82226E971C4CDFA800A09B67;
+			remoteInfo = Mqtt;
+		};
 		82D072541C60463A00D9AF61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
@@ -40,7 +65,39 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		82093A521C735F1F0002A01F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		82093A791C735FEF0002A01F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				82093A781C735FEF0002A01F /* Mqtt.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		82093A541C735F1F0002A01F /* MqttClientCLT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MqttClientCLT; sourceTree = BUILT_PRODUCTS_DIR; };
+		82093A561C735F1F0002A01F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		82093A621C735FDA0002A01F /* MqttApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MqttApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		82093A641C735FDA0002A01F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		82093A661C735FDA0002A01F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		82093A691C735FDA0002A01F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		82093A6B1C735FDA0002A01F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		82093A6E1C735FDA0002A01F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		82093A701C735FDA0002A01F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82098C9C1C68463600BDA71E /* MqttStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttStream.swift; sourceTree = "<group>"; };
 		82226E981C4CDFA800A09B67 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82226E9B1C4CDFA800A09B67 /* Mqtt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
@@ -54,6 +111,7 @@
 		82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
 		82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
 		82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
+		82A6078A1C6987CC003F9245 /* MqttClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClientTests.swift; sourceTree = "<group>"; };
 		82B50F0E1C5B6C4100AC3F03 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		82D0724E1C60463A00D9AF61 /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D072501C60463A00D9AF61 /* MqttPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttPacketTests.swift; sourceTree = "<group>"; };
@@ -68,6 +126,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		82093A511C735F1F0002A01F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82093A5D1C735F3D0002A01F /* Mqtt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82093A5F1C735FDA0002A01F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82093A771C735FEF0002A01F /* Mqtt.framework in Frameworks */,
+				82093A761C735FEA0002A01F /* Mqtt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		82226E941C4CDFA800A09B67 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -86,11 +161,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		82093A551C735F1F0002A01F /* MqttClientCLT */ = {
+			isa = PBXGroup;
+			children = (
+				82093A561C735F1F0002A01F /* main.swift */,
+			);
+			path = MqttClientCLT;
+			sourceTree = "<group>";
+		};
+		82093A631C735FDA0002A01F /* MqttApp */ = {
+			isa = PBXGroup;
+			children = (
+				82093A641C735FDA0002A01F /* AppDelegate.swift */,
+				82093A661C735FDA0002A01F /* ViewController.swift */,
+				82093A681C735FDA0002A01F /* Main.storyboard */,
+				82093A6B1C735FDA0002A01F /* Assets.xcassets */,
+				82093A6D1C735FDA0002A01F /* LaunchScreen.storyboard */,
+				82093A701C735FDA0002A01F /* Info.plist */,
+			);
+			path = MqttApp;
+			sourceTree = "<group>";
+		};
 		82226E8E1C4CDFA800A09B67 = {
 			isa = PBXGroup;
 			children = (
 				82226E9A1C4CDFA800A09B67 /* Mqtt */,
 				82D0724F1C60463A00D9AF61 /* MqttTests */,
+				82093A551C735F1F0002A01F /* MqttClientCLT */,
+				82093A631C735FDA0002A01F /* MqttApp */,
 				82226E991C4CDFA800A09B67 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +198,8 @@
 			children = (
 				82226E981C4CDFA800A09B67 /* Mqtt.framework */,
 				82D0724E1C60463A00D9AF61 /* MqttTests.xctest */,
+				82093A541C735F1F0002A01F /* MqttClientCLT */,
+				82093A621C735FDA0002A01F /* MqttApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				82D072501C60463A00D9AF61 /* MqttPacketTests.swift */,
+				82A6078A1C6987CC003F9245 /* MqttClientTests.swift */,
 				82D072521C60463A00D9AF61 /* Info.plist */,
 			);
 			path = MqttTests;
@@ -162,6 +263,43 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		82093A531C735F1F0002A01F /* MqttClientCLT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82093A5A1C735F1F0002A01F /* Build configuration list for PBXNativeTarget "MqttClientCLT" */;
+			buildPhases = (
+				82093A501C735F1F0002A01F /* Sources */,
+				82093A511C735F1F0002A01F /* Frameworks */,
+				82093A521C735F1F0002A01F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82093A5C1C735F330002A01F /* PBXTargetDependency */,
+			);
+			name = MqttClientCLT;
+			productName = MqttClientCLT;
+			productReference = 82093A541C735F1F0002A01F /* MqttClientCLT */;
+			productType = "com.apple.product-type.tool";
+		};
+		82093A611C735FDA0002A01F /* MqttApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82093A711C735FDA0002A01F /* Build configuration list for PBXNativeTarget "MqttApp" */;
+			buildPhases = (
+				82093A5E1C735FDA0002A01F /* Sources */,
+				82093A5F1C735FDA0002A01F /* Frameworks */,
+				82093A601C735FDA0002A01F /* Resources */,
+				82093A791C735FEF0002A01F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82093A751C735FE50002A01F /* PBXTargetDependency */,
+			);
+			name = MqttApp;
+			productName = MqttApp;
+			productReference = 82093A621C735FDA0002A01F /* MqttApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		82226E971C4CDFA800A09B67 /* Mqtt */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82226EA01C4CDFA800A09B67 /* Build configuration list for PBXNativeTarget "Mqtt" */;
@@ -208,6 +346,12 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = beidouapp;
 				TargetAttributes = {
+					82093A531C735F1F0002A01F = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					82093A611C735FDA0002A01F = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
 					82226E971C4CDFA800A09B67 = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -222,6 +366,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 82226E8E1C4CDFA800A09B67;
 			productRefGroup = 82226E991C4CDFA800A09B67 /* Products */;
@@ -229,12 +374,24 @@
 			projectRoot = "";
 			targets = (
 				82226E971C4CDFA800A09B67 /* Mqtt */,
+				82093A531C735F1F0002A01F /* MqttClientCLT */,
+				82093A611C735FDA0002A01F /* MqttApp */,
 				82D0724D1C60463A00D9AF61 /* MqttTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		82093A601C735FDA0002A01F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82093A6F1C735FDA0002A01F /* LaunchScreen.storyboard in Resources */,
+				82093A6C1C735FDA0002A01F /* Assets.xcassets in Resources */,
+				82093A6A1C735FDA0002A01F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		82226E961C4CDFA800A09B67 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,6 +409,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		82093A501C735F1F0002A01F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82093A571C735F1F0002A01F /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82093A5E1C735FDA0002A01F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82093A671C735FDA0002A01F /* ViewController.swift in Sources */,
+				82093A651C735FDA0002A01F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		82226E931C4CDFA800A09B67 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -281,6 +455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82A6078B1C6987CC003F9245 /* MqttClientTests.swift in Sources */,
 				82D072511C60463A00D9AF61 /* MqttPacketTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +463,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		82093A5C1C735F330002A01F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
+			targetProxy = 82093A5B1C735F330002A01F /* PBXContainerItemProxy */;
+		};
+		82093A751C735FE50002A01F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
+			targetProxy = 82093A741C735FE50002A01F /* PBXContainerItemProxy */;
+		};
 		82D072551C60463A00D9AF61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
@@ -295,7 +480,71 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		82093A681C735FDA0002A01F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				82093A691C735FDA0002A01F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		82093A6D1C735FDA0002A01F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				82093A6E1C735FDA0002A01F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		82093A581C735F1F0002A01F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		82093A591C735F1F0002A01F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		82093A721C735FDA0002A01F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = MqttApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		82093A731C735FDA0002A01F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = MqttApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		82226E9E1C4CDFA800A09B67 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -333,7 +582,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -374,7 +624,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -386,6 +637,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -395,9 +648,10 @@
 				INFOPLIST_FILE = Mqtt/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hjianbo.Mqtt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hjianbo.mqtt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -406,6 +660,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -415,9 +671,10 @@
 				INFOPLIST_FILE = Mqtt/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hjianbo.Mqtt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hjianbo.mqtt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 			};
 			name = Release;
 		};
@@ -446,6 +703,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		82093A5A1C735F1F0002A01F /* Build configuration list for PBXNativeTarget "MqttClientCLT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82093A581C735F1F0002A01F /* Debug */,
+				82093A591C735F1F0002A01F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82093A711C735FDA0002A01F /* Build configuration list for PBXNativeTarget "MqttApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82093A721C735FDA0002A01F /* Debug */,
+				82093A731C735FDA0002A01F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		82226E921C4CDFA800A09B67 /* Build configuration list for PBXProject "Mqtt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

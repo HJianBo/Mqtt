@@ -9,8 +9,7 @@
 import Foundation
 
 
-
-class MqttClient {
+public class MqttClient {
     
     var clientId: String
     var cleanSession: Bool
@@ -22,12 +21,14 @@ class MqttClient {
     
     private var stream: MqttStream
 
-    init(host: String, port: UInt16, clientId: String, cleanSession: Bool, keepAlive: UInt16 = 60) {
+    public init(host: String, port: UInt16, clientId: String, cleanSession: Bool, keepAlive: UInt16 = 60) {
         self.clientId     = clientId
         self.cleanSession = cleanSession
         self.keepAlive    = keepAlive
         
         stream = MqttStream(host: host, port: port)
+        
+        stream.delegate = self
     }
 }
 
@@ -35,7 +36,34 @@ class MqttClient {
 
 extension MqttClient {
     
-    func connect() {
+    public func connect() {
+        stream.connect()
+    }
+    
+    public func publish() {
+        
+    }
+    
+    public func subscribe() {
+    
+    }
+    
+    public func unsubscribe() {
+        
+    }
+    
+    public func ping() {
+        
+    }
+    
+    public func disconnect() {
+    
+    }
+}
+
+extension MqttClient: MqttStreamDelegate {
+    
+    func stream(stream: MqttStream, didConnectHost host: String, port: UInt16) {
         var packet = ConnectPacket(clientId: clientId)
         
         packet.userName = username
@@ -45,27 +73,14 @@ extension MqttClient {
         
         // TODO: WillMessage
         packet.willTopic = willMessage?.topicName
-        stream.connect()
+        stream.send(packet)
     }
     
-    func publish() {
-    
-    }
-    
-    func subscribe() {
-    
-    }
-    
-    func unsubscribe() {
+    func stream(stream: MqttStream, didSendPacket packet: Packet) {
         
     }
     
-    func ping() {
+    func stream(stream: MqttStream, didRecvPacket packet: Packet) {
         
-    }
-    
-    func disconnect() {
-    
     }
 }
-

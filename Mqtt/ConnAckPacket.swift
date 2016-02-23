@@ -33,6 +33,7 @@ struct ConnAckPacket: Packet {
     var fixHeader: PacketFixHeader
 
     // MARK: Variable Header
+    
     var connackFlags: UInt8 = 0
     
     var returnCode: ConnAckReturnCode = .Accepted
@@ -54,6 +55,14 @@ struct ConnAckPacket: Packet {
     
     init() {
         fixHeader = PacketFixHeader(type: .CONNACK)
+    }
+    
+    
+    init(header: PacketFixHeader, bytes: [UInt8]) {
+        fixHeader = header
+        
+        connackFlags = bytes[0]
+        returnCode = ConnAckReturnCode(rawValue: bytes[1])!
     }
 }
 
