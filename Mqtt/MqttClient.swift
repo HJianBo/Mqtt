@@ -19,14 +19,14 @@ public class MqttClient {
     var password: String?
     var willMessage: PublishPacket?
     
-    private var stream: MqttStream
+    private var stream: Stream
 
     public init(host: String, port: UInt16, clientId: String, cleanSession: Bool, keepAlive: UInt16 = 60) {
         self.clientId     = clientId
         self.cleanSession = cleanSession
         self.keepAlive    = keepAlive
         
-        stream = MqttStream(host: host, port: port)
+        stream = Stream(host: host, port: port)
         
         stream.delegate = self
     }
@@ -37,7 +37,7 @@ public class MqttClient {
 extension MqttClient {
     
     public func connect() {
-        stream.connect()
+        stream.open()
     }
     
     public func publish() {
@@ -61,9 +61,11 @@ extension MqttClient {
     }
 }
 
-extension MqttClient: MqttStreamDelegate {
+extension MqttClient: StreamDelegate {
     
-    func stream(stream: MqttStream, didConnectHost host: String, port: UInt16) {
+    func stream(stream: Stream, didOpenAtHost host: String, port: UInt16) {
+        
+        
         var packet = ConnectPacket(clientId: clientId)
         
         packet.userName = username
@@ -73,14 +75,17 @@ extension MqttClient: MqttStreamDelegate {
         
         // TODO: WillMessage
         packet.willTopic = willMessage?.topicName
-        stream.send(packet)
+        
+        stream.send(packet.packToData)
+        stream.read()
     }
     
-    func stream(stream: MqttStream, didSendPacket packet: Packet) {
-        
+    func stream(stream: Stream, didRecvData data: NSData) {
+        NSLog("didRecv: \(data)")
     }
     
-    func stream(stream: MqttStream, didRecvPacket packet: Packet) {
-        
+    
+    func stream(stream: Stream, didSendData data: NSData) {
+        NSLog("didSend: \(data)")
     }
 }

@@ -8,8 +8,6 @@
 
 import UIKit
 
-let sDefaultHost = "192.168.1.31"
-let sDefaultPort = UInt16(1883)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
