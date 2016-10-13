@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class MqttClient {
+open class MqttClient {
     
     var clientId: String
     var cleanSession: Bool
@@ -19,7 +19,7 @@ public class MqttClient {
     var password: String?
     var willMessage: PublishPacket?
     
-    private var stream: Stream
+    fileprivate var stream: Stream
 
     public init(host: String, port: UInt16, clientId: String, cleanSession: Bool, keepAlive: UInt16 = 60) {
         self.clientId     = clientId
@@ -63,7 +63,7 @@ extension MqttClient {
 
 extension MqttClient: StreamDelegate {
     
-    func stream(stream: Stream, didOpenAtHost host: String, port: UInt16) {
+    func stream(_ stream: Stream, didOpenAtHost host: String, port: UInt16) {
         
         
         var packet = ConnectPacket(clientId: clientId)
@@ -77,15 +77,16 @@ extension MqttClient: StreamDelegate {
         packet.willTopic = willMessage?.topicName
         
         stream.send(packet.packToData)
-        stream.read()
+        
+        // FIXME: read a header
+        stream.read(5)
     }
     
-    func stream(stream: Stream, didRecvData data: NSData) {
+    func stream(_ stream: Stream, didRecvData data: Data) {
         NSLog("didRecv: \(data)")
     }
     
-    
-    func stream(stream: Stream, didSendData data: NSData) {
+    func stream(_ stream: Stream, didSendData data: Data) {
         NSLog("didSend: \(data)")
     }
 }

@@ -17,6 +17,6 @@ struct PingRespPacket: Packet {
     var payload   = [UInt8]()
     
     init() {
-        fixHeader = PacketFixHeader(type: .PINGRESP)
+        fixHeader = PacketFixHeader(type: .pingresp)
     }
 }

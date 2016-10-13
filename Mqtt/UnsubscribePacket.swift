@@ -28,14 +28,14 @@ struct UnsubscribePacket: Packet {
         var value = [UInt8]()
         let tmp = topics.map { $0.mq_stringData }
         for d in tmp {
-            value.appendContentsOf(d)
+            value.append(contentsOf: d)
         }
         return value
     }
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .UNSUBSCRIBE)
-        fixHeader.qos = .Qos1
+        fixHeader = PacketFixHeader(type: .unsubscribe)
+        fixHeader.qos = .qos1
 
         self.packetId = packetId
     }

@@ -10,22 +10,22 @@ import Foundation
 
 enum ConnAckReturnCode: UInt8 {
     /// Connection accepted
-    case Accepted = 0x00
+    case accepted = 0x00
     
     /// The Server does not support the level of the MQTT protocol requested by the Client
-    case UnAccepableProtocolVersion  = 0x01
+    case unAccepableProtocolVersion  = 0x01
     
     /// The Client identifier is correct UTF-8 but not allowed by the Server
-    case IdentifierRejected = 0x02
+    case identifierRejected = 0x02
     
     /// The Network Connection has been made but the MQTT service is unavailable
-    case ServerUnavailable = 0x03
+    case serverUnavailable = 0x03
 
     /// The data in the user name or password is malformed
-    case BadUsernameOrPassword = 0x04
+    case badUsernameOrPassword = 0x04
     
     /// The Client is not authorized to connect
-    case NotAuthorized = 0x05
+    case notAuthorized = 0x05
 }
 
 struct ConnAckPacket: Packet {
@@ -36,7 +36,7 @@ struct ConnAckPacket: Packet {
     
     var connackFlags: UInt8 = 0
     
-    var returnCode: ConnAckReturnCode = .Accepted
+    var returnCode: ConnAckReturnCode = .accepted
     
     var sessionPresent: Bool {
         get {
@@ -54,7 +54,7 @@ struct ConnAckPacket: Packet {
     var payload = Array<UInt8>()
     
     init() {
-        fixHeader = PacketFixHeader(type: .CONNACK)
+        fixHeader = PacketFixHeader(type: .connack)
     }
     
     

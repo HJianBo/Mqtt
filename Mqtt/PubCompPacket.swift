@@ -21,7 +21,7 @@ struct PubCompPacket: Packet {
     var payload = [UInt8]()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .PUBCOMP)
+        fixHeader = PacketFixHeader(type: .pubcomp)
         self.packetId = packetId
     }
 }

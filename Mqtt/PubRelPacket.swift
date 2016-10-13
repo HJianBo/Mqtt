@@ -22,8 +22,8 @@ struct PubRelPacket: Packet {
     var payload = [UInt8]()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .PUBREL)
-        fixHeader.qos = .Qos1
+        fixHeader = PacketFixHeader(type: .pubrel)
+        fixHeader.qos = .qos1
         self.packetId = packetId
     }
 }

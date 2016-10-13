@@ -10,13 +10,13 @@ import Foundation
 
 enum SubsAckReturnCode: UInt8 {
     
-    case MaxQos0 = 0x00
+    case maxQos0 = 0x00
     
-    case MaxQos1 = 0x01
+    case maxQos1 = 0x01
     
-    case MaxQos2 = 0x02
+    case maxQos2 = 0x02
     
-    case Failure = 0x80
+    case failure = 0x80
 }
 
 
@@ -40,7 +40,7 @@ struct SubAckPacket: Packet {
     }
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .SUBACK)
+        fixHeader = PacketFixHeader(type: .suback)
         
         self.packetId = packetId
     }

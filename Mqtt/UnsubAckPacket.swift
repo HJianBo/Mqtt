@@ -25,7 +25,7 @@ struct UnsubAckPacket: Packet {
     
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .UNSUBACK)
+        fixHeader = PacketFixHeader(type: .unsuback)
         self.packetId = packetId
     }
 }

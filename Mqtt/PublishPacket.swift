@@ -20,16 +20,16 @@ struct PublishPacket: Packet {
     var varHeader: Array<UInt8> {
         var value = topicName.mq_stringData
         
-        if fixHeader.qos > .Qos0 {
-            value.appendContentsOf(packetId.bytes)
+        if fixHeader.qos > .qos0 {
+            value.append(contentsOf: packetId.bytes)
         }
         return value
     }
     
     var payload: Array<UInt8>
     
-    init(packetId: UInt16, topic: String, payload: Array<UInt8>, dup: Bool = false, qos: Qos = .Qos0, retain: Bool = false) {
-        fixHeader = PacketFixHeader(type: .PUBLISH)
+    init(packetId: UInt16, topic: String, payload: Array<UInt8>, dup: Bool = false, qos: Qos = .qos0, retain: Bool = false) {
+        fixHeader = PacketFixHeader(type: .publish)
         
         self.topicName = topic
         self.packetId  = packetId

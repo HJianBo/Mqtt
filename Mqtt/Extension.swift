@@ -50,11 +50,11 @@ extension UInt16 {
 extension UInt8 {
     
     /// offset: 7~0
-    func bitAt(offset: UInt8) -> UInt8 {
+    func bitAt(_ offset: UInt8) -> UInt8 {
         return (self >> offset) & 0x01
     }
     
-    mutating func setBit(value: UInt8, at offset: UInt8) {
+    mutating func setBit(_ value: UInt8, at offset: UInt8) {
         if (value & 0x01) == 1 {
             self |= (1 << offset)
         } else {
@@ -67,36 +67,36 @@ extension UInt8 {
 extension String {
     
     var mq_stringData: Array<UInt8> {
-        let len = UInt16(lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
+        let len = UInt16(lengthOfBytes(using: String.Encoding.utf8))
         return len.bytes + utf8
     }
 }
 
 
-extension NSStreamStatus: CustomStringConvertible {
+extension Foundation.Stream.Status: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .NotOpen:  return "NotOpen"
-        case .Opening:  return "Opening"
-        case .Open:     return "Open"
-        case .Reading:  return "Reading"
-        case .Writing:  return "Writing"
-        case .AtEnd:    return "AtEnd"
-        case .Closed:   return "Closed"
-        case .Error:    return "Error"
+        case .notOpen:  return "NotOpen"
+        case .opening:  return "Opening"
+        case .open:     return "Open"
+        case .reading:  return "Reading"
+        case .writing:  return "Writing"
+        case .atEnd:    return "AtEnd"
+        case .closed:   return "Closed"
+        case .error:    return "Error"
         }
     }
 }
 
-extension NSStreamEvent: CustomStringConvertible {
+extension Foundation.Stream.Event: CustomStringConvertible {
     public var description: String {
         switch self {
-        case NSStreamEvent.None:                return "None"
-        case NSStreamEvent.OpenCompleted:       return "OpenComleted"
-        case NSStreamEvent.HasBytesAvailable:   return "HasBytesAvailable"
-        case NSStreamEvent.HasSpaceAvailable:   return "HasSpaceAvailable"
-        case NSStreamEvent.ErrorOccurred:       return "ErrorOccurred"
-        case NSStreamEvent.EndEncountered:      return "EndEncountered"
+        case Foundation.Stream.Event():                return "None"
+        case Foundation.Stream.Event.openCompleted:       return "OpenComleted"
+        case Foundation.Stream.Event.hasBytesAvailable:   return "HasBytesAvailable"
+        case Foundation.Stream.Event.hasSpaceAvailable:   return "HasSpaceAvailable"
+        case Foundation.Stream.Event.errorOccurred:       return "ErrorOccurred"
+        case Foundation.Stream.Event.endEncountered:      return "EndEncountered"
         default:
             assert(false, "unknown")
         }

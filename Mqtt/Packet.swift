@@ -13,61 +13,61 @@ import Foundation
 enum PacketType: UInt8 {
     
     // Forbidden        | Reserved
-    case RESERVED    = 0x00
+    case reserved    = 0x00
     
     // Client to Server | Client request to connect to Server
-    case CONNECT     = 0x10
+    case connect     = 0x10
     
     // Server to Client | Connect ack
-    case CONNACK     = 0x20
+    case connack     = 0x20
     
     // Client -- Server | Publish message
-    case PUBLISH     = 0x30
+    case publish     = 0x30
     
     // Client -- Server | Publish ack
-    case PUBACK      = 0x40
+    case puback      = 0x40
     
     // Client -- Server | Publish received (assured delivery part 1)
-    case PUBREC      = 0x50
+    case pubrec      = 0x50
     
     // Client -- Server | Publish release  (assured delivery part 2)
-    case PUBREL      = 0x60
+    case pubrel      = 0x60
     
     // Client -- Server | Publish complete (assured delivery part 3)
-    case PUBCOMP     = 0x70
+    case pubcomp     = 0x70
     
     // Client to Server | Client subscribe request
-    case SUBSCRIBE   = 0x80
+    case subscribe   = 0x80
     
     // Server to Client | Subscribe ack
-    case SUBACK      = 0x90
+    case suback      = 0x90
     
     // Client to Server | Unsubcribe request
-    case UNSUBSCRIBE = 0xA0
+    case unsubscribe = 0xA0
     
     // Server to Client | Unsubscribe ack
-    case UNSUBACK    = 0xB0
+    case unsuback    = 0xB0
     
     // Client to Server | PING Request
-    case PINGREQ     = 0xC0
+    case pingreq     = 0xC0
     
     // Server to Client | PING response
-    case PINGRESP    = 0xD0
+    case pingresp    = 0xD0
     
     // Client to Server | Client is disconnecting
-    case DISCONNECT  = 0xE0
+    case disconnect  = 0xE0
     
     // Forbidden        | Reserved
-    case RESERVED2   = 0xF0
+    case reserved2   = 0xF0
 }
 
 enum Qos: UInt8 {
     
-    case Qos0 = 0
+    case qos0 = 0
     
-    case Qos1 = 1
+    case qos1 = 1
     
-    case Qos2 = 2
+    case qos2 = 2
 }
 
 extension Qos: Comparable { }
@@ -93,13 +93,13 @@ func >= (lhs: Qos, rhs: Qos) -> Bool {
 struct PacketFixHeader {
     
     /// mqtt control packet type
-    var type: PacketType = .RESERVED
+    var type: PacketType = .reserved
     
     /// Duplicate delivery of a PUBLISH Control Packet
     var dup = false
     
     ///  PUBLISH Quality of Service
-    var qos: Qos = .Qos0
+    var qos: Qos = .qos0
     
     /// PUBLISH Retain flag
     var retain = false
@@ -109,15 +109,15 @@ struct PacketFixHeader {
         return dup.rawValue*8 + ((qos.rawValue >> 1) & 0x01)*4 + (qos.rawValue & 0x01)*2 + retain.rawValue*1
     }
     
-    init(type: PacketType = .RESERVED) {
+    init(type: PacketType = .reserved) {
         self.type = type
     }
 }
 
 extension PacketFixHeader {
     
-    var packToData: NSData {
-        return NSData(bytes: packToBytes, length: packToBytes.count)
+    var packToData: Data {
+        return Data(bytes: UnsafePointer<UInt8>(packToBytes), count: packToBytes.count)
     }
     
     var packToBytes: Array<UInt8> {
@@ -142,8 +142,8 @@ protocol Packet {
 
 extension Packet {
 
-    var packToData: NSData {
-        return NSData(bytes: packToBytes, length: packToBytes.count)
+    var packToData: Data {
+        return Data(bytes: UnsafePointer<UInt8>(packToBytes), count: packToBytes.count)
     }
     
     var packToBytes: Array<UInt8> {

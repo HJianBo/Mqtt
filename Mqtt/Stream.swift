@@ -11,14 +11,14 @@ import Foundation
 
 protocol StreamDelegate {
     
-    func stream(stream: Stream, didSendData data: NSData)
+    func stream(_ stream: Stream, didSendData data: Data)
     
-    func stream(stream: Stream, didRecvData data: NSData)
+    func stream(_ stream: Stream, didRecvData data: Data)
     
-    func stream(stream: Stream, didOpenAtHost host:String, port: UInt16)
+    func stream(_ stream: Stream, didOpenAtHost host:String, port: UInt16)
 }
 
-struct StreamStatus: OptionSetType {
+struct StreamStatus: OptionSet {
     let rawValue: UInt
     
     static let None = StreamStatus(rawValue: 0x00)
@@ -37,11 +37,11 @@ class Stream: NSObject {
     
     var status: StreamStatus = .None
     
-    private var inputStream: NSInputStream?
-    private var outputStream: NSOutputStream?
+    fileprivate var inputStream: InputStream?
+    fileprivate var outputStream: OutputStream?
     
-    private var readQueue: dispatch_queue_t
-    private var sendQueue: dispatch_queue_t
+    fileprivate var readQueue: DispatchQueue
+    fileprivate var sendQueue: DispatchQueue
     
     
     
@@ -49,17 +49,17 @@ class Stream: NSObject {
         self.host = host
         self.port = port
         
-        readQueue = dispatch_queue_create("stream_read", DISPATCH_QUEUE_SERIAL)
-        sendQueue = dispatch_queue_create("stream_send", DISPATCH_QUEUE_SERIAL)
+        readQueue = DispatchQueue(label: "stream_read", attributes: [])
+        sendQueue = DispatchQueue(label: "stream_send", attributes: [])
     }
 }
 
-extension Stream: NSStreamDelegate {
+extension Stream: Foundation.StreamDelegate {
     
-    func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
+    func stream(_ aStream: Foundation.Stream, handle eventCode: Foundation.Stream.Event) {
         
         var streamType = ""
-        if aStream is NSInputStream {
+        if aStream is InputStream {
             streamType = "Input "
         } else {
             streamType = "Output"
@@ -71,30 +71,30 @@ extension Stream: NSStreamDelegate {
         }
         
         switch eventCode {
-        case NSStreamEvent.None:
+        case Foundation.Stream.Event():
             break;
-        case NSStreamEvent.OpenCompleted:
-            if aStream is NSInputStream {
+        case Foundation.Stream.Event.openCompleted:
+            if aStream is InputStream {
                 status = status.union(.InputReady)
             } else {
                 status = status.union(.OutputReady)
             }
             
-            if status.isSupersetOf([.OutputReady, .InputReady]) {
+            if status.isSuperset(of: [.OutputReady, .InputReady]) {
                 delegate?.stream(self, didOpenAtHost: host, port: port)
             }
             break;
-        case NSStreamEvent.HasBytesAvailable:
+        case Foundation.Stream.Event.hasBytesAvailable:
             // recv
             if aStream == inputStream {
                 //
             }
             break;
-        case NSStreamEvent.HasSpaceAvailable:
+        case Foundation.Stream.Event.hasSpaceAvailable:
             break;
-        case NSStreamEvent.ErrorOccurred:
+        case Foundation.Stream.Event.errorOccurred:
             break;
-        case NSStreamEvent.EndEncountered:
+        case Foundation.Stream.Event.endEncountered:
             break;
         default:
             assert(false, "unknown")
@@ -107,13 +107,13 @@ extension Stream {
     
     func open() {
         // XXX: Host & Port invaild?
-        NSStream.getStreamsToHostWithName(host, port: Int(port), inputStream: &inputStream, outputStream: &outputStream)
+        Foundation.Stream.getStreamsToHost(withName: host, port: Int(port), inputStream: &inputStream, outputStream: &outputStream)
         
         inputStream?.delegate = self
         outputStream?.delegate = self
         
-        self.inputStream?.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
-        self.outputStream?.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+        self.inputStream?.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+        self.outputStream?.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
         
         self.inputStream?.open()
         self.outputStream?.open()
@@ -121,19 +121,19 @@ extension Stream {
         // ...
     }
     
-    func send(data: NSData) {
+    func send(_ data: Data) {
         
         guard let output = outputStream else {
             return
         }
         
-        dispatch_async(sendQueue) { [unowned self] in
+        sendQueue.async { [unowned self] in
             while !output.hasSpaceAvailable {
                 // waiting...
             }
             
-            let hasWritedCount = output.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
-            if hasWritedCount == data.length {
+            let hasWritedCount = output.write((data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), maxLength: data.count)
+            if hasWritedCount == data.count {
                 self.delegate?.stream(self, didSendData: data)
             } else {
                 NSLog("output stream write error")
@@ -141,8 +141,8 @@ extension Stream {
         }
     }
     
-    func read(length: Int, timeOut: NSTimeInterval = 5) {
-        guard let input = inputStream else {
+    func read(_ length: Int, timeOut: TimeInterval = 5) {
+        guard inputStream != nil else {
             return
         }
         
@@ -156,10 +156,10 @@ extension Stream {
     func close() {
         
         self.inputStream?.close()
-        self.inputStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+        self.inputStream?.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
         
         self.outputStream?.close()
-        self.outputStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+        self.outputStream?.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
     }
 }
 

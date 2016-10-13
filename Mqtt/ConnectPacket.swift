@@ -31,10 +31,10 @@ struct ConnectPacket: Packet {
     var varHeader: Array<UInt8> {
         get {
             var value = Array<UInt8>()
-            value.appendContentsOf(protocolName.mq_stringData)
+            value.append(contentsOf: protocolName.mq_stringData)
             value.append(protocolLevel)
             value.append(connectFlags)
-            value.appendContentsOf(keepAlive.bytes)
+            value.append(contentsOf: keepAlive.bytes)
             return value
         }
     }
@@ -83,35 +83,35 @@ struct ConnectPacket: Packet {
         get {
             var value = Array<UInt8>()
             
-            value.appendContentsOf(clientId.mq_stringData)
+            value.append(contentsOf: clientId.mq_stringData)
             
             if (willFlag) {
                 if let topic = willTopic {
-                    value.appendContentsOf(topic.mq_stringData)
+                    value.append(contentsOf: topic.mq_stringData)
                 } else {
-                    value.appendContentsOf("".mq_stringData)
+                    value.append(contentsOf: "".mq_stringData)
                 }
                 
                 if let message = willMessage {
-                    value.appendContentsOf(message.mq_stringData)
+                    value.append(contentsOf: message.mq_stringData)
                 } else {
-                    value.appendContentsOf("".mq_stringData)
+                    value.append(contentsOf: "".mq_stringData)
                 }
             }
             
             if userNameFlag {
                 if let uname = userName {
-                    value.appendContentsOf(uname.mq_stringData)
+                    value.append(contentsOf: uname.mq_stringData)
                 } else {
-                    value.appendContentsOf("".mq_stringData)
+                    value.append(contentsOf: "".mq_stringData)
                 }
             }
             
             if passwordFlag {
                 if let pwd = password {
-                    value.appendContentsOf(pwd.mq_stringData)
+                    value.append(contentsOf: pwd.mq_stringData)
                 } else {
-                    value.appendContentsOf("".mq_stringData)
+                    value.append(contentsOf: "".mq_stringData)
                 }
             }
             
@@ -121,7 +121,7 @@ struct ConnectPacket: Packet {
     
     init(clientId id: String) {
         clientId = id
-        fixHeader = PacketFixHeader(type: .CONNECT)
+        fixHeader = PacketFixHeader(type: .connect)
     }
 }
 
@@ -171,15 +171,15 @@ extension ConnectPacket {
         
         set {
             switch newValue {
-            case .Qos0:
+            case .qos0:
                 connectFlags.setBit(0, at: 4)
                 connectFlags.setBit(0, at: 3)
                 break
-            case .Qos1:
+            case .qos1:
                 connectFlags.setBit(0, at: 4)
                 connectFlags.setBit(1, at: 3)
                 break
-            case .Qos2:
+            case .qos2:
                 connectFlags.setBit(1, at: 4)
                 connectFlags.setBit(0, at: 3)
                 break
@@ -201,10 +201,10 @@ extension ConnectPacket {
             connectFlags.setBit(newValue.rawValue, at: 2)
             if newValue {
                 // Default. Configuration
-                willQos = .Qos1
+                willQos = .qos1
             } else {
                 // MUST. Set willQos willRetain 0
-                willQos = .Qos0
+                willQos = .qos0
                 willRetain = false
             }
         }

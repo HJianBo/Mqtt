@@ -21,7 +21,7 @@ struct PubRecPacket: Packet {
     var payload = [UInt8]()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .PUBREC)
+        fixHeader = PacketFixHeader(type: .pubrec)
         self.packetId = packetId
     }
 }

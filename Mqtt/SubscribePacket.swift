@@ -26,15 +26,15 @@ struct SubscribePacket: Packet {
         var value = [UInt8]()
         let tmp = topics.map { $0.0.mq_stringData + [$0.1.rawValue] }
         for d in tmp {
-            value.appendContentsOf(d)
+            value.append(contentsOf: d)
         }
         return value
     }
     
     
     init(packetId: UInt16) {
-        fixHeader     =  PacketFixHeader(type: .SUBSCRIBE)
-        fixHeader.qos = .Qos1
+        fixHeader     =  PacketFixHeader(type: .subscribe)
+        fixHeader.qos = .qos1
         
         self.packetId     = packetId
     }

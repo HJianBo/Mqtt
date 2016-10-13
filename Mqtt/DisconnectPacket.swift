@@ -17,6 +17,6 @@ struct DisconnectPacket: Packet {
     var payload   = [UInt8]()
     
     init() {
-        fixHeader = PacketFixHeader(type: .DISCONNECT)
+        fixHeader = PacketFixHeader(type: .disconnect)
     }
 }
