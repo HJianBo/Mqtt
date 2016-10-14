@@ -7,54 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		82093A571C735F1F0002A01F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82093A561C735F1F0002A01F /* main.swift */; };
-		82093A5D1C735F3D0002A01F /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
-		82093A651C735FDA0002A01F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82093A641C735FDA0002A01F /* AppDelegate.swift */; };
-		82093A671C735FDA0002A01F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82093A661C735FDA0002A01F /* ViewController.swift */; };
-		82093A6A1C735FDA0002A01F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82093A681C735FDA0002A01F /* Main.storyboard */; };
-		82093A6C1C735FDA0002A01F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82093A6B1C735FDA0002A01F /* Assets.xcassets */; };
-		82093A6F1C735FDA0002A01F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82093A6D1C735FDA0002A01F /* LaunchScreen.storyboard */; };
-		82093A771C735FEF0002A01F /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
-		82093A781C735FEF0002A01F /* Mqtt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		82226E9C1C4CDFA800A09B67 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82226E9B1C4CDFA800A09B67 /* Mqtt.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA31C4CE06600A09B67 /* MqttClient.swift */; };
-		82226EA61C4CE13300A09B67 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82226EA51C4CE13300A09B67 /* Packet.swift */; };
-		82A3FE181C61917F00C4FFCD /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE171C61917F00C4FFCD /* SubscribePacket.swift */; };
-		82A3FE1A1C61987D00C4FFCD /* SubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE191C61987D00C4FFCD /* SubAckPacket.swift */; };
-		82A3FE1C1C619C8500C4FFCD /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE1B1C619C8500C4FFCD /* UnsubscribePacket.swift */; };
-		82A3FE1E1C61A35800C4FFCD /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE1D1C61A35800C4FFCD /* UnsubAckPacket.swift */; };
-		82A3FE201C61A47B00C4FFCD /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */; };
-		82A3FE221C61A66000C4FFCD /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */; };
-		82A3FE241C61A74500C4FFCD /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */; };
-		82A6078B1C6987CC003F9245 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6078A1C6987CC003F9245 /* MqttClientTests.swift */; };
-		82B50F0F1C5B6C4100AC3F03 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B50F0E1C5B6C4100AC3F03 /* Extension.swift */; };
-		82D072511C60463A00D9AF61 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072501C60463A00D9AF61 /* MqttPacketTests.swift */; };
+		82B114C11DB07A4B00786B29 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114AD1DB07A4B00786B29 /* ConnAckPacket.swift */; };
+		82B114C21DB07A4B00786B29 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114AE1DB07A4B00786B29 /* ConnectPacket.swift */; };
+		82B114C31DB07A4B00786B29 /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114AF1DB07A4B00786B29 /* DisconnectPacket.swift */; };
+		82B114C41DB07A4B00786B29 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B01DB07A4B00786B29 /* Extension.swift */; };
+		82B114C51DB07A4B00786B29 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82B114B11DB07A4B00786B29 /* Info.plist */; };
+		82B114C61DB07A4B00786B29 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82B114B21DB07A4B00786B29 /* Mqtt.h */; };
+		82B114C71DB07A4B00786B29 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B31DB07A4B00786B29 /* MqttClient.swift */; };
+		82B114C81DB07A4B00786B29 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B41DB07A4B00786B29 /* Packet.swift */; };
+		82B114C91DB07A4B00786B29 /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B51DB07A4B00786B29 /* PingReqPacket.swift */; };
+		82B114CA1DB07A4B00786B29 /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B61DB07A4B00786B29 /* PingRespPacket.swift */; };
+		82B114CB1DB07A4B00786B29 /* PubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B71DB07A4B00786B29 /* PubAckPacket.swift */; };
+		82B114CC1DB07A4B00786B29 /* PubCompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B81DB07A4B00786B29 /* PubCompPacket.swift */; };
+		82B114CD1DB07A4B00786B29 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B91DB07A4B00786B29 /* PublishPacket.swift */; };
+		82B114CE1DB07A4B00786B29 /* PubRecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BA1DB07A4B00786B29 /* PubRecPacket.swift */; };
+		82B114CF1DB07A4B00786B29 /* PubRelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BB1DB07A4B00786B29 /* PubRelPacket.swift */; };
+		82B114D01DB07A4B00786B29 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BC1DB07A4B00786B29 /* Stream.swift */; };
+		82B114D11DB07A4B00786B29 /* SubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BD1DB07A4B00786B29 /* SubAckPacket.swift */; };
+		82B114D21DB07A4B00786B29 /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BE1DB07A4B00786B29 /* SubscribePacket.swift */; };
+		82B114D31DB07A4B00786B29 /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BF1DB07A4B00786B29 /* UnsubAckPacket.swift */; };
+		82B114D41DB07A4B00786B29 /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114C01DB07A4B00786B29 /* UnsubscribePacket.swift */; };
+		82B114D91DB07A5700786B29 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82B114D61DB07A5700786B29 /* Info.plist */; };
+		82B114DA1DB07A5700786B29 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D71DB07A5700786B29 /* MqttClientTests.swift */; };
+		82B114DB1DB07A5700786B29 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D81DB07A5700786B29 /* MqttPacketTests.swift */; };
+		82B114DC1DB07A6900786B29 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D71DB07A5700786B29 /* MqttClientTests.swift */; };
+		82B114DD1DB07A6900786B29 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D81DB07A5700786B29 /* MqttPacketTests.swift */; };
 		82D072531C60463A00D9AF61 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
-		82D0725A1C6097C800D9AF61 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072591C6097C800D9AF61 /* ConnAckPacket.swift */; };
-		82D0725C1C60A16F00D9AF61 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */; };
-		82D0725E1C60A18500D9AF61 /* PubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725D1C60A18500D9AF61 /* PubAckPacket.swift */; };
-		82D072601C60A19E00D9AF61 /* PubRelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0725F1C60A19E00D9AF61 /* PubRelPacket.swift */; };
-		82D072621C60A20A00D9AF61 /* PubRecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072611C60A20A00D9AF61 /* PubRecPacket.swift */; };
-		82D072641C60A22B00D9AF61 /* PubCompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D072631C60A22B00D9AF61 /* PubCompPacket.swift */; };
-		82DF08871C7C3F8D00F89A7E /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DF08861C7C3F8D00F89A7E /* Stream.swift */; };
-		82E83F931C5F5964006BFF96 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E83F921C5F5964006BFF96 /* ConnectPacket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		82093A5B1C735F330002A01F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 82226E971C4CDFA800A09B67;
-			remoteInfo = Mqtt;
-		};
-		82093A741C735FE50002A01F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 82226E971C4CDFA800A09B67;
-			remoteInfo = Mqtt;
-		};
 		82D072541C60463A00D9AF61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
@@ -64,83 +45,35 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		82093A521C735F1F0002A01F /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		82093A791C735FEF0002A01F /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				82093A781C735FEF0002A01F /* Mqtt.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		82093A541C735F1F0002A01F /* MqttClientCLT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MqttClientCLT; sourceTree = BUILT_PRODUCTS_DIR; };
-		82093A561C735F1F0002A01F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		82093A621C735FDA0002A01F /* MqttApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MqttApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		82093A641C735FDA0002A01F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		82093A661C735FDA0002A01F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		82093A691C735FDA0002A01F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		82093A6B1C735FDA0002A01F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		82093A6E1C735FDA0002A01F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		82093A701C735FDA0002A01F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82226E981C4CDFA800A09B67 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82226E9B1C4CDFA800A09B67 /* Mqtt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
-		82226E9D1C4CDFA800A09B67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82226EA31C4CE06600A09B67 /* MqttClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
-		82226EA51C4CE13300A09B67 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
-		82A3FE171C61917F00C4FFCD /* SubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
-		82A3FE191C61987D00C4FFCD /* SubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubAckPacket.swift; sourceTree = "<group>"; };
-		82A3FE1B1C619C8500C4FFCD /* UnsubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
-		82A3FE1D1C61A35800C4FFCD /* UnsubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
-		82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
-		82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
-		82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
-		82A6078A1C6987CC003F9245 /* MqttClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClientTests.swift; sourceTree = "<group>"; };
-		82B50F0E1C5B6C4100AC3F03 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		82B114AD1DB07A4B00786B29 /* ConnAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
+		82B114AE1DB07A4B00786B29 /* ConnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
+		82B114AF1DB07A4B00786B29 /* DisconnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
+		82B114B01DB07A4B00786B29 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		82B114B11DB07A4B00786B29 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82B114B21DB07A4B00786B29 /* Mqtt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
+		82B114B31DB07A4B00786B29 /* MqttClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
+		82B114B41DB07A4B00786B29 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		82B114B51DB07A4B00786B29 /* PingReqPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
+		82B114B61DB07A4B00786B29 /* PingRespPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
+		82B114B71DB07A4B00786B29 /* PubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubAckPacket.swift; sourceTree = "<group>"; };
+		82B114B81DB07A4B00786B29 /* PubCompPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubCompPacket.swift; sourceTree = "<group>"; };
+		82B114B91DB07A4B00786B29 /* PublishPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
+		82B114BA1DB07A4B00786B29 /* PubRecPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRecPacket.swift; sourceTree = "<group>"; };
+		82B114BB1DB07A4B00786B29 /* PubRelPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRelPacket.swift; sourceTree = "<group>"; };
+		82B114BC1DB07A4B00786B29 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
+		82B114BD1DB07A4B00786B29 /* SubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubAckPacket.swift; sourceTree = "<group>"; };
+		82B114BE1DB07A4B00786B29 /* SubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
+		82B114BF1DB07A4B00786B29 /* UnsubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
+		82B114C01DB07A4B00786B29 /* UnsubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
+		82B114D61DB07A5700786B29 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82B114D71DB07A5700786B29 /* MqttClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClientTests.swift; sourceTree = "<group>"; };
+		82B114D81DB07A5700786B29 /* MqttPacketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttPacketTests.swift; sourceTree = "<group>"; };
 		82D0724E1C60463A00D9AF61 /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		82D072501C60463A00D9AF61 /* MqttPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttPacketTests.swift; sourceTree = "<group>"; };
-		82D072521C60463A00D9AF61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82D072591C6097C800D9AF61 /* ConnAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
-		82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
-		82D0725D1C60A18500D9AF61 /* PubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubAckPacket.swift; sourceTree = "<group>"; };
-		82D0725F1C60A19E00D9AF61 /* PubRelPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRelPacket.swift; sourceTree = "<group>"; };
-		82D072611C60A20A00D9AF61 /* PubRecPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRecPacket.swift; sourceTree = "<group>"; };
-		82D072631C60A22B00D9AF61 /* PubCompPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubCompPacket.swift; sourceTree = "<group>"; };
-		82DF08861C7C3F8D00F89A7E /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
-		82E83F921C5F5964006BFF96 /* ConnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		82093A511C735F1F0002A01F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82093A5D1C735F3D0002A01F /* Mqtt.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		82093A5F1C735FDA0002A01F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82093A771C735FEF0002A01F /* Mqtt.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		82226E941C4CDFA800A09B67 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -159,34 +92,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		82093A551C735F1F0002A01F /* MqttClientCLT */ = {
-			isa = PBXGroup;
-			children = (
-				82093A561C735F1F0002A01F /* main.swift */,
-			);
-			path = MqttClientCLT;
-			sourceTree = "<group>";
-		};
-		82093A631C735FDA0002A01F /* MqttApp */ = {
-			isa = PBXGroup;
-			children = (
-				82093A641C735FDA0002A01F /* AppDelegate.swift */,
-				82093A661C735FDA0002A01F /* ViewController.swift */,
-				82093A681C735FDA0002A01F /* Main.storyboard */,
-				82093A6B1C735FDA0002A01F /* Assets.xcassets */,
-				82093A6D1C735FDA0002A01F /* LaunchScreen.storyboard */,
-				82093A701C735FDA0002A01F /* Info.plist */,
-			);
-			path = MqttApp;
-			sourceTree = "<group>";
-		};
 		82226E8E1C4CDFA800A09B67 = {
 			isa = PBXGroup;
 			children = (
-				82226E9A1C4CDFA800A09B67 /* Mqtt */,
-				82D0724F1C60463A00D9AF61 /* MqttTests */,
-				82093A551C735F1F0002A01F /* MqttClientCLT */,
-				82093A631C735FDA0002A01F /* MqttApp */,
+				82B114AC1DB07A4B00786B29 /* Source */,
+				82B114D51DB07A5700786B29 /* Tests */,
 				82226E991C4CDFA800A09B67 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -196,55 +106,45 @@
 			children = (
 				82226E981C4CDFA800A09B67 /* Mqtt.framework */,
 				82D0724E1C60463A00D9AF61 /* MqttTests.xctest */,
-				82093A541C735F1F0002A01F /* MqttClientCLT */,
-				82093A621C735FDA0002A01F /* MqttApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		82226E9A1C4CDFA800A09B67 /* Mqtt */ = {
+		82B114AC1DB07A4B00786B29 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				82D072651C60A24200D9AF61 /* Packet */,
-				82226EA31C4CE06600A09B67 /* MqttClient.swift */,
-				82DF08861C7C3F8D00F89A7E /* Stream.swift */,
-				82B50F0E1C5B6C4100AC3F03 /* Extension.swift */,
-				82226E9B1C4CDFA800A09B67 /* Mqtt.h */,
-				82226E9D1C4CDFA800A09B67 /* Info.plist */,
+				82B114AD1DB07A4B00786B29 /* ConnAckPacket.swift */,
+				82B114AE1DB07A4B00786B29 /* ConnectPacket.swift */,
+				82B114AF1DB07A4B00786B29 /* DisconnectPacket.swift */,
+				82B114B01DB07A4B00786B29 /* Extension.swift */,
+				82B114B11DB07A4B00786B29 /* Info.plist */,
+				82B114B21DB07A4B00786B29 /* Mqtt.h */,
+				82B114B31DB07A4B00786B29 /* MqttClient.swift */,
+				82B114B41DB07A4B00786B29 /* Packet.swift */,
+				82B114B51DB07A4B00786B29 /* PingReqPacket.swift */,
+				82B114B61DB07A4B00786B29 /* PingRespPacket.swift */,
+				82B114B71DB07A4B00786B29 /* PubAckPacket.swift */,
+				82B114B81DB07A4B00786B29 /* PubCompPacket.swift */,
+				82B114B91DB07A4B00786B29 /* PublishPacket.swift */,
+				82B114BA1DB07A4B00786B29 /* PubRecPacket.swift */,
+				82B114BB1DB07A4B00786B29 /* PubRelPacket.swift */,
+				82B114BC1DB07A4B00786B29 /* Stream.swift */,
+				82B114BD1DB07A4B00786B29 /* SubAckPacket.swift */,
+				82B114BE1DB07A4B00786B29 /* SubscribePacket.swift */,
+				82B114BF1DB07A4B00786B29 /* UnsubAckPacket.swift */,
+				82B114C01DB07A4B00786B29 /* UnsubscribePacket.swift */,
 			);
-			path = Mqtt;
+			path = Source;
 			sourceTree = "<group>";
 		};
-		82D0724F1C60463A00D9AF61 /* MqttTests */ = {
+		82B114D51DB07A5700786B29 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				82D072501C60463A00D9AF61 /* MqttPacketTests.swift */,
-				82A6078A1C6987CC003F9245 /* MqttClientTests.swift */,
-				82D072521C60463A00D9AF61 /* Info.plist */,
+				82B114D61DB07A5700786B29 /* Info.plist */,
+				82B114D71DB07A5700786B29 /* MqttClientTests.swift */,
+				82B114D81DB07A5700786B29 /* MqttPacketTests.swift */,
 			);
-			path = MqttTests;
-			sourceTree = "<group>";
-		};
-		82D072651C60A24200D9AF61 /* Packet */ = {
-			isa = PBXGroup;
-			children = (
-				82226EA51C4CE13300A09B67 /* Packet.swift */,
-				82E83F921C5F5964006BFF96 /* ConnectPacket.swift */,
-				82D072591C6097C800D9AF61 /* ConnAckPacket.swift */,
-				82D0725B1C60A16F00D9AF61 /* PublishPacket.swift */,
-				82D0725D1C60A18500D9AF61 /* PubAckPacket.swift */,
-				82D072611C60A20A00D9AF61 /* PubRecPacket.swift */,
-				82D0725F1C60A19E00D9AF61 /* PubRelPacket.swift */,
-				82D072631C60A22B00D9AF61 /* PubCompPacket.swift */,
-				82A3FE171C61917F00C4FFCD /* SubscribePacket.swift */,
-				82A3FE191C61987D00C4FFCD /* SubAckPacket.swift */,
-				82A3FE1B1C619C8500C4FFCD /* UnsubscribePacket.swift */,
-				82A3FE1D1C61A35800C4FFCD /* UnsubAckPacket.swift */,
-				82A3FE1F1C61A47B00C4FFCD /* PingReqPacket.swift */,
-				82A3FE211C61A66000C4FFCD /* PingRespPacket.swift */,
-				82A3FE231C61A74500C4FFCD /* DisconnectPacket.swift */,
-			);
-			name = Packet;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,50 +154,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82226E9C1C4CDFA800A09B67 /* Mqtt.h in Headers */,
+				82B114C61DB07A4B00786B29 /* Mqtt.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		82093A531C735F1F0002A01F /* MqttClientCLT */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 82093A5A1C735F1F0002A01F /* Build configuration list for PBXNativeTarget "MqttClientCLT" */;
-			buildPhases = (
-				82093A501C735F1F0002A01F /* Sources */,
-				82093A511C735F1F0002A01F /* Frameworks */,
-				82093A521C735F1F0002A01F /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				82093A5C1C735F330002A01F /* PBXTargetDependency */,
-			);
-			name = MqttClientCLT;
-			productName = MqttClientCLT;
-			productReference = 82093A541C735F1F0002A01F /* MqttClientCLT */;
-			productType = "com.apple.product-type.tool";
-		};
-		82093A611C735FDA0002A01F /* MqttApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 82093A711C735FDA0002A01F /* Build configuration list for PBXNativeTarget "MqttApp" */;
-			buildPhases = (
-				82093A5E1C735FDA0002A01F /* Sources */,
-				82093A5F1C735FDA0002A01F /* Frameworks */,
-				82093A601C735FDA0002A01F /* Resources */,
-				82093A791C735FEF0002A01F /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				82093A751C735FE50002A01F /* PBXTargetDependency */,
-			);
-			name = MqttApp;
-			productName = MqttApp;
-			productReference = 82093A621C735FDA0002A01F /* MqttApp.app */;
-			productType = "com.apple.product-type.application";
-		};
 		82226E971C4CDFA800A09B67 /* Mqtt */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82226EA01C4CDFA800A09B67 /* Build configuration list for PBXNativeTarget "Mqtt" */;
@@ -344,18 +207,13 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = beidouapp;
 				TargetAttributes = {
-					82093A531C735F1F0002A01F = {
-						CreatedOnToolsVersion = 7.2.1;
-					};
-					82093A611C735FDA0002A01F = {
-						CreatedOnToolsVersion = 7.2.1;
-					};
 					82226E971C4CDFA800A09B67 = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0800;
 					};
 					82D0724D1C60463A00D9AF61 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -373,28 +231,18 @@
 			projectRoot = "";
 			targets = (
 				82226E971C4CDFA800A09B67 /* Mqtt */,
-				82093A531C735F1F0002A01F /* MqttClientCLT */,
-				82093A611C735FDA0002A01F /* MqttApp */,
 				82D0724D1C60463A00D9AF61 /* MqttTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		82093A601C735FDA0002A01F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82093A6F1C735FDA0002A01F /* LaunchScreen.storyboard in Resources */,
-				82093A6C1C735FDA0002A01F /* Assets.xcassets in Resources */,
-				82093A6A1C735FDA0002A01F /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		82226E961C4CDFA800A09B67 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82B114D91DB07A5700786B29 /* Info.plist in Resources */,
+				82B114C51DB07A4B00786B29 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,45 +256,30 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		82093A501C735F1F0002A01F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82093A571C735F1F0002A01F /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		82093A5E1C735FDA0002A01F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82093A671C735FDA0002A01F /* ViewController.swift in Sources */,
-				82093A651C735FDA0002A01F /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		82226E931C4CDFA800A09B67 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82B50F0F1C5B6C4100AC3F03 /* Extension.swift in Sources */,
-				82226EA41C4CE06600A09B67 /* MqttClient.swift in Sources */,
-				82D072641C60A22B00D9AF61 /* PubCompPacket.swift in Sources */,
-				82E83F931C5F5964006BFF96 /* ConnectPacket.swift in Sources */,
-				82A3FE181C61917F00C4FFCD /* SubscribePacket.swift in Sources */,
-				82DF08871C7C3F8D00F89A7E /* Stream.swift in Sources */,
-				82D0725C1C60A16F00D9AF61 /* PublishPacket.swift in Sources */,
-				82A3FE1A1C61987D00C4FFCD /* SubAckPacket.swift in Sources */,
-				82226EA61C4CE13300A09B67 /* Packet.swift in Sources */,
-				82D0725A1C6097C800D9AF61 /* ConnAckPacket.swift in Sources */,
-				82D0725E1C60A18500D9AF61 /* PubAckPacket.swift in Sources */,
-				82D072601C60A19E00D9AF61 /* PubRelPacket.swift in Sources */,
-				82D072621C60A20A00D9AF61 /* PubRecPacket.swift in Sources */,
-				82A3FE1C1C619C8500C4FFCD /* UnsubscribePacket.swift in Sources */,
-				82A3FE1E1C61A35800C4FFCD /* UnsubAckPacket.swift in Sources */,
-				82A3FE201C61A47B00C4FFCD /* PingReqPacket.swift in Sources */,
-				82A3FE241C61A74500C4FFCD /* DisconnectPacket.swift in Sources */,
-				82A3FE221C61A66000C4FFCD /* PingRespPacket.swift in Sources */,
+				82B114C21DB07A4B00786B29 /* ConnectPacket.swift in Sources */,
+				82B114C71DB07A4B00786B29 /* MqttClient.swift in Sources */,
+				82B114D31DB07A4B00786B29 /* UnsubAckPacket.swift in Sources */,
+				82B114CE1DB07A4B00786B29 /* PubRecPacket.swift in Sources */,
+				82B114C11DB07A4B00786B29 /* ConnAckPacket.swift in Sources */,
+				82B114C81DB07A4B00786B29 /* Packet.swift in Sources */,
+				82B114CC1DB07A4B00786B29 /* PubCompPacket.swift in Sources */,
+				82B114D11DB07A4B00786B29 /* SubAckPacket.swift in Sources */,
+				82B114CD1DB07A4B00786B29 /* PublishPacket.swift in Sources */,
+				82B114C31DB07A4B00786B29 /* DisconnectPacket.swift in Sources */,
+				82B114C91DB07A4B00786B29 /* PingReqPacket.swift in Sources */,
+				82B114D21DB07A4B00786B29 /* SubscribePacket.swift in Sources */,
+				82B114CF1DB07A4B00786B29 /* PubRelPacket.swift in Sources */,
+				82B114DB1DB07A5700786B29 /* MqttPacketTests.swift in Sources */,
+				82B114DA1DB07A5700786B29 /* MqttClientTests.swift in Sources */,
+				82B114D41DB07A4B00786B29 /* UnsubscribePacket.swift in Sources */,
+				82B114CB1DB07A4B00786B29 /* PubAckPacket.swift in Sources */,
+				82B114C41DB07A4B00786B29 /* Extension.swift in Sources */,
+				82B114CA1DB07A4B00786B29 /* PingRespPacket.swift in Sources */,
+				82B114D01DB07A4B00786B29 /* Stream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,24 +287,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82A6078B1C6987CC003F9245 /* MqttClientTests.swift in Sources */,
-				82D072511C60463A00D9AF61 /* MqttPacketTests.swift in Sources */,
+				82B114DC1DB07A6900786B29 /* MqttClientTests.swift in Sources */,
+				82B114DD1DB07A6900786B29 /* MqttPacketTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		82093A5C1C735F330002A01F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
-			targetProxy = 82093A5B1C735F330002A01F /* PBXContainerItemProxy */;
-		};
-		82093A751C735FE50002A01F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
-			targetProxy = 82093A741C735FE50002A01F /* PBXContainerItemProxy */;
-		};
 		82D072551C60463A00D9AF61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
@@ -479,71 +302,7 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		82093A681C735FDA0002A01F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				82093A691C735FDA0002A01F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		82093A6D1C735FDA0002A01F /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				82093A6E1C735FDA0002A01F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		82093A581C735F1F0002A01F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		82093A591C735F1F0002A01F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		82093A721C735FDA0002A01F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = MqttApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		82093A731C735FDA0002A01F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = MqttApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		82226E9E1C4CDFA800A09B67 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -687,46 +446,32 @@
 		82D072561C60463A00D9AF61 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = MqttTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		82D072571C60463A00D9AF61 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = MqttTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jianbo.MqttTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		82093A5A1C735F1F0002A01F /* Build configuration list for PBXNativeTarget "MqttClientCLT" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				82093A581C735F1F0002A01F /* Debug */,
-				82093A591C735F1F0002A01F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		82093A711C735FDA0002A01F /* Build configuration list for PBXNativeTarget "MqttApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				82093A721C735FDA0002A01F /* Debug */,
-				82093A731C735FDA0002A01F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		82226E921C4CDFA800A09B67 /* Build configuration list for PBXProject "Mqtt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

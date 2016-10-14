@@ -9,7 +9,7 @@
 import Foundation
 
 
-open class MqttClient {
+public class MqttClient {
     
     var clientId: String
     var cleanSession: Bool
@@ -31,7 +31,6 @@ open class MqttClient {
         stream.delegate = self
     }
 }
-
 
 
 extension MqttClient {

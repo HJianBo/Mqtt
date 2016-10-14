@@ -26,12 +26,12 @@ class MqttClientTests: XCTestCase {
     }
     
     func testClient_Init() {
-        let exp = expectationWithDescription("CONNECT")
+        let exp = expectation(description: "CONNECT")
         
         let client = MqttClient(host: sDefaultHost, port: sDefaultPort, clientId: "MacbookPro", cleanSession: false)
         
         client.connect()
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }
