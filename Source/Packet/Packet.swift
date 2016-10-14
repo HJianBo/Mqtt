@@ -16,49 +16,49 @@ enum PacketType: UInt8 {
     case reserved    = 0x00
     
     // Client to Server | Client request to connect to Server
-    case connect     = 0x10
+    case connect     = 0x01
     
     // Server to Client | Connect ack
-    case connack     = 0x20
+    case connack     = 0x02
     
     // Client -- Server | Publish message
-    case publish     = 0x30
+    case publish     = 0x03
     
     // Client -- Server | Publish ack
-    case puback      = 0x40
+    case puback      = 0x04
     
     // Client -- Server | Publish received (assured delivery part 1)
-    case pubrec      = 0x50
+    case pubrec      = 0x05
     
     // Client -- Server | Publish release  (assured delivery part 2)
-    case pubrel      = 0x60
+    case pubrel      = 0x06
     
     // Client -- Server | Publish complete (assured delivery part 3)
-    case pubcomp     = 0x70
+    case pubcomp     = 0x07
     
     // Client to Server | Client subscribe request
-    case subscribe   = 0x80
+    case subscribe   = 0x08
     
     // Server to Client | Subscribe ack
-    case suback      = 0x90
+    case suback      = 0x09
     
     // Client to Server | Unsubcribe request
-    case unsubscribe = 0xA0
+    case unsubscribe = 0x0A
     
     // Server to Client | Unsubscribe ack
-    case unsuback    = 0xB0
+    case unsuback    = 0x0B
     
     // Client to Server | PING Request
-    case pingreq     = 0xC0
+    case pingreq     = 0x0C
     
     // Server to Client | PING response
-    case pingresp    = 0xD0
+    case pingresp    = 0x0D
     
     // Client to Server | Client is disconnecting
-    case disconnect  = 0xE0
+    case disconnect  = 0x0E
     
     // Forbidden        | Reserved
-    case reserved2   = 0xF0
+    case reserved2   = 0x0F
 }
 
 enum Qos: UInt8 {
@@ -92,25 +92,64 @@ func >= (lhs: Qos, rhs: Qos) -> Bool {
  */
 struct PacketFixHeader {
     
+    /**
+     *
+     *
+     */
+    
     /// mqtt control packet type
     var type: PacketType = .reserved
     
     /// Duplicate delivery of a PUBLISH Control Packet
-    var dup = false
+    var dup: Bool {
+        get { return ((flag & 0x08) >> 3 == 1) ? true : false }
+        
+        set {
+            flag &= ~0x08
+            flag |= newValue.rawValue << 3
+        }
+    }
     
     ///  PUBLISH Quality of Service
-    var qos: Qos = .qos0
+    var qos: Qos {
+        get {
+            guard let q = Qos(rawValue: (flag & 0x06) >> 1) else {
+                assert(false, "invaild qos value")
+                return .qos0
+            }
+            return q
+        }
+        
+        set {
+            flag &= ~0x06
+            flag |= (newValue.rawValue << 1)
+        }
+    }
     
     /// PUBLISH Retain flag
-    var retain = false
+    var retain: Bool {
+        get { return ( flag & 0x01 == 1 ) ? true : false }
+        set {
+            flag &= ~0x01
+            flag |= newValue.rawValue
+        }
+    }
     
     /// flags
-    var flag: UInt8 {
-        return dup.rawValue*8 + ((qos.rawValue >> 1) & 0x01)*4 + (qos.rawValue & 0x01)*2 + retain.rawValue*1
-    }
+    var flag: UInt8 = 0
     
     init(type: PacketType = .reserved) {
         self.type = type
+    }
+    
+    init?(byte: UInt8) {
+        guard let t = PacketType(rawValue: byte >> 4) else {
+            return nil
+        }
+        
+        type = t
+        
+        flag = byte & 0x0F
     }
 }
 

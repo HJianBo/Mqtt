@@ -11,9 +11,9 @@ import Foundation
 
 protocol StreamDelegate {
     
-    func stream(_ stream: Stream, didSendData data: Data)
+    func stream(_ stream: Stream, didSendData data: Data, flag: String)
     
-    func stream(_ stream: Stream, didRecvData data: Data)
+    func stream(_ stream: Stream, didRecvData data: Data, flag: String)
     
     func stream(_ stream: Stream, didOpenAtHost host:String, port: UInt16)
 }
@@ -121,7 +121,7 @@ extension Stream {
         // ...
     }
     
-    func send(_ data: Data) {
+    func send(_ data: Data, flag: String = "") {
         
         guard let output = outputStream else {
             return
@@ -134,23 +134,28 @@ extension Stream {
             
             let hasWritedCount = output.write((data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), maxLength: data.count)
             if hasWritedCount == data.count {
-                self.delegate?.stream(self, didSendData: data)
+                self.delegate?.stream(self, didSendData: data, flag: flag)
             } else {
                 NSLog("output stream write error")
             }
         }
     }
     
-    func read(_ length: Int, timeOut: TimeInterval = 5) {
-        guard inputStream != nil else {
+    func read(_ length: Int, timeOut: TimeInterval = 5, flag: String = "") {
+        guard let input = inputStream else {
             return
         }
         
-        
-//        var buffer = [UInt8](count: length, repeatedValue: 0)
-//        if length > 0 {
-//            let readLength = input.read(&buffer, maxLength: buffer.count)
-//        }
+        var buffer = [UInt8](repeating: 0, count: length)
+        if length > 0 {
+            readQueue.async { [unowned self] in
+                let readLen = input.read(&buffer, maxLength: buffer.count)
+                if readLen != length {
+                    NSLog("----- read length not equal!")
+                }
+                self.delegate?.stream(self, didRecvData: Data(bytes: buffer), flag: flag)
+            }
+        }
     }
     
     func close() {

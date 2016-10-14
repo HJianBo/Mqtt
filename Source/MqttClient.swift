@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public class MqttClient {
     
     var clientId: String
@@ -64,7 +63,6 @@ extension MqttClient: StreamDelegate {
     
     func stream(_ stream: Stream, didOpenAtHost host: String, port: UInt16) {
         
-        
         var packet = ConnectPacket(clientId: clientId)
         
         packet.userName = username
@@ -76,16 +74,18 @@ extension MqttClient: StreamDelegate {
         packet.willTopic = willMessage?.topicName
         
         stream.send(packet.packToData)
-        
-        // FIXME: read a header
-        stream.read(5)
     }
     
-    func stream(_ stream: Stream, didRecvData data: Data) {
-        NSLog("didRecv: \(data)")
+    func stream(_ stream: Stream, didRecvData data: Data, flag: String) {
+        NSLog("didRecv: \(data), flag: \(flag)")
+        if flag == "HEADER" {
+            let header = PacketFixHeader(byte: data[0])
+            print(header)
+        }
     }
     
-    func stream(_ stream: Stream, didSendData data: Data) {
-        NSLog("didSend: \(data)")
+    func stream(_ stream: Stream, didSendData data: Data, flag: String) {
+        NSLog("didSend: \(data), flag: \(flag)")
+        stream.read(1, flag: "HEADER")
     }
 }

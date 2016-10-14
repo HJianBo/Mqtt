@@ -231,7 +231,7 @@ extension MqttPacketTests {
         XCTAssert(publishPacket.fixHeader.flag == 0x00, "packet falge shpuld be 0x00")
         
         publishPacket.fixHeader.dup = true
-        XCTAssert(publishPacket.fixHeader.dup, "packet dup should be true")
+        XCTAssertTrue(publishPacket.fixHeader.dup,"packet dup should be true")
         XCTAssert(publishPacket.fixHeader.flag == 0x08, "packet falge shpuld be 0x08")
         
         publishPacket.fixHeader.dup = false
@@ -563,7 +563,7 @@ extension MqttPacketTests {
     func testPingResp_init() {
         let pingrespPacket = PingRespPacket()
         
-        XCTAssert(pingrespPacket.fixHeader.type == .pingreq, "packet type should be .pingreq")
+        XCTAssert(pingrespPacket.fixHeader.type == .pingresp, "packet type should be .pingreq")
         XCTAssert(pingrespPacket.fixHeader.flag == 0, "packet flag should be 0")
         XCTAssert(!pingrespPacket.fixHeader.dup, "packet dup should be false")
         XCTAssert(!pingrespPacket.fixHeader.retain, "packet retain should be false")

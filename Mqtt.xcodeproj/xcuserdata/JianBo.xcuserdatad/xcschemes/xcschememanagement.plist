@@ -9,10 +9,15 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>MqttTests.xcscheme</key>
+		<key>MqttClient.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
+		</dict>
+		<key>MqttTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -33,6 +38,16 @@
 			<true/>
 		</dict>
 		<key>82D0724D1C60463A00D9AF61</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>82D830D71DB0A65E0022D257</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>82D830E51DB0A9680022D257</key>
 		<dict>
 			<key>primary</key>
 			<true/>

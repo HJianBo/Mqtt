@@ -29,6 +29,12 @@
 		82B114FB1DB07F8E00786B29 /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114EC1DB07F8E00786B29 /* UnsubAckPacket.swift */; };
 		82B114FC1DB07F8E00786B29 /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114ED1DB07F8E00786B29 /* UnsubscribePacket.swift */; };
 		82D072531C60463A00D9AF61 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
+		82D830E91DB0A9680022D257 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D830E81DB0A9680022D257 /* AppDelegate.swift */; };
+		82D830EB1DB0A9680022D257 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D830EA1DB0A9680022D257 /* ViewController.swift */; };
+		82D830ED1DB0A9680022D257 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D830EC1DB0A9680022D257 /* Assets.xcassets */; };
+		82D830F01DB0A9680022D257 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D830EE1DB0A9680022D257 /* Main.storyboard */; };
+		82D830F51DB0A9700022D257 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
+		82D830F61DB0A9700022D257 /* Mqtt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +45,28 @@
 			remoteGlobalIDString = 82226E971C4CDFA800A09B67;
 			remoteInfo = Mqtt;
 		};
+		82D830F71DB0A9700022D257 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82226E8F1C4CDFA800A09B67 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82226E971C4CDFA800A09B67;
+			remoteInfo = Mqtt;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		82D830F91DB0A9700022D257 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				82D830F61DB0A9700022D257 /* Mqtt.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		82226E981C4CDFA800A09B67 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +94,12 @@
 		82B114EC1DB07F8E00786B29 /* UnsubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
 		82B114ED1DB07F8E00786B29 /* UnsubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
 		82D0724E1C60463A00D9AF61 /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		82D830E61DB0A9680022D257 /* MqttClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MqttClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		82D830E81DB0A9680022D257 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		82D830EA1DB0A9680022D257 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		82D830EC1DB0A9680022D257 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		82D830EF1DB0A9680022D257 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		82D830F11DB0A9680022D257 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +118,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82D830E31DB0A9680022D257 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82D830F51DB0A9700022D257 /* Mqtt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -93,6 +134,7 @@
 			children = (
 				82B114AC1DB07A4B00786B29 /* Source */,
 				82B114D51DB07A5700786B29 /* Tests */,
+				82D830E71DB0A9680022D257 /* MqttClient */,
 				82226E991C4CDFA800A09B67 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,6 +144,7 @@
 			children = (
 				82226E981C4CDFA800A09B67 /* Mqtt.framework */,
 				82D0724E1C60463A00D9AF61 /* MqttTests.xctest */,
+				82D830E61DB0A9680022D257 /* MqttClient.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,6 +202,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		82D830E71DB0A9680022D257 /* MqttClient */ = {
+			isa = PBXGroup;
+			children = (
+				82D830E81DB0A9680022D257 /* AppDelegate.swift */,
+				82D830EA1DB0A9680022D257 /* ViewController.swift */,
+				82D830EC1DB0A9680022D257 /* Assets.xcassets */,
+				82D830EE1DB0A9680022D257 /* Main.storyboard */,
+				82D830F11DB0A9680022D257 /* Info.plist */,
+			);
+			path = MqttClient;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -209,13 +264,32 @@
 			productReference = 82D0724E1C60463A00D9AF61 /* MqttTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		82D830E51DB0A9680022D257 /* MqttClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82D830F21DB0A9680022D257 /* Build configuration list for PBXNativeTarget "MqttClient" */;
+			buildPhases = (
+				82D830E21DB0A9680022D257 /* Sources */,
+				82D830E31DB0A9680022D257 /* Frameworks */,
+				82D830E41DB0A9680022D257 /* Resources */,
+				82D830F91DB0A9700022D257 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82D830F81DB0A9700022D257 /* PBXTargetDependency */,
+			);
+			name = MqttClient;
+			productName = MqttClient;
+			productReference = 82D830E61DB0A9680022D257 /* MqttClient.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		82226E8F1C4CDFA800A09B67 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = beidouapp;
 				TargetAttributes = {
@@ -226,6 +300,10 @@
 					82D0724D1C60463A00D9AF61 = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0800;
+					};
+					82D830E51DB0A9680022D257 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -244,6 +322,7 @@
 			targets = (
 				82226E971C4CDFA800A09B67 /* Mqtt */,
 				82D0724D1C60463A00D9AF61 /* MqttTests */,
+				82D830E51DB0A9680022D257 /* MqttClient */,
 			);
 		};
 /* End PBXProject section */
@@ -260,6 +339,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82D830E41DB0A9680022D257 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82D830ED1DB0A9680022D257 /* Assets.xcassets in Resources */,
+				82D830F01DB0A9680022D257 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +388,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82D830E21DB0A9680022D257 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82D830EB1DB0A9680022D257 /* ViewController.swift in Sources */,
+				82D830E91DB0A9680022D257 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -308,7 +405,23 @@
 			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
 			targetProxy = 82D072541C60463A00D9AF61 /* PBXContainerItemProxy */;
 		};
+		82D830F81DB0A9700022D257 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82226E971C4CDFA800A09B67 /* Mqtt */;
+			targetProxy = 82D830F71DB0A9700022D257 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		82D830EE1DB0A9680022D257 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				82D830EF1DB0A9680022D257 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		82226E9E1C4CDFA800A09B67 /* Debug */ = {
@@ -477,6 +590,43 @@
 			};
 			name = Release;
 		};
+		82D830F31DB0A9680022D257 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = MqttClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heeejianbo.MqttClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		82D830F41DB0A9680022D257 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = MqttClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heeejianbo.MqttClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -506,6 +656,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		82D830F21DB0A9680022D257 /* Build configuration list for PBXNativeTarget "MqttClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82D830F31DB0A9680022D257 /* Debug */,
+				82D830F41DB0A9680022D257 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

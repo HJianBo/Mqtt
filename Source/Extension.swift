@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 extension Bool {
     
     init(intValue: UInt8) {
@@ -26,8 +24,6 @@ extension Bool {
         return 0
     }
 }
-
-
 
 extension UInt16 {
     
