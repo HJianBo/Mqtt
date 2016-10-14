@@ -7,31 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		82B114C11DB07A4B00786B29 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114AD1DB07A4B00786B29 /* ConnAckPacket.swift */; };
-		82B114C21DB07A4B00786B29 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114AE1DB07A4B00786B29 /* ConnectPacket.swift */; };
-		82B114C31DB07A4B00786B29 /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114AF1DB07A4B00786B29 /* DisconnectPacket.swift */; };
 		82B114C41DB07A4B00786B29 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B01DB07A4B00786B29 /* Extension.swift */; };
-		82B114C51DB07A4B00786B29 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82B114B11DB07A4B00786B29 /* Info.plist */; };
-		82B114C61DB07A4B00786B29 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82B114B21DB07A4B00786B29 /* Mqtt.h */; };
+		82B114C61DB07A4B00786B29 /* Mqtt.h in Headers */ = {isa = PBXBuildFile; fileRef = 82B114B21DB07A4B00786B29 /* Mqtt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82B114C71DB07A4B00786B29 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B31DB07A4B00786B29 /* MqttClient.swift */; };
-		82B114C81DB07A4B00786B29 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B41DB07A4B00786B29 /* Packet.swift */; };
-		82B114C91DB07A4B00786B29 /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B51DB07A4B00786B29 /* PingReqPacket.swift */; };
-		82B114CA1DB07A4B00786B29 /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B61DB07A4B00786B29 /* PingRespPacket.swift */; };
-		82B114CB1DB07A4B00786B29 /* PubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B71DB07A4B00786B29 /* PubAckPacket.swift */; };
-		82B114CC1DB07A4B00786B29 /* PubCompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B81DB07A4B00786B29 /* PubCompPacket.swift */; };
-		82B114CD1DB07A4B00786B29 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114B91DB07A4B00786B29 /* PublishPacket.swift */; };
-		82B114CE1DB07A4B00786B29 /* PubRecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BA1DB07A4B00786B29 /* PubRecPacket.swift */; };
-		82B114CF1DB07A4B00786B29 /* PubRelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BB1DB07A4B00786B29 /* PubRelPacket.swift */; };
 		82B114D01DB07A4B00786B29 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BC1DB07A4B00786B29 /* Stream.swift */; };
-		82B114D11DB07A4B00786B29 /* SubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BD1DB07A4B00786B29 /* SubAckPacket.swift */; };
-		82B114D21DB07A4B00786B29 /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BE1DB07A4B00786B29 /* SubscribePacket.swift */; };
-		82B114D31DB07A4B00786B29 /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114BF1DB07A4B00786B29 /* UnsubAckPacket.swift */; };
-		82B114D41DB07A4B00786B29 /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114C01DB07A4B00786B29 /* UnsubscribePacket.swift */; };
-		82B114D91DB07A5700786B29 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82B114D61DB07A5700786B29 /* Info.plist */; };
-		82B114DA1DB07A5700786B29 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D71DB07A5700786B29 /* MqttClientTests.swift */; };
-		82B114DB1DB07A5700786B29 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D81DB07A5700786B29 /* MqttPacketTests.swift */; };
 		82B114DC1DB07A6900786B29 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D71DB07A5700786B29 /* MqttClientTests.swift */; };
 		82B114DD1DB07A6900786B29 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114D81DB07A5700786B29 /* MqttPacketTests.swift */; };
+		82B114EE1DB07F8E00786B29 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114DF1DB07F8E00786B29 /* ConnAckPacket.swift */; };
+		82B114EF1DB07F8E00786B29 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E01DB07F8E00786B29 /* ConnectPacket.swift */; };
+		82B114F01DB07F8E00786B29 /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E11DB07F8E00786B29 /* DisconnectPacket.swift */; };
+		82B114F11DB07F8E00786B29 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E21DB07F8E00786B29 /* Packet.swift */; };
+		82B114F21DB07F8E00786B29 /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E31DB07F8E00786B29 /* PingReqPacket.swift */; };
+		82B114F31DB07F8E00786B29 /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E41DB07F8E00786B29 /* PingRespPacket.swift */; };
+		82B114F41DB07F8E00786B29 /* PubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E51DB07F8E00786B29 /* PubAckPacket.swift */; };
+		82B114F51DB07F8E00786B29 /* PubCompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E61DB07F8E00786B29 /* PubCompPacket.swift */; };
+		82B114F61DB07F8E00786B29 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E71DB07F8E00786B29 /* PublishPacket.swift */; };
+		82B114F71DB07F8E00786B29 /* PubRecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E81DB07F8E00786B29 /* PubRecPacket.swift */; };
+		82B114F81DB07F8E00786B29 /* PubRelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114E91DB07F8E00786B29 /* PubRelPacket.swift */; };
+		82B114F91DB07F8E00786B29 /* SubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114EA1DB07F8E00786B29 /* SubAckPacket.swift */; };
+		82B114FA1DB07F8E00786B29 /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114EB1DB07F8E00786B29 /* SubscribePacket.swift */; };
+		82B114FB1DB07F8E00786B29 /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114EC1DB07F8E00786B29 /* UnsubAckPacket.swift */; };
+		82B114FC1DB07F8E00786B29 /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B114ED1DB07F8E00786B29 /* UnsubscribePacket.swift */; };
 		82D072531C60463A00D9AF61 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82226E981C4CDFA800A09B67 /* Mqtt.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,29 +43,29 @@
 
 /* Begin PBXFileReference section */
 		82226E981C4CDFA800A09B67 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82B114AD1DB07A4B00786B29 /* ConnAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
-		82B114AE1DB07A4B00786B29 /* ConnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
-		82B114AF1DB07A4B00786B29 /* DisconnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
 		82B114B01DB07A4B00786B29 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		82B114B11DB07A4B00786B29 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82B114B21DB07A4B00786B29 /* Mqtt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
 		82B114B31DB07A4B00786B29 /* MqttClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
-		82B114B41DB07A4B00786B29 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
-		82B114B51DB07A4B00786B29 /* PingReqPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
-		82B114B61DB07A4B00786B29 /* PingRespPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
-		82B114B71DB07A4B00786B29 /* PubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubAckPacket.swift; sourceTree = "<group>"; };
-		82B114B81DB07A4B00786B29 /* PubCompPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubCompPacket.swift; sourceTree = "<group>"; };
-		82B114B91DB07A4B00786B29 /* PublishPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
-		82B114BA1DB07A4B00786B29 /* PubRecPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRecPacket.swift; sourceTree = "<group>"; };
-		82B114BB1DB07A4B00786B29 /* PubRelPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRelPacket.swift; sourceTree = "<group>"; };
 		82B114BC1DB07A4B00786B29 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
-		82B114BD1DB07A4B00786B29 /* SubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubAckPacket.swift; sourceTree = "<group>"; };
-		82B114BE1DB07A4B00786B29 /* SubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
-		82B114BF1DB07A4B00786B29 /* UnsubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
-		82B114C01DB07A4B00786B29 /* UnsubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
 		82B114D61DB07A5700786B29 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82B114D71DB07A5700786B29 /* MqttClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttClientTests.swift; sourceTree = "<group>"; };
 		82B114D81DB07A5700786B29 /* MqttPacketTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MqttPacketTests.swift; sourceTree = "<group>"; };
+		82B114DF1DB07F8E00786B29 /* ConnAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
+		82B114E01DB07F8E00786B29 /* ConnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
+		82B114E11DB07F8E00786B29 /* DisconnectPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
+		82B114E21DB07F8E00786B29 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		82B114E31DB07F8E00786B29 /* PingReqPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
+		82B114E41DB07F8E00786B29 /* PingRespPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
+		82B114E51DB07F8E00786B29 /* PubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubAckPacket.swift; sourceTree = "<group>"; };
+		82B114E61DB07F8E00786B29 /* PubCompPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubCompPacket.swift; sourceTree = "<group>"; };
+		82B114E71DB07F8E00786B29 /* PublishPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
+		82B114E81DB07F8E00786B29 /* PubRecPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRecPacket.swift; sourceTree = "<group>"; };
+		82B114E91DB07F8E00786B29 /* PubRelPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubRelPacket.swift; sourceTree = "<group>"; };
+		82B114EA1DB07F8E00786B29 /* SubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubAckPacket.swift; sourceTree = "<group>"; };
+		82B114EB1DB07F8E00786B29 /* SubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
+		82B114EC1DB07F8E00786B29 /* UnsubAckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
+		82B114ED1DB07F8E00786B29 /* UnsubscribePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
 		82D0724E1C60463A00D9AF61 /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,26 +109,11 @@
 		82B114AC1DB07A4B00786B29 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				82B114AD1DB07A4B00786B29 /* ConnAckPacket.swift */,
-				82B114AE1DB07A4B00786B29 /* ConnectPacket.swift */,
-				82B114AF1DB07A4B00786B29 /* DisconnectPacket.swift */,
+				82B114DE1DB07F8E00786B29 /* Packet */,
 				82B114B01DB07A4B00786B29 /* Extension.swift */,
-				82B114B11DB07A4B00786B29 /* Info.plist */,
-				82B114B21DB07A4B00786B29 /* Mqtt.h */,
-				82B114B31DB07A4B00786B29 /* MqttClient.swift */,
-				82B114B41DB07A4B00786B29 /* Packet.swift */,
-				82B114B51DB07A4B00786B29 /* PingReqPacket.swift */,
-				82B114B61DB07A4B00786B29 /* PingRespPacket.swift */,
-				82B114B71DB07A4B00786B29 /* PubAckPacket.swift */,
-				82B114B81DB07A4B00786B29 /* PubCompPacket.swift */,
-				82B114B91DB07A4B00786B29 /* PublishPacket.swift */,
-				82B114BA1DB07A4B00786B29 /* PubRecPacket.swift */,
-				82B114BB1DB07A4B00786B29 /* PubRelPacket.swift */,
 				82B114BC1DB07A4B00786B29 /* Stream.swift */,
-				82B114BD1DB07A4B00786B29 /* SubAckPacket.swift */,
-				82B114BE1DB07A4B00786B29 /* SubscribePacket.swift */,
-				82B114BF1DB07A4B00786B29 /* UnsubAckPacket.swift */,
-				82B114C01DB07A4B00786B29 /* UnsubscribePacket.swift */,
+				82B114B31DB07A4B00786B29 /* MqttClient.swift */,
+				82B114FD1DB07FD800786B29 /* Supporting Files */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -145,6 +126,37 @@
 				82B114D81DB07A5700786B29 /* MqttPacketTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		82B114DE1DB07F8E00786B29 /* Packet */ = {
+			isa = PBXGroup;
+			children = (
+				82B114DF1DB07F8E00786B29 /* ConnAckPacket.swift */,
+				82B114E01DB07F8E00786B29 /* ConnectPacket.swift */,
+				82B114E11DB07F8E00786B29 /* DisconnectPacket.swift */,
+				82B114E21DB07F8E00786B29 /* Packet.swift */,
+				82B114E31DB07F8E00786B29 /* PingReqPacket.swift */,
+				82B114E41DB07F8E00786B29 /* PingRespPacket.swift */,
+				82B114E51DB07F8E00786B29 /* PubAckPacket.swift */,
+				82B114E61DB07F8E00786B29 /* PubCompPacket.swift */,
+				82B114E71DB07F8E00786B29 /* PublishPacket.swift */,
+				82B114E81DB07F8E00786B29 /* PubRecPacket.swift */,
+				82B114E91DB07F8E00786B29 /* PubRelPacket.swift */,
+				82B114EA1DB07F8E00786B29 /* SubAckPacket.swift */,
+				82B114EB1DB07F8E00786B29 /* SubscribePacket.swift */,
+				82B114EC1DB07F8E00786B29 /* UnsubAckPacket.swift */,
+				82B114ED1DB07F8E00786B29 /* UnsubscribePacket.swift */,
+			);
+			path = Packet;
+			sourceTree = "<group>";
+		};
+		82B114FD1DB07FD800786B29 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				82B114B11DB07A4B00786B29 /* Info.plist */,
+				82B114B21DB07A4B00786B29 /* Mqtt.h */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,8 +253,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82B114D91DB07A5700786B29 /* Info.plist in Resources */,
-				82B114C51DB07A4B00786B29 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,26 +270,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82B114C21DB07A4B00786B29 /* ConnectPacket.swift in Sources */,
+				82B114EF1DB07F8E00786B29 /* ConnectPacket.swift in Sources */,
 				82B114C71DB07A4B00786B29 /* MqttClient.swift in Sources */,
-				82B114D31DB07A4B00786B29 /* UnsubAckPacket.swift in Sources */,
-				82B114CE1DB07A4B00786B29 /* PubRecPacket.swift in Sources */,
-				82B114C11DB07A4B00786B29 /* ConnAckPacket.swift in Sources */,
-				82B114C81DB07A4B00786B29 /* Packet.swift in Sources */,
-				82B114CC1DB07A4B00786B29 /* PubCompPacket.swift in Sources */,
-				82B114D11DB07A4B00786B29 /* SubAckPacket.swift in Sources */,
-				82B114CD1DB07A4B00786B29 /* PublishPacket.swift in Sources */,
-				82B114C31DB07A4B00786B29 /* DisconnectPacket.swift in Sources */,
-				82B114C91DB07A4B00786B29 /* PingReqPacket.swift in Sources */,
-				82B114D21DB07A4B00786B29 /* SubscribePacket.swift in Sources */,
-				82B114CF1DB07A4B00786B29 /* PubRelPacket.swift in Sources */,
-				82B114DB1DB07A5700786B29 /* MqttPacketTests.swift in Sources */,
-				82B114DA1DB07A5700786B29 /* MqttClientTests.swift in Sources */,
-				82B114D41DB07A4B00786B29 /* UnsubscribePacket.swift in Sources */,
-				82B114CB1DB07A4B00786B29 /* PubAckPacket.swift in Sources */,
+				82B114F61DB07F8E00786B29 /* PublishPacket.swift in Sources */,
+				82B114FA1DB07F8E00786B29 /* SubscribePacket.swift in Sources */,
+				82B114F41DB07F8E00786B29 /* PubAckPacket.swift in Sources */,
+				82B114F01DB07F8E00786B29 /* DisconnectPacket.swift in Sources */,
+				82B114F21DB07F8E00786B29 /* PingReqPacket.swift in Sources */,
+				82B114F91DB07F8E00786B29 /* SubAckPacket.swift in Sources */,
 				82B114C41DB07A4B00786B29 /* Extension.swift in Sources */,
-				82B114CA1DB07A4B00786B29 /* PingRespPacket.swift in Sources */,
+				82B114F11DB07F8E00786B29 /* Packet.swift in Sources */,
+				82B114FB1DB07F8E00786B29 /* UnsubAckPacket.swift in Sources */,
+				82B114F51DB07F8E00786B29 /* PubCompPacket.swift in Sources */,
+				82B114F31DB07F8E00786B29 /* PingRespPacket.swift in Sources */,
+				82B114FC1DB07F8E00786B29 /* UnsubscribePacket.swift in Sources */,
 				82B114D01DB07A4B00786B29 /* Stream.swift in Sources */,
+				82B114EE1DB07F8E00786B29 /* ConnAckPacket.swift in Sources */,
+				82B114F71DB07F8E00786B29 /* PubRecPacket.swift in Sources */,
+				82B114F81DB07F8E00786B29 /* PubRelPacket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,14 +409,14 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Mqtt/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hjianbo.mqtt;
@@ -425,14 +433,14 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Mqtt/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hjianbo.mqtt;
