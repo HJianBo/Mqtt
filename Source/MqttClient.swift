@@ -20,7 +20,7 @@ public class MqttClient {
     
     fileprivate var stream: Stream
 
-    public init(host: String, port: UInt16, clientId: String, cleanSession: Bool, keepAlive: UInt16 = 60) {
+    public init(host: String, port: UInt16, clientId: String, cleanSession: Bool = false, keepAlive: UInt16 = 60) {
         self.clientId     = clientId
         self.cleanSession = cleanSession
         self.keepAlive    = keepAlive
@@ -61,6 +61,25 @@ extension MqttClient {
 
 extension MqttClient: StreamDelegate {
     
+    enum ReaderAction: Int {
+        case header = 0
+        case length
+        case payload
+    }
+    
+    func readHeader() {
+        stream.read(1, flag: ReaderAction.header.rawValue)
+    }
+    
+    func readLength() {
+        stream.read(1, flag: ReaderAction.length.rawValue)
+    }
+    
+    func readPaylod(len: Int) {
+        
+    }
+    
+    
     func stream(_ stream: Stream, didOpenAtHost host: String, port: UInt16) {
         
         var packet = ConnectPacket(clientId: clientId)
@@ -74,18 +93,34 @@ extension MqttClient: StreamDelegate {
         packet.willTopic = willMessage?.topicName
         
         stream.send(packet.packToData)
+        
+        // recv response
+        readHeader()
     }
     
-    func stream(_ stream: Stream, didRecvData data: Data, flag: String) {
+    func stream(_ stream: Stream, didRecvData data: Data, flag: Int) {
         NSLog("didRecv: \(data), flag: \(flag)")
-        if flag == "HEADER" {
+        if flag == ReaderAction.header.rawValue {
             let header = PacketFixHeader(byte: data[0])
             print(header)
         }
+        
+        switch ReaderAction(rawValue: flag)! {
+        case .header:
+            readLength()
+        case .length:
+            // ...
+            
+            
+            
+            readPaylod(len: 10)
+        case .payload:
+            // ...
+            readHeader()
+        }
     }
     
-    func stream(_ stream: Stream, didSendData data: Data, flag: String) {
+    func stream(_ stream: Stream, didSendData data: Data, flag: Int) {
         NSLog("didSend: \(data), flag: \(flag)")
-        stream.read(1, flag: "HEADER")
     }
 }

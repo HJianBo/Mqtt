@@ -161,7 +161,7 @@ extension PacketFixHeader {
     
     var packToBytes: Array<UInt8> {
         // FIXME: tpye != .PUBLISH, flag = 0
-        return [type.rawValue & 0xF0 | flag & 0x0F]// + remain.bytes
+        return [(type.rawValue << 4) & 0xF0 | flag & 0x0F]// + remain.bytes
     }
 }
 

@@ -8,12 +8,11 @@
 
 import Foundation
 
-
 protocol StreamDelegate {
     
-    func stream(_ stream: Stream, didSendData data: Data, flag: String)
+    func stream(_ stream: Stream, didSendData data: Data, flag: Int)
     
-    func stream(_ stream: Stream, didRecvData data: Data, flag: String)
+    func stream(_ stream: Stream, didRecvData data: Data, flag: Int)
     
     func stream(_ stream: Stream, didOpenAtHost host:String, port: UInt16)
 }
@@ -121,7 +120,7 @@ extension Stream {
         // ...
     }
     
-    func send(_ data: Data, flag: String = "") {
+    func send(_ data: Data, flag: Int = 0) {
         
         guard let output = outputStream else {
             return
@@ -141,7 +140,7 @@ extension Stream {
         }
     }
     
-    func read(_ length: Int, timeOut: TimeInterval = 5, flag: String = "") {
+    func read(_ length: Int, timeOut: TimeInterval = 5, flag: Int = 0) {
         guard let input = inputStream else {
             return
         }
@@ -167,108 +166,3 @@ extension Stream {
         self.outputStream?.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
     }
 }
-
-//extension Stream {
-//    private func receiveDataOnStream(stream: NSStream) {
-//        
-//        var headerByte = [UInt8](count: 1, repeatedValue: 0)
-//        guard inputStream?.read(&headerByte, maxLength: 1) > 0 else {
-//            NSLog("stream: read length 0")
-//            return
-//        }
-//        
-//        guard let headerType = PacketType(rawValue: headerByte[0]) else {
-//            NSLog("stream: headerTpype invaild")
-//            return
-//        }
-//        
-//        let header = PacketFixHeader(type: headerType)
-//        
-//        // Reading data (varheader & payload)
-//        // Max Length is 2^28 = 268,435,455 (256 MB)
-//        
-//        var multiplier = 1
-//        var value = 0
-//        var encodedByte: UInt8 = 0
-//        repeat {
-//            var readByte = [UInt8](count: 1, repeatedValue: 0)
-//            inputStream?.read(&readByte, maxLength: 1)
-//            encodedByte = readByte[0]
-//            value += (Int(encodedByte) & 127) * multiplier
-//            multiplier *= 128
-//            if multiplier > 128*128*128 {
-//                return;
-//            }
-//        } while ((Int(encodedByte) & 128) != 0)
-//        
-//        let totalLength = value
-//        //var responseData: NSData = NSData()
-//        
-//        var buffer = [UInt8](count: totalLength, repeatedValue: 0)
-//        if totalLength > 0 {
-//            
-//            let readLength = inputStream?.read(&buffer, maxLength: buffer.count)
-//            //responseData = NSData(bytes: buffer, length: readLength!)
-//        }
-//        
-//        var packet: Packet?
-//        
-//        switch headerType {
-//        case .RESERVED:
-//            break
-//        case .CONNECT:
-//            // FIXME: Client doesn't recv data
-//            break
-//        case .CONNACK:
-//            //
-//            packet = ConnAckPacket(header: header, bytes: buffer)
-//            
-//            break
-//        case .PUBLISH:
-//            //
-//            break
-//        case .PUBACK:
-//            //
-//            break
-//        case .PUBREC:
-//            //
-//            break
-//        case .PUBREL:
-//            //
-//            break
-//        case .PUBCOMP:
-//            //
-//            break
-//        case .SUBSCRIBE:
-//            //
-//            break
-//        case .SUBACK:
-//            //
-//            break
-//        case .UNSUBSCRIBE:
-//            //
-//            break
-//        case .UNSUBACK:
-//            //
-//            break
-//        case .PINGREQ:
-//            //
-//            break
-//        case .PINGRESP:
-//            //
-//            break
-//        case .DISCONNECT:
-//            //
-//            break
-//        case .RESERVED2:
-//            //
-//            break
-//        }
-//        
-//        //self.delegate?.receivedData(self, data: responseData, withMQTTHeader: header)
-//        //delegate?.stream(self, didRecvPacket: )
-////        if let p = packet {
-////            delegate?.stream(self, didRecvPacket: p)
-////        }
-//    }
-//}

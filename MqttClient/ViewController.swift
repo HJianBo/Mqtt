@@ -9,8 +9,8 @@
 import Cocoa
 import Mqtt
 
-//let defaultHost = "q.emqtt.com"
-let defaultHost = "120.25.145.3"
+let defaultHost = "q.emqtt.com"
+//let defaultHost = "120.25.145.3"
 let defaultPort: UInt16 = 1883
 
 class ViewController: NSViewController {
@@ -32,4 +32,3 @@ class ViewController: NSViewController {
         }
     }
 }
-
