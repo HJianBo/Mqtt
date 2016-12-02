@@ -17,6 +17,11 @@ protocol MqttReaderDelegate {
     
     func reader(_ reader: MqttReader, didRecvConnectAck connack: ConnAckPacket)
     
+    func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket)
+    
+    func reader(_ reader: MqttReader, didRecvPubRec pubrec: PubRecPacket) throws
+    
+    func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket)
 }
 
 
@@ -44,17 +49,25 @@ extension MqttReader {
 
     func read() throws {
         let header = try readHeader()
-        let len = try readLength()
+        let remainLength = try readLength()
         var payload: [UInt8] = []
-        if len != 0 {
-            payload = try readPayload(len: len)
+        if remainLength != 0 {
+            payload = try readPayload(len: remainLength)
         }
-        print(header, len, payload)
         
         switch header.type {
         case .connack:
             let conack = ConnAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvConnectAck: conack)
+        case .puback:
+            let puback = PubAckPacket(header: header, bytes: payload)
+            delegate?.reader(self, didRecvPubAck: puback)
+        case .pubrec:
+            let pubrec = PubRecPacket(header: header, bytes: payload)
+            try delegate?.reader(self, didRecvPubRec: pubrec)
+        case .pubcomp:
+            let pubcmp = PubCompPacket(header: header, bytes: payload)
+            delegate?.reader(self, didRecvPubComp: pubcmp)
         default:
             assert(false)
         }
@@ -98,6 +111,7 @@ extension MqttReader {
         return length
     }
     
+    // read variable header and payload
     func readPayload(len: Int) throws -> [UInt8] {
         return try socket.receive(maxBytes: len)
     }

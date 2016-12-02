@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ConnAckReturnCode: UInt8 {
+public enum ConnAckReturnCode: UInt8 {
     /// Connection accepted
     case accepted = 0x00
     
@@ -32,7 +32,7 @@ enum ConnAckReturnCode: UInt8 {
  The CONNACK Packet is the packet sent by the Server in response to a CONNECT Packet received from a Client
  
  */
-struct ConnAckPacket: Packet {
+public struct ConnAckPacket: Packet {
     
     var fixHeader: PacketFixHeader
 
@@ -40,7 +40,7 @@ struct ConnAckPacket: Packet {
     
     var connackFlags: UInt8 = 0
     
-    var returnCode: ConnAckReturnCode = .accepted
+    public var returnCode: ConnAckReturnCode = .accepted
     
     /**
      The variable header for the CONNACK Packet consists of twi fields in the following order:
@@ -79,7 +79,7 @@ extension ConnAckPacket {
       2. If the Server does not have stored Session state, it MUST set Session Present to 0 in the CONNACK packet.
      This is in addition to setting a zero return code in the CONNACK packet.
      */
-    var sessionPresent: Bool {
+    public var sessionPresent: Bool {
         get {
             return Bool(intValue: connackFlags.bitAt(0))
         }

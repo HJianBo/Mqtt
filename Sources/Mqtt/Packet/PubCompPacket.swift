@@ -8,6 +8,22 @@
 
 import Foundation
 
+/**
+ The PUBCOMP Packet is the response to a PUBREL Packet. It is the fourth and final packet of the QoS
+ 2 protocol exchange.
+ 
+ **Fixed Header:**
+  1. *Remaining Length field:* This is the length of the variable header. 
+                               For the PUBCOMP Packet this has the value 2.
+ 
+ **Variable Header:**
+ The variable header contains the same Packet Identifier as the PUBREL Packet that is being
+ acknowledged.
+ 
+ **Payload:**
+ The PUBCOMP Packet has no payload.
+ 
+ */
 struct PubCompPacket: Packet {
     
     var fixHeader: PacketFixHeader
@@ -23,5 +39,11 @@ struct PubCompPacket: Packet {
     init(packetId: UInt16) {
         fixHeader = PacketFixHeader(type: .pubcomp)
         self.packetId = packetId
+    }
+    
+    init(header: PacketFixHeader, bytes: [UInt8]) {
+        fixHeader = header
+        
+        packetId = UInt16(bytes[0]*127 + bytes[1])
     }
 }

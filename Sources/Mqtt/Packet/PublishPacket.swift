@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct PublishPacket: Packet {
+public struct PublishPacket: Packet {
     
     var fixHeader: PacketFixHeader
     
     // MARK: Variable Header
-    var topicName: String
+    public var topicName: String
     
     var packetId: UInt16
     
@@ -26,7 +26,7 @@ struct PublishPacket: Packet {
         return value
     }
     
-    var payload: Array<UInt8>
+    public var payload: Array<UInt8>
     
     init(packetId: UInt16, topic: String, payload: Array<UInt8>, dup: Bool = false, qos: Qos = .qos0, retain: Bool = false) {
         fixHeader = PacketFixHeader(type: .publish)

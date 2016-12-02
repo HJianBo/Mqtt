@@ -24,4 +24,10 @@ struct PubAckPacket: Packet {
         fixHeader = PacketFixHeader(type: .puback)
         self.packetId = packetId
     }
+    
+    init(header: PacketFixHeader, bytes: [UInt8]) {
+        fixHeader = header
+        
+        packetId = UInt16(bytes[0]*127 + bytes[1])
+    }
 }

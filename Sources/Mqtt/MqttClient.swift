@@ -8,9 +8,20 @@
 
 import Socks
 
-public class MqttClient {
+public protocol MqttClientDelegate {
+    
+    func mqtt(_ mqtt: MqttClient, didRecvConnack packet: ConnAckPacket)
+    
+    func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket)
+    
+    func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket)
+}
+
+public final class MqttClient {
     
     private var _packetId: UInt16 = 0
+    
+    public var delegate: MqttClientDelegate?
     
     var clientId: String
     
@@ -27,6 +38,8 @@ public class MqttClient {
     private var socket: TCPClient?
     
     private var reader: MqttReader?
+    
+    var storedPacket = [UInt16: PublishPacket]()
 
     public init(clientId: String,
                 cleanSession: Bool = false,
@@ -52,6 +65,7 @@ public class MqttClient {
         reader = MqttReader(socks: socket, del: self)
     }
     
+    // sync method
     fileprivate func send(packet: Packet, recv: Bool = true) throws {
         
         // TODO: when socket is nil, throw a error
@@ -61,6 +75,10 @@ public class MqttClient {
         if recv {
             try reader?.read()
         }
+    }
+    
+    fileprivate func readPacket() throws {
+        try reader?.read()
     }
 }
 
@@ -88,9 +106,17 @@ extension MqttClient {
     }
     
     public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1) throws {
-        let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload)
+        let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload, qos: qos)
         
-        try send(packet: packet)
+        try send(packet: packet, recv: false)
+        
+        if qos == .qos0 {
+            delegate?.mqtt(self, didPublish: packet)
+        } else {
+            storedPacket[packetId] = packet
+        }
+        
+        try readPacket()
     }
     
     public func subscribe(topic: String, qos: Qos = .qos1) throws {
@@ -119,14 +145,58 @@ extension MqttClient {
     }
 }
 
+// MARK: Public Helper Method
 extension MqttClient {
-
+    
+    public func publish(topic: String, payload: String, qos: Qos = .qos1) throws {
+        try publish(topic: topic, payload: payload.toBytes(), qos: qos)
+    }
 }
 
 extension MqttClient: MqttReaderDelegate {
     
     // when recv connect ack
     func reader(_ reader: MqttReader, didRecvConnectAck connack: ConnAckPacket) {
-        DDLogDebug("recv connectack \(connack)")
+        DDLogDebug("recv connect ack \(connack)")
+        
+        delegate?.mqtt(self, didRecvConnack: connack)
+    }
+    
+    func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket) {
+        DDLogDebug("recv publish ack \(puback)")
+        
+        guard let publish = storedPacket[puback.packetId] else {
+            assert(false)
+            return
+        }
+        
+        // publish is compelate, when qos equal 1
+        delegate?.mqtt(self, didPublish: publish)
+        storedPacket.removeValue(forKey: puback.packetId)
+    }
+    
+    func reader(_ reader: MqttReader, didRecvPubRec pubrec: PubRecPacket) throws {
+        DDLogDebug("recv publish rec \(pubrec)")
+        
+        guard let publish = storedPacket[pubrec.packetId] else {
+            assert(false)
+            return
+        }
+        
+        // response PUBREL packet to server
+        let pubrel = PubRelPacket(packetId: pubrec.packetId)
+        try send(packet: pubrel)
+    }
+    
+    func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket) {
+        DDLogDebug("recv publish comp \(pubcomp)")
+        guard let publish = storedPacket[pubcomp.packetId] else {
+            assert(false)
+            return
+        }
+        
+        // publish is compelate, when qos equal 1
+        delegate?.mqtt(self, didPublish: publish)
+        storedPacket.removeValue(forKey: pubcomp.packetId)
     }
 }
