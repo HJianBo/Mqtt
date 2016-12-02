@@ -81,7 +81,7 @@ extension MqttReader {
     // sync method to read a header
     func readHeader() throws -> PacketFixHeader {
         
-        let buffer = try socket.receive(maxBytes: 1)
+        var buffer = try socket.receive(maxBytes: 1)
         
         guard let header = PacketFixHeader(byte: buffer[0]) else {
             throw ReaderError.invaildPacket

@@ -178,7 +178,7 @@ extension MqttClient: MqttReaderDelegate {
     func reader(_ reader: MqttReader, didRecvPubRec pubrec: PubRecPacket) throws {
         DDLogDebug("recv publish rec \(pubrec)")
         
-        guard let publish = storedPacket[pubrec.packetId] else {
+        guard let _ = storedPacket[pubrec.packetId] else {
             assert(false)
             return
         }

@@ -19,6 +19,8 @@ class MqttClientTests: XCTestCase {
     
     var expPublish: XCTestExpectation?
     
+    var expSubscribe: XCTestExpectation?
+    
     var client: MqttClient!
     
     override func setUp() {
@@ -47,6 +49,17 @@ class MqttClientTests: XCTestCase {
         
         do {
             try client.publish(topic: "topic1", payload: "hello mqtt server!", qos: .qos2)
+        } catch {
+            XCTAssert(false, "\(error)")
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testSubscribe() {
+        expSubscribe = expectation(description: "SUBSCRIBE")
+        
+        do {
+            try client.subscribe(topic: "topic1", qos: .qos1)
         } catch {
             XCTAssert(false, "\(error)")
         }
