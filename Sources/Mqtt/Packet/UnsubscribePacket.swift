@@ -8,7 +8,22 @@
 
 import Foundation
 
-
+/**
+ An UNSUBSCRIBE Packet is sent by the Client to the Server, to unsubscribe from topics.
+ 
+ **Variable Header:** 
+ The variable header contains a Packet Identifier.
+ 
+ **Payload:**
+ The payload for the UNSUBSCRIBE Packet contains the list of Topic Filters that the Client wishes to
+ unsubscribe from.
+ 
+  1. The Topic Filters in an UNSUBSCRIBE packet MUST be UTF-8 encoded strings.
+ 
+  2. The Payload of an UNSUBSCRIBE packet MUST contain at least one Topic Filter. An UNSUBSCRIBE
+     packet with no payload
+ 
+ */
 struct UnsubscribePacket: Packet {
     
     var fixHeader: PacketFixHeader

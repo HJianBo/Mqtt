@@ -32,9 +32,9 @@ struct SubscribePacket: Packet {
     }
     
     
-    init(packetId: UInt16) {
+    init(packetId: UInt16, qos: Qos) {
         fixHeader     =  PacketFixHeader(type: .subscribe)
-        fixHeader.qos = .qos1
+        fixHeader.qos = qos
         
         self.packetId     = packetId
     }

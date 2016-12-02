@@ -12,17 +12,50 @@ let DefaultProtocolName  = "MQTT"
 let DefaultProtocolLevel = UInt8(4)
 let DefaultKeepAlive     = UInt16(60)
 
+/**
+ After a Network Connection is established by a Client to a Server, *the firse Packet sent from the*
+ *Client to the Server MUST be a CONNECT Packet*.
 
+ A Client can only send the CONNECT Packet once over a Network Connection. The Server MUST process
+ a sencond CONNECT Packet sent from a Client as a protocol violation and disconnect the Client.
+
+ The payload contains one or more encoded fields. They specify a unique Client identifier for the
+ Client, a Will topic, Will Message, User Name and Password. All but the Client identifier are
+ optional and their presence is determined based on flags in the variable header.
+ 
+ **Fixed Header:**
+  1. *Remaining Length field*: Remaining Length is the length of the variable header (10 bytes) plus
+                               the length of the Payload.
+ 
+ **Variable Header:**
+ The variable header for the CONNECT Packet consists of four fields in the following order: 
+  `Protocol Name`, `Protocol Level`, `Connect Flags`, `Keep Alive`.
+ 
+ **Payload:**
+ The payload of the CONNECT Packet contains one or more length-prefixed fields, whose presence is
+ determined by the flags in the variable header.
+ 
+ These fields, if present, MUST appear in the order 
+ `Client Identifier`, `Will Topic`, `Will Message`, `User Name`, `Passwrod`
+ 
+ */
 struct ConnectPacket: Packet {
     
     var fixHeader: PacketFixHeader
     
     // MARK: Variable Header Members
     
+    /// The Protocol Name is a UTF-8 encoded string that represents the protocol name "MQTT"
     var protocolName = DefaultProtocolName
     
+    /// The value of the Protocol Level field for the version 3.1.1 of the protocol is 4 (0x04).
     var protocolLevel: UInt8 = DefaultProtocolLevel
     
+    /**
+     The Connect Flags byte contains a number of parameters specifying the behavior
+     of the MQTT connection. It also indicates the presence or absence of fields in
+     the payload.
+     */
     var connectFlags: UInt8  = 0
     
     var keepAlive: UInt16    = DefaultKeepAlive
@@ -129,6 +162,8 @@ struct ConnectPacket: Packet {
 /// Connect Flags
 extension ConnectPacket {
     /**
+     
+     
      +--------------------------------------------------------------------------------------------------+
      |       bit7     |      bit6     |     bit5    | bit4  bit3 |    bit2   |      bit1     |   bit0   |
      | User Name Flag | Password Flag | Will Retain |  Will Qos  | Will Falg | Clean session | Reserved |

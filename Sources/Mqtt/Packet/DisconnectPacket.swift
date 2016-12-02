@@ -8,6 +8,11 @@
 
 import Foundation
 
+/**
+ The DISCONNECT Packet is the final Control Packet sent from the Client to the Server. It indicates that
+ 1140 the Client is disconnecting cleanly.
+ 
+ */
 struct DisconnectPacket: Packet {
     
     var fixHeader: PacketFixHeader

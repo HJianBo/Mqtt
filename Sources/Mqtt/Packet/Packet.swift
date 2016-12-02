@@ -61,7 +61,7 @@ enum PacketType: UInt8 {
     case reserved2   = 0x0F
 }
 
-enum Qos: UInt8 {
+public enum Qos: UInt8 {
     
     case qos0 = 0
     
@@ -72,17 +72,17 @@ enum Qos: UInt8 {
 
 extension Qos: Comparable { }
 
-func < (lhs: Qos, rhs: Qos) -> Bool {
+public func < (lhs: Qos, rhs: Qos) -> Bool {
     return lhs.rawValue < rhs.rawValue
 }
 
-func <= (lhs: Qos, rhs: Qos) -> Bool {
+public func <= (lhs: Qos, rhs: Qos) -> Bool {
     return lhs.rawValue <= rhs.rawValue
 }
-func > (lhs: Qos, rhs: Qos) -> Bool {
+public func > (lhs: Qos, rhs: Qos) -> Bool {
     return lhs.rawValue > rhs.rawValue
 }
-func >= (lhs: Qos, rhs: Qos) -> Bool {
+public func >= (lhs: Qos, rhs: Qos) -> Bool {
     return lhs.rawValue >= rhs.rawValue
 }
 

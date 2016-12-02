@@ -10,7 +10,7 @@ import XCTest
 import Mqtt
 
 
-let sDefaultHost = "115.28.55.154"
+let sDefaultHost = "q.emqtt.com"
 let sDefaultPort = UInt16(1883)
 
 class MqttClientTests: XCTestCase {
@@ -28,9 +28,13 @@ class MqttClientTests: XCTestCase {
     func testClient_Init() {
         let exp = expectation(description: "CONNECT")
         
-        let client = MqttClient(host: sDefaultHost, port: sDefaultPort, clientId: "MacbookPro", cleanSession: false)
+        let client = MqttClient(clientId: "macbookpro-test")
         
-        client.connect()
+        do {
+            try client.connect(host: sDefaultHost, port: sDefaultPort)
+        } catch {
+            XCTAssert(false, "\(error)")
+        }
         
         waitForExpectations(timeout: 10, handler: nil)
     }

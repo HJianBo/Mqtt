@@ -28,6 +28,10 @@ enum ConnAckReturnCode: UInt8 {
     case notAuthorized = 0x05
 }
 
+/**
+ The CONNACK Packet is the packet sent by the Server in response to a CONNECT Packet received from a Client
+ 
+ */
 struct ConnAckPacket: Packet {
     
     var fixHeader: PacketFixHeader
@@ -38,15 +42,11 @@ struct ConnAckPacket: Packet {
     
     var returnCode: ConnAckReturnCode = .accepted
     
-    var sessionPresent: Bool {
-        get {
-            return Bool(intValue: connackFlags.bitAt(0))
-        }
-        set {
-            connackFlags.setBit(newValue.rawValue, at: 0)
-        }
-    }
-    
+    /**
+     The variable header for the CONNACK Packet consists of twi fields in the following order:
+     `Connect Acknowledge Flags`, `Connect Return Code`.
+     
+     */
     var varHeader: Array<UInt8> {
         return [connackFlags, returnCode.rawValue]
     }
@@ -63,6 +63,29 @@ struct ConnAckPacket: Packet {
         
         connackFlags = bytes[0]
         returnCode = ConnAckReturnCode(rawValue: bytes[1])!
+    }
+}
+
+// MARK: Variable Header Helper
+extension ConnAckPacket {
+    
+    /**
+     If the Server accepts a connnection with CleanSession set to 1, the Server MUST set `Sessiont Present`
+     to 0 in the CONNACK packet in addition to setting a zero return code in the CONNACK packet.
+     
+     If the Server accepts a connection whih CleanSession set to 0, the value set in Session Persent 
+     depends on whether the Server already has stored Session state for the supplied client ID. 
+      1. If the Server has stored Session state. it MUST set Session Present to 1 in the CONNACK packet. 
+      2. If the Server does not have stored Session state, it MUST set Session Present to 0 in the CONNACK packet.
+     This is in addition to setting a zero return code in the CONNACK packet.
+     */
+    var sessionPresent: Bool {
+        get {
+            return Bool(intValue: connackFlags.bitAt(0))
+        }
+        set {
+            connackFlags.setBit(newValue.rawValue, at: 0)
+        }
     }
 }
 
