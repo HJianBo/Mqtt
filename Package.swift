@@ -6,6 +6,6 @@ let package = Package(
         Target(name: "Mqtt")
     ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/socks", majorVersion: 1, minor: 1)
+        .Package(url: "https://github.com/vapor/socks", majorVersion: 1, minor: 2)
     ]
 )

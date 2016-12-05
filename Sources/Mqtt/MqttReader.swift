@@ -29,6 +29,7 @@ public class MqttReader {
     
     enum ReaderError: Error {
         case invaildPacket
+        case errorLength
     }
     
     var socket: TCPClient
@@ -80,8 +81,12 @@ extension MqttReader {
     
     // sync method to read a header
     func readHeader() throws -> PacketFixHeader {
+        let readLength = 1
         
-        var buffer = try socket.receive(maxBytes: 1)
+        var buffer = try socket.receive(maxBytes: readLength)
+        guard readLength == buffer.count else {
+            throw ReaderError.errorLength
+        }
         
         guard let header = PacketFixHeader(byte: buffer[0]) else {
             throw ReaderError.invaildPacket
@@ -92,14 +97,19 @@ extension MqttReader {
     
     // sync method to read length
     func readLength() throws -> Int {
+        let readLength = 1
+        
         var multiply = 1
         var length = 0
-        
         while true {
-            let buffer = try socket.receive(maxBytes: 1)[0]
-            length += Int(buffer & 127) * multiply
+            let buffer = try socket.receive(maxBytes: readLength)
+            guard readLength == buffer.count else {
+                throw ReaderError.errorLength
+            }
+            let byte = buffer[0]
+            length += Int(byte & 127) * multiply
             // done
-            if buffer & 0x80 == 0 {
+            if byte & 0x80 == 0 {
                 break
             } else { // continue read length
                 multiply *= 128
@@ -113,6 +123,11 @@ extension MqttReader {
     
     // read variable header and payload
     func readPayload(len: Int) throws -> [UInt8] {
-        return try socket.receive(maxBytes: len)
+        let buffer = try socket.receive(maxBytes: len)
+        guard buffer.count == len else {
+            throw ReaderError.errorLength
+        }
+        
+        return buffer
     }
 }
