@@ -99,7 +99,27 @@ struct PacketFixHeader {
     
     /// mqtt control packet type
     var type: PacketType = .reserved
+
+    /// flags
+    var flag: UInt8 = 0
     
+    init(type: PacketType = .reserved) {
+        self.type = type
+    }
+    
+    init?(byte: UInt8) {
+        guard let t = PacketType(rawValue: byte >> 4) else {
+            return nil
+        }
+        
+        type = t
+        
+        flag = byte & 0x0F
+    }
+}
+
+/// Fixed Header flag members getter/setter
+extension PacketFixHeader {
     /// Duplicate delivery of a PUBLISH Control Packet
     var dup: Bool {
         get { return ((flag & 0x08) >> 3 == 1) ? true : false }
@@ -133,23 +153,6 @@ struct PacketFixHeader {
             flag &= ~0x01
             flag |= newValue.rawValue
         }
-    }
-    
-    /// flags
-    var flag: UInt8 = 0
-    
-    init(type: PacketType = .reserved) {
-        self.type = type
-    }
-    
-    init?(byte: UInt8) {
-        guard let t = PacketType(rawValue: byte >> 4) else {
-            return nil
-        }
-        
-        type = t
-        
-        flag = byte & 0x0F
     }
 }
 

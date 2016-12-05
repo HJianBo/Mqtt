@@ -50,10 +50,6 @@ public final class MqttClient {
         self.keepAlive    = keepAlive
     }
     
-    fileprivate var packetId: UInt16 {
-        return _packetId
-    }
-    
     fileprivate var nextPacketId: UInt16 {
         // FIXME: over flow?
         _packetId += 1
@@ -113,14 +109,16 @@ extension MqttClient {
         if qos == .qos0 {
             delegate?.mqtt(self, didPublish: packet)
         } else {
-            storedPacket[packetId] = packet
+            storedPacket[packet.packetId] = packet
         }
         
         try readPacket()
     }
     
     public func subscribe(topic: String, qos: Qos = .qos1) throws {
-        let packet = SubscribePacket(packetId: nextPacketId, qos: qos)
+        var packet = SubscribePacket(packetId: nextPacketId)
+        
+        packet.topics.append((topic, qos))
         
         try send(packet: packet)
     }
@@ -162,6 +160,12 @@ extension MqttClient: MqttReaderDelegate {
         delegate?.mqtt(self, didRecvConnack: connack)
     }
     
+    func reader(_ reader: MqttReader, didRecvPublish publish: PublishPacket) {
+        DDLogDebug("recv publish \(publish)")
+        
+        delegate?.mqtt(self, didRecvMessage: publish)
+    }
+    
     func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket) {
         DDLogDebug("recv publish ack \(puback)")
         
@@ -198,5 +202,11 @@ extension MqttClient: MqttReaderDelegate {
         // publish is compelate, when qos equal 1
         delegate?.mqtt(self, didPublish: publish)
         storedPacket.removeValue(forKey: pubcomp.packetId)
+    }
+    
+    func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket) {
+        DDLogDebug("recv subscribe ack \(suback)")
+        
+        // ...
     }
 }

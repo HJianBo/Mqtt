@@ -10,7 +10,7 @@ import XCTest
 import Mqtt
 
 
-let sDefaultHost = "q.emqtt.com"
+let sDefaultHost = "192.168.1.224"
 let sDefaultPort = UInt16(1883)
 
 class MqttClientTests: XCTestCase {

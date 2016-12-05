@@ -8,6 +8,27 @@
 
 import Foundation
 
+/**
+ The SUBSCRIBE Packet is sent from the Client to the Server to create one or more Subscriptions.
+ 
+ The SUBSCRIBE Packet also specifies (for each Subscription) the maximum QoS with which the Server
+ can send Application Messages to the Client
+ 
+ **Fixed Header:**
+  1. type: subcribe(1000)
+  2. flag: reserved(0010)
+ Bits 3,2,1 and 0 of the fixed header of the `SUBSCRIBE` Control Packet are **reserved** and MUST be
+ set 0,0,1 and 0 respectively. the Server MUST treat any other value as malformed and close the Network
+ Connection.
+ 
+ **Variable Header:**
+ The variable header contains a `Packet Identifier`.
+ 
+ **Payload:**
+ The payload of a SUBCRIBE Packet contains `a list of Topic Filters` indicating the Topics to which the
+ Client wants to subscribe.
+
+ */
 struct SubscribePacket: Packet {
     
     var fixHeader: PacketFixHeader
@@ -32,9 +53,10 @@ struct SubscribePacket: Packet {
     }
     
     
-    init(packetId: UInt16, qos: Qos) {
+    init(packetId: UInt16) {
         fixHeader     =  PacketFixHeader(type: .subscribe)
-        fixHeader.qos = qos
+        // flag reserved values (0010)
+        fixHeader.qos = .qos1
         
         self.packetId     = packetId
     }

@@ -8,6 +8,28 @@
 
 import Foundation
 
+/**
+ A PUBLISH Control Packet is sent from a Client to a Server or from Server to a Client to transport an
+ Application Message.
+ 
+ **Fixed Header:**
+  1. type: publish(0011)
+  2. flag: dup,qos,retain
+ 
+ **Variable Header:**
+ The variable header contains the following fields in the order: `Topic Name`, `Packet Identifier`.
+  1. Topic Name: The Topic Name identifies the information channel to which payload data is published.
+                 The Topic Name in the PUBLISH Packet MUST NOT contain wildcard characters
+ 
+  2. Packet Identifier: The Packet Identifier field is only present in PUBLISH Packets where the 
+                        QoS level is 1 or 2
+ 
+ **Payload:**
+ The Payload contains the Application Message that is being published. The content and format of the
+ data is application specific. The length of the payload can be calculated by subtracting the length 
+ of the variable header from the Remaining Length field that is in the Fixed Header. *It is valid for
+ a PUBLISH Packet to contain a zero length payload*.
+ */
 public struct PublishPacket: Packet {
     
     var fixHeader: PacketFixHeader
@@ -38,5 +60,23 @@ public struct PublishPacket: Packet {
         self.fixHeader.qos = qos
         self.fixHeader.retain = retain
         self.payload = payload
+    }
+}
+
+extension PublishPacket {
+    init(header: PacketFixHeader, bytes: [UInt8]) {
+        fixHeader = header
+        
+        // topic length
+        let topicLen = Int(bytes[0]*127 + bytes[1])
+        topicName = String(bytes: bytes[2..<topicLen+2], encoding: .utf8)!
+        
+        if fixHeader.qos > .qos0 {
+            packetId = UInt16(bytes[topicLen+2]*127 + bytes[topicLen+3])
+            payload = Array<UInt8>(bytes.suffix(from: topicLen+4))
+        } else {
+            packetId = 0
+            payload = Array<UInt8>(bytes.suffix(from: topicLen+2))
+        }
     }
 }

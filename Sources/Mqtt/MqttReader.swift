@@ -17,11 +17,15 @@ protocol MqttReaderDelegate {
     
     func reader(_ reader: MqttReader, didRecvConnectAck connack: ConnAckPacket)
     
+    func reader(_ reader: MqttReader, didRecvPublish publish: PublishPacket)
+    
     func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket)
     
     func reader(_ reader: MqttReader, didRecvPubRec pubrec: PubRecPacket) throws
     
     func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket)
+    
+    func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket)
 }
 
 
@@ -60,6 +64,9 @@ extension MqttReader {
         case .connack:
             let conack = ConnAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvConnectAck: conack)
+        case .publish:
+            let publish = PublishPacket(header: header, bytes: payload)
+            delegate?.reader(self, didRecvPublish: publish)
         case .puback:
             let puback = PubAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvPubAck: puback)
@@ -69,6 +76,10 @@ extension MqttReader {
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvPubComp: pubcmp)
+        case .suback:
+            let suback = SubAckPacket(header: header, bytes: payload)
+            delegate?.reader(self, didRecvSubAck: suback)
+        
         default:
             assert(false)
         }

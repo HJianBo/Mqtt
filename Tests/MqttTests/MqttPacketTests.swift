@@ -384,7 +384,7 @@ extension MqttPacketTests {
     
     func testSubscribe_init() {
         let packetId = UInt16(123)
-        let subscribePacket = SubscribePacket(packetId: packetId, qos: .qos1)
+        let subscribePacket = SubscribePacket(packetId: packetId)
         
         XCTAssert(subscribePacket.fixHeader.type == .subscribe, "packet type should be .subscribe")
         XCTAssert(!subscribePacket.fixHeader.dup, "packet dup should be false")
@@ -399,7 +399,7 @@ extension MqttPacketTests {
     
     func testSubscribe_propterty() {
         let packetId = UInt16(123)
-        var subscribePacket = SubscribePacket(packetId: 1234, qos: .qos1)
+        var subscribePacket = SubscribePacket(packetId: 1234)
         
         subscribePacket.packetId = packetId
         XCTAssert(subscribePacket.packetId == packetId, "packet id should be \(packetId)")

@@ -19,7 +19,28 @@ enum SubsAckReturnCode: UInt8 {
     case failure = 0x80
 }
 
-
+/**
+ A SUBACK Packet is sent by the Server to the Client to confirm receipt and processing of a SUBSCRIBE
+ Packet.
+ 
+ A SUBACK Packet contains a list of return codes, that specify the maximum QoS level that was granted
+ in each Subscription that was requested by the SUBSCRIBE.
+ 
+ **Fixed Header:**
+  1. type: subsack(1001)
+  2. flag: reserved(0000)
+ 
+ **Variable Header:**
+ The variable header contains the Packet Identifier from the SUBSCRIBE Packet that is being acknowledged
+ 
+ **Payload:**
+ The payload contains a list of return codes. Each return code corresponds to a Topic Filter in the
+ SUBSCRIBE Packet being acknowledged.
+ 
+ The order of return codes in the SUBACK Packet MUST match the order of Topic Filters in the SUBSCRIBE
+ Packet
+ 
+ */
 struct SubAckPacket: Packet {
     
     var fixHeader: PacketFixHeader
@@ -33,7 +54,7 @@ struct SubAckPacket: Packet {
     
     // MARK: Payload
     
-    var returnCodes = Array<SubsAckReturnCode>()
+    var returnCodes: Array<SubsAckReturnCode>
     
     var payload: Array<UInt8> {
         return returnCodes.map { $0.rawValue }
@@ -41,7 +62,26 @@ struct SubAckPacket: Packet {
     
     init(packetId: UInt16) {
         fixHeader = PacketFixHeader(type: .suback)
-        
         self.packetId = packetId
+        
+        returnCodes = []
+    }
+}
+
+extension SubAckPacket {
+    
+    init(header: PacketFixHeader, bytes: [UInt8]) {
+        
+        fixHeader = header
+        
+        packetId = UInt16(bytes[0]*127+bytes[1])
+        
+        // XXX: endindex????
+        returnCodes = bytes[2..<bytes.endIndex].map {
+            guard let returnCode = SubsAckReturnCode(rawValue: $0) else {
+                return .failure
+            }
+            return returnCode
+        }
     }
 }
