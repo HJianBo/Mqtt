@@ -14,6 +14,8 @@ public protocol MqttClientDelegate {
     
     func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket)
     
+    func mqtt(_ mqtt: MqttClient, didSubcribe packet: SubscribePacket)
+    
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket)
 }
 
@@ -39,7 +41,9 @@ public final class MqttClient {
     
     private var reader: MqttReader?
     
-    var storedPacket = [UInt16: PublishPacket]()
+    var storedPubPacket = [UInt16: PublishPacket]()
+    
+    var storedSubsPacket = [UInt16: SubscribePacket]()
 
     public init(clientId: String,
                 cleanSession: Bool = false,
@@ -109,7 +113,7 @@ extension MqttClient {
         if qos == .qos0 {
             delegate?.mqtt(self, didPublish: packet)
         } else {
-            storedPacket[packet.packetId] = packet
+            storedPubPacket[packet.packetId] = packet
         }
         
         try readPacket()
@@ -120,7 +124,11 @@ extension MqttClient {
         
         packet.topics.append((topic, qos))
         
-        try send(packet: packet)
+        try send(packet: packet, recv: false)
+        
+        storedSubsPacket[packet.packetId] = packet
+        
+        try readPacket()
     }
     
     public func unsubscribe(topics: [String]) throws {
@@ -164,25 +172,37 @@ extension MqttClient: MqttReaderDelegate {
         DDLogDebug("recv publish \(publish)")
         
         delegate?.mqtt(self, didRecvMessage: publish)
+        
+        // feedback ack
+        switch publish.fixHeader.qos {
+        case .qos0:
+            break
+        case .qos1:
+            let packet = PubAckPacket(packetId: publish.packetId)
+            try? send(packet: packet)
+        case .qos2:
+            let packet = PubRecPacket(packetId: publish.packetId)
+            try? send(packet: packet)
+        }
     }
     
     func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket) {
         DDLogDebug("recv publish ack \(puback)")
         
-        guard let publish = storedPacket[puback.packetId] else {
+        guard let publish = storedPubPacket[puback.packetId] else {
             assert(false)
             return
         }
         
         // publish is compelate, when qos equal 1
         delegate?.mqtt(self, didPublish: publish)
-        storedPacket.removeValue(forKey: puback.packetId)
+        storedPubPacket.removeValue(forKey: puback.packetId)
     }
     
     func reader(_ reader: MqttReader, didRecvPubRec pubrec: PubRecPacket) throws {
         DDLogDebug("recv publish rec \(pubrec)")
         
-        guard let _ = storedPacket[pubrec.packetId] else {
+        guard let _ = storedPubPacket[pubrec.packetId] else {
             assert(false)
             return
         }
@@ -194,19 +214,23 @@ extension MqttClient: MqttReaderDelegate {
     
     func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket) {
         DDLogDebug("recv publish comp \(pubcomp)")
-        guard let publish = storedPacket[pubcomp.packetId] else {
+        guard let publish = storedPubPacket[pubcomp.packetId] else {
             assert(false)
             return
         }
         
-        // publish is compelate, when qos equal 1
+        // publish is compelate, when qos equal 2
         delegate?.mqtt(self, didPublish: publish)
-        storedPacket.removeValue(forKey: pubcomp.packetId)
+        storedPubPacket.removeValue(forKey: pubcomp.packetId)
     }
     
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket) {
         DDLogDebug("recv subscribe ack \(suback)")
-        
-        // ...
+        guard let packet = storedSubsPacket[suback.packetId] else {
+            DDLogWarn("recv a suback, but not in stored subscribe packet")
+            return
+        }
+        storedSubsPacket.removeValue(forKey: suback.packetId)
+        delegate?.mqtt(self, didSubcribe: packet)
     }
 }

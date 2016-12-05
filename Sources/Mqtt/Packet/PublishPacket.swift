@@ -37,7 +37,7 @@ public struct PublishPacket: Packet {
     // MARK: Variable Header
     public var topicName: String
     
-    var packetId: UInt16
+    public var packetId: UInt16
     
     var varHeader: Array<UInt8> {
         var value = topicName.mq_stringData
@@ -67,10 +67,11 @@ extension PublishPacket {
     init(header: PacketFixHeader, bytes: [UInt8]) {
         fixHeader = header
         
-        // topic length
+        // parse topic
         let topicLen = Int(bytes[0]*127 + bytes[1])
         topicName = String(bytes: bytes[2..<topicLen+2], encoding: .utf8)!
         
+        // parse qos and payload
         if fixHeader.qos > .qos0 {
             packetId = UInt16(bytes[topicLen+2]*127 + bytes[topicLen+3])
             payload = Array<UInt8>(bytes.suffix(from: topicLen+4))

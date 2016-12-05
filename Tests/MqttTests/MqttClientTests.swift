@@ -10,7 +10,7 @@ import XCTest
 import Mqtt
 
 
-let sDefaultHost = "192.168.1.224"
+let sDefaultHost = "q.emqtt.com"
 let sDefaultPort = UInt16(1883)
 
 class MqttClientTests: XCTestCase {
@@ -59,7 +59,7 @@ class MqttClientTests: XCTestCase {
         expSubscribe = expectation(description: "SUBSCRIBE")
         
         do {
-            try client.subscribe(topic: "topic1", qos: .qos1)
+            try client.subscribe(topic: "topic2", qos: .qos1)
         } catch {
             XCTAssert(false, "\(error)")
         }
@@ -83,5 +83,10 @@ extension MqttClientTests: MqttClientDelegate {
     
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket) {
         
+    }
+    
+    func mqtt(_ mqtt: MqttClient, didSubcribe packet: SubscribePacket) {
+        expSubscribe?.fulfill()
+        expSubscribe = nil
     }
 }

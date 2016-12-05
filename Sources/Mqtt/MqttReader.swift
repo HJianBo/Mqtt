@@ -28,6 +28,11 @@ protocol MqttReaderDelegate {
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket)
 }
 
+// TODO:
+//  1. read circle
+//  2. 
+//
+
 
 public class MqttReader {
     
@@ -38,21 +43,38 @@ public class MqttReader {
     
     var socket: TCPClient
     
-    //var opQueue: DispatchQueue
+    var semaphore: DispatchSemaphore
+    
+    var opQueue: DispatchQueue
     
     var delegate: MqttReaderDelegate?
     
     init(socks: TCPClient, del: MqttReaderDelegate?) {
         socket = socks
         delegate = del
-        //opQueue = DispatchQueue(label: "com.mqtt.reader")
-        //opQueue.setSpecific(key: OP_QUEUE_SPECIFIC_KEY, value: OP_QUEUE_SPECIFIC_VAL)
+        opQueue = DispatchQueue(label: "com.mqtt.reader")
+        opQueue.setSpecific(key: OP_QUEUE_SPECIFIC_KEY, value: OP_QUEUE_SPECIFIC_VAL)
+        semaphore = DispatchSemaphore(value: 0)
+        opQueue.async { [unowned self] in
+            while true {
+                self.semaphore.wait()
+                try? self.tl_read()
+                self.semaphore.signal()
+            }
+        }
     }
 }
 
 extension MqttReader {
 
     func read() throws {
+        semaphore.signal()
+    }
+    
+    func tl_read() throws {
+        assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
+               "this method should only be run at sepcific queue")
+        
         let header = try readHeader()
         let remainLength = try readLength()
         var payload: [UInt8] = []
@@ -79,7 +101,7 @@ extension MqttReader {
         case .suback:
             let suback = SubAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvSubAck: suback)
-        
+            
         default:
             assert(false)
         }

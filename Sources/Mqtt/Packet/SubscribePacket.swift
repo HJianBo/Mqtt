@@ -29,19 +29,19 @@ import Foundation
  Client wants to subscribe.
 
  */
-struct SubscribePacket: Packet {
+public struct SubscribePacket: Packet {
     
     var fixHeader: PacketFixHeader
     
     // MARK: Varibale Header
-    var packetId: UInt16
+    public var packetId: UInt16
     
     var varHeader: Array<UInt8> {
         return packetId.bytes
     }
     
     // MARK: Payload
-    var topics = Array<(String, Qos)>()
+    public var topics = Array<(String, Qos)>()
     
     var payload: Array<UInt8> {
         var value = [UInt8]()
