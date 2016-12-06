@@ -53,16 +53,8 @@ public struct ConnAckPacket: Packet {
 
     var payload = Array<UInt8>()
     
-    init() {
+    public init() {
         fixedHeader = FixedHeader(type: .connack)
-    }
-    
-    
-    init(header: FixedHeader, bytes: [UInt8]) {
-        fixedHeader = header
-        
-        connackFlags = bytes[0]
-        returnCode = ConnAckReturnCode(rawValue: bytes[1])!
     }
 }
 
@@ -90,3 +82,13 @@ extension ConnAckPacket {
 }
 
 
+
+extension ConnAckPacket: InitializeWithResponse {
+    
+    init(header: FixedHeader, bytes: [UInt8]) {
+        fixedHeader = header
+        
+        connackFlags = bytes[0]
+        returnCode = ConnAckReturnCode(rawValue: bytes[1])!
+    }
+}

@@ -24,7 +24,9 @@ struct PubAckPacket: Packet {
         fixedHeader = FixedHeader(type: .puback)
         self.packetId = packetId
     }
-    
+}
+
+extension PubAckPacket: InitializeWithResponse {
     init(header: FixedHeader, bytes: [UInt8]) {
         fixedHeader = header
         

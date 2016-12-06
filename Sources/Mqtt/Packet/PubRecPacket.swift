@@ -12,7 +12,7 @@ import Foundation
  PUBREC Packet is the response to a PUBLISH Packet with QoS 2. It is the second packet of the QoS
  2 protocol exchange.
  
- **Fix Header:**
+ **Fixed Header:**
   1. *Remaining Length field:* This is the length of the variable header.
                                For the PUBREC Packet this has the value 2.
  
@@ -39,6 +39,9 @@ struct PubRecPacket: Packet {
         fixedHeader = FixedHeader(type: .pubrec)
         self.packetId = packetId
     }
+}
+
+extension PubRecPacket: InitializeWithResponse {
     
     init(header: FixedHeader, bytes: [UInt8]) {
         self.fixedHeader = header

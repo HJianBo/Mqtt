@@ -63,7 +63,7 @@ public struct PublishPacket: Packet {
     }
 }
 
-extension PublishPacket {
+extension PublishPacket: InitializeWithResponse {
     init(header: FixedHeader, bytes: [UInt8]) {
         fixedHeader = header
         
@@ -81,3 +81,5 @@ extension PublishPacket {
         }
     }
 }
+
+

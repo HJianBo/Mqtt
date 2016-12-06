@@ -40,6 +40,9 @@ struct PubCompPacket: Packet {
         fixedHeader = FixedHeader(type: .pubcomp)
         self.packetId = packetId
     }
+}
+
+extension PubCompPacket: InitializeWithResponse {
     
     init(header: FixedHeader, bytes: [UInt8]) {
         fixedHeader = header

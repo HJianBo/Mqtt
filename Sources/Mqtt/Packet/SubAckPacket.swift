@@ -68,7 +68,7 @@ struct SubAckPacket: Packet {
     }
 }
 
-extension SubAckPacket {
+extension SubAckPacket: InitializeWithResponse {
     
     init(header: FixedHeader, bytes: [UInt8]) {
         
