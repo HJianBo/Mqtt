@@ -26,7 +26,7 @@ import Foundation
  */
 struct UnsubscribePacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     // MARK: Variable Header
     var packetId: UInt16
@@ -49,8 +49,8 @@ struct UnsubscribePacket: Packet {
     }
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .unsubscribe)
-        fixHeader.qos = .qos1
+        fixedHeader = FixedHeader(type: .unsubscribe)
+        fixedHeader.qos = .qos1
 
         self.packetId = packetId
     }

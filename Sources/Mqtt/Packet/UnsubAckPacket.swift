@@ -10,7 +10,7 @@ import Foundation
 
 struct UnsubAckPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     // MARK: Variable Header
     
@@ -25,7 +25,7 @@ struct UnsubAckPacket: Packet {
     
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .unsuback)
+        fixedHeader = FixedHeader(type: .unsuback)
         self.packetId = packetId
     }
 }

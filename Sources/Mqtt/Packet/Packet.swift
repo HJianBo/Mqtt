@@ -90,7 +90,7 @@ public func >= (lhs: Qos, rhs: Qos) -> Bool {
 /**
  *  Each MQTT Control Packet contains a fixed header
  */
-struct PacketFixHeader {
+struct FixedHeader {
     
     /**
      *
@@ -119,7 +119,7 @@ struct PacketFixHeader {
 }
 
 /// Fixed Header flag members getter/setter
-extension PacketFixHeader {
+extension FixedHeader {
     /// Duplicate delivery of a PUBLISH Control Packet
     var dup: Bool {
         get { return ((flag & 0x08) >> 3 == 1) ? true : false }
@@ -156,7 +156,7 @@ extension PacketFixHeader {
     }
 }
 
-extension PacketFixHeader {
+extension FixedHeader {
     
     var packToData: Data {
         return Data(bytes: UnsafePointer<UInt8>(packToBytes), count: packToBytes.count)
@@ -172,7 +172,7 @@ extension PacketFixHeader {
 protocol Packet {
     
     // 1. Fixed header, require
-    var fixHeader: PacketFixHeader { get }
+    var fixedHeader: FixedHeader { get }
     
     // 2. Variable header, optional
     var varHeader: Array<UInt8> { get }
@@ -189,7 +189,7 @@ extension Packet {
     }
     
     var packToBytes: Array<UInt8> {
-        return fixHeader.packToBytes + remainLength + varHeader + payload
+        return fixedHeader.packToBytes + remainLength + varHeader + payload
     }
     
     var remainLength: Array<UInt8> {
@@ -210,6 +210,12 @@ extension Packet {
 
 extension Packet {
     var description: String {
-        return "\n fixheader: \(fixHeader).\n remainlen: \(remainLength).\n varheader: \(varHeader).\n payload: \(payload).\n"
+        return "\n fixedheader: \(fixedHeader).\n remainlen: \(remainLength).\n varheader: \(varHeader).\n payload: \(payload).\n"
     }
+}
+
+///
+
+protocol InitializeWithResponse {
+    init(header: FixedHeader, bytes: [UInt8])
 }

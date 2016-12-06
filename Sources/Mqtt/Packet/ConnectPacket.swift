@@ -41,7 +41,7 @@ let DefaultKeepAlive     = UInt16(60)
  */
 struct ConnectPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     // MARK: Variable Header Members
     
@@ -154,7 +154,7 @@ struct ConnectPacket: Packet {
     
     init(clientId id: String) {
         clientId = id
-        fixHeader = PacketFixHeader(type: .connect)
+        fixedHeader = FixedHeader(type: .connect)
     }
 }
 

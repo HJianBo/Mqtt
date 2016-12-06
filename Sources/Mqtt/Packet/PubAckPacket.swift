@@ -10,7 +10,7 @@ import Foundation
 
 struct PubAckPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     var packetId: UInt16
     
@@ -21,12 +21,12 @@ struct PubAckPacket: Packet {
     var payload = [UInt8]()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .puback)
+        fixedHeader = FixedHeader(type: .puback)
         self.packetId = packetId
     }
     
-    init(header: PacketFixHeader, bytes: [UInt8]) {
-        fixHeader = header
+    init(header: FixedHeader, bytes: [UInt8]) {
+        fixedHeader = header
         
         packetId = UInt16(bytes[0]*127 + bytes[1])
     }

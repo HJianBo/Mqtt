@@ -34,8 +34,8 @@ extension MqttPacketTests {
         
         var connetPacket = ConnectPacket(clientId: clientId)
         // FIX HEADER
-        XCTAssert(connetPacket.fixHeader.type == .connect, "packet type is error")
-        XCTAssert(connetPacket.fixHeader.flag == 0, "fixheader flag should  reserved!")
+        XCTAssert(connetPacket.fixedHeader.type == .connect, "packet type is error")
+        XCTAssert(connetPacket.fixedHeader.flag == 0, "fixheader flag should  reserved!")
         
         // VARIABLE HEADER
         XCTAssert(connetPacket.protocolName == DefaultProtocolName, "protocol name should be default")
@@ -166,7 +166,7 @@ extension MqttPacketTests {
     func testConnAck_Init() {
         let connackPacket = ConnAckPacket()
         
-        XCTAssert(connackPacket.fixHeader.type == .connack, "fixheader type should be .connack")
+        XCTAssert(connackPacket.fixedHeader.type == .connack, "fixheader type should be .connack")
         XCTAssert(connackPacket.connackFlags == 0, "connack flags should be 0")
         XCTAssert(!connackPacket.sessionPresent, "session present should be 0")
         XCTAssert(connackPacket.returnCode == .accepted, "return code default should be .accepted")
@@ -208,10 +208,10 @@ extension MqttPacketTests {
         
         let publishPacket = PublishPacket(packetId: packetId, topic: topic, payload: payload)
         
-        XCTAssert(publishPacket.fixHeader.type == .publish, "packet type should .publish")
-        XCTAssert(publishPacket.fixHeader.dup == false, "packet dup should be false")
-        XCTAssert(publishPacket.fixHeader.qos == .qos0, "packet Qos should be .qos0")
-        XCTAssert(publishPacket.fixHeader.retain == false, "packet retain should be false")
+        XCTAssert(publishPacket.fixedHeader.type == .publish, "packet type should .publish")
+        XCTAssert(publishPacket.fixedHeader.dup == false, "packet dup should be false")
+        XCTAssert(publishPacket.fixedHeader.qos == .qos0, "packet Qos should be .qos0")
+        XCTAssert(publishPacket.fixedHeader.retain == false, "packet retain should be false")
 
         XCTAssert(publishPacket.topicName == topic, "packet topic name should be \(topic)")
         XCTAssert(publishPacket.packetId == packetId, "packet id should be \(packetId)")
@@ -228,31 +228,31 @@ extension MqttPacketTests {
         
         publishPacket.packetId = packetId
         XCTAssert(publishPacket.packetId == packetId, "packet id should be \(packetId)")
-        XCTAssert(publishPacket.fixHeader.flag == 0x00, "packet falge shpuld be 0x00")
+        XCTAssert(publishPacket.fixedHeader.flag == 0x00, "packet falge shpuld be 0x00")
         
-        publishPacket.fixHeader.dup = true
-        XCTAssertTrue(publishPacket.fixHeader.dup,"packet dup should be true")
-        XCTAssert(publishPacket.fixHeader.flag == 0x08, "packet falge shpuld be 0x08")
+        publishPacket.fixedHeader.dup = true
+        XCTAssertTrue(publishPacket.fixedHeader.dup,"packet dup should be true")
+        XCTAssert(publishPacket.fixedHeader.flag == 0x08, "packet falge shpuld be 0x08")
         
-        publishPacket.fixHeader.dup = false
-        XCTAssert(!publishPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(publishPacket.fixHeader.flag == 0x00, "packet falge shpuld be 0x00")
+        publishPacket.fixedHeader.dup = false
+        XCTAssert(!publishPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(publishPacket.fixedHeader.flag == 0x00, "packet falge shpuld be 0x00")
         
-        publishPacket.fixHeader.qos = .qos2
-        XCTAssert(publishPacket.fixHeader.qos == .qos2, "packet qos should be .qos2")
-        XCTAssert(publishPacket.fixHeader.flag == 0x04, "packet falge shpuld be 0x04")
+        publishPacket.fixedHeader.qos = .qos2
+        XCTAssert(publishPacket.fixedHeader.qos == .qos2, "packet qos should be .qos2")
+        XCTAssert(publishPacket.fixedHeader.flag == 0x04, "packet falge shpuld be 0x04")
         
-        publishPacket.fixHeader.qos = .qos0
-        XCTAssert(publishPacket.fixHeader.qos == .qos0, "packet qos should be .qos1")
-        XCTAssert(publishPacket.fixHeader.flag == 0x00, "packet falge shpuld be 0x00")
+        publishPacket.fixedHeader.qos = .qos0
+        XCTAssert(publishPacket.fixedHeader.qos == .qos0, "packet qos should be .qos1")
+        XCTAssert(publishPacket.fixedHeader.flag == 0x00, "packet falge shpuld be 0x00")
         
-        publishPacket.fixHeader.retain = true
-        XCTAssert(publishPacket.fixHeader.retain, "packet retain should be true")
-        XCTAssert(publishPacket.fixHeader.flag == 0x01, "packet falge shpuld be 0x01")
+        publishPacket.fixedHeader.retain = true
+        XCTAssert(publishPacket.fixedHeader.retain, "packet retain should be true")
+        XCTAssert(publishPacket.fixedHeader.flag == 0x01, "packet falge shpuld be 0x01")
         
-        publishPacket.fixHeader.retain = false
-        XCTAssert(!publishPacket.fixHeader.retain, "packet retain should be false")
-        XCTAssert(publishPacket.fixHeader.flag == 0x00, "packet falge shpuld be 0x00")
+        publishPacket.fixedHeader.retain = false
+        XCTAssert(!publishPacket.fixedHeader.retain, "packet retain should be false")
+        XCTAssert(publishPacket.fixedHeader.flag == 0x00, "packet falge shpuld be 0x00")
         
         publishPacket.topicName = topic
         XCTAssert(publishPacket.topicName == topic, "packet topic should be \(topic)")
@@ -276,11 +276,11 @@ extension MqttPacketTests {
         
         let pubackPacket = PubAckPacket(packetId: packetId)
         
-        XCTAssert(pubackPacket.fixHeader.type == .puback, "packet type should be .puback")
-        XCTAssert(!pubackPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!pubackPacket.fixHeader.retain, "packet flag should be false")
-        XCTAssert(pubackPacket.fixHeader.qos == .qos0, "packet flag should be .qos0")
-        XCTAssert(pubackPacket.fixHeader.flag == 0x00, "packet flag should be 0")
+        XCTAssert(pubackPacket.fixedHeader.type == .puback, "packet type should be .puback")
+        XCTAssert(!pubackPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!pubackPacket.fixedHeader.retain, "packet flag should be false")
+        XCTAssert(pubackPacket.fixedHeader.qos == .qos0, "packet flag should be .qos0")
+        XCTAssert(pubackPacket.fixedHeader.flag == 0x00, "packet flag should be 0")
         XCTAssert(pubackPacket.packetId == packetId, "packet id should be \(packetId)")
         XCTAssert(pubackPacket.payload.count == 0, "packet payload should be empty")
     }
@@ -304,11 +304,11 @@ extension MqttPacketTests {
         
         let pubackPacket = PubRecPacket(packetId: packetId)
         
-        XCTAssert(pubackPacket.fixHeader.type == .pubrec, "packet type should be .pubrec")
-        XCTAssert(!pubackPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!pubackPacket.fixHeader.retain, "packet flag should be false")
-        XCTAssert(pubackPacket.fixHeader.qos == .qos0, "packet flag should be .qos0")
-        XCTAssert(pubackPacket.fixHeader.flag == 0x00, "packet flag should be 0")
+        XCTAssert(pubackPacket.fixedHeader.type == .pubrec, "packet type should be .pubrec")
+        XCTAssert(!pubackPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!pubackPacket.fixedHeader.retain, "packet flag should be false")
+        XCTAssert(pubackPacket.fixedHeader.qos == .qos0, "packet flag should be .qos0")
+        XCTAssert(pubackPacket.fixedHeader.flag == 0x00, "packet flag should be 0")
         XCTAssert(pubackPacket.packetId == packetId, "packet id should be \(packetId)")
         XCTAssert(pubackPacket.payload.count == 0, "packet payload should be empty")
     }
@@ -331,11 +331,11 @@ extension MqttPacketTests {
         
         let pubackPacket = PubRelPacket(packetId: packetId)
         
-        XCTAssert(pubackPacket.fixHeader.type == .pubrel, "packet type should be .pubrel")
-        XCTAssert(!pubackPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!pubackPacket.fixHeader.retain, "packet flag should be false")
-        XCTAssert(pubackPacket.fixHeader.qos == .qos1, "packet flag should be .qos1")
-        XCTAssert(pubackPacket.fixHeader.flag == 0x02, "packet flag should be 0x02")
+        XCTAssert(pubackPacket.fixedHeader.type == .pubrel, "packet type should be .pubrel")
+        XCTAssert(!pubackPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!pubackPacket.fixedHeader.retain, "packet flag should be false")
+        XCTAssert(pubackPacket.fixedHeader.qos == .qos1, "packet flag should be .qos1")
+        XCTAssert(pubackPacket.fixedHeader.flag == 0x02, "packet flag should be 0x02")
         XCTAssert(pubackPacket.packetId == packetId, "packet id should be \(packetId)")
         XCTAssert(pubackPacket.payload.count == 0, "packet payload should be empty")
     }
@@ -359,11 +359,11 @@ extension MqttPacketTests {
         
         let pubackPacket = PubCompPacket(packetId: packetId)
         
-        XCTAssert(pubackPacket.fixHeader.type == .pubcomp, "packet type should be .pubcomp")
-        XCTAssert(!pubackPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!pubackPacket.fixHeader.retain, "packet flag should be false")
-        XCTAssert(pubackPacket.fixHeader.qos == .qos0, "packet flag should be .qos0")
-        XCTAssert(pubackPacket.fixHeader.flag == 0x00, "packet flag should be 0")
+        XCTAssert(pubackPacket.fixedHeader.type == .pubcomp, "packet type should be .pubcomp")
+        XCTAssert(!pubackPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!pubackPacket.fixedHeader.retain, "packet flag should be false")
+        XCTAssert(pubackPacket.fixedHeader.qos == .qos0, "packet flag should be .qos0")
+        XCTAssert(pubackPacket.fixedHeader.flag == 0x00, "packet flag should be 0")
         XCTAssert(pubackPacket.packetId == packetId, "packet id should be \(packetId)")
         XCTAssert(pubackPacket.payload.count == 0, "packet payload should be empty")
     }
@@ -386,11 +386,11 @@ extension MqttPacketTests {
         let packetId = UInt16(123)
         let subscribePacket = SubscribePacket(packetId: packetId)
         
-        XCTAssert(subscribePacket.fixHeader.type == .subscribe, "packet type should be .subscribe")
-        XCTAssert(!subscribePacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(subscribePacket.fixHeader.qos == .qos1, "packet qos should be .qos1")
-        XCTAssert(!subscribePacket.fixHeader.retain, "packet retain should be false")
-        XCTAssert(subscribePacket.fixHeader.flag == 0x02, "packet flag should be 0x02")
+        XCTAssert(subscribePacket.fixedHeader.type == .subscribe, "packet type should be .subscribe")
+        XCTAssert(!subscribePacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(subscribePacket.fixedHeader.qos == .qos1, "packet qos should be .qos1")
+        XCTAssert(!subscribePacket.fixedHeader.retain, "packet retain should be false")
+        XCTAssert(subscribePacket.fixedHeader.flag == 0x02, "packet flag should be 0x02")
         
         XCTAssert(subscribePacket.packetId == packetId, "packet id should be \(packetId)")
         XCTAssert(subscribePacket.topics.count == 0, "packet topics count should be 0")
@@ -425,11 +425,11 @@ extension MqttPacketTests {
         let packetId = UInt16(123)
         let subackPacket = SubAckPacket(packetId: packetId)
         
-        XCTAssert(subackPacket.fixHeader.type == .suback, "packet type should be .suback")
-        XCTAssert(subackPacket.fixHeader.flag == 0x00, "packet falg should be 0x00")
-        XCTAssert(!subackPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!subackPacket.fixHeader.retain, "packet retain should be false")
-        XCTAssert(subackPacket.fixHeader.qos == .qos0, "packet Qos should be .qos0")
+        XCTAssert(subackPacket.fixedHeader.type == .suback, "packet type should be .suback")
+        XCTAssert(subackPacket.fixedHeader.flag == 0x00, "packet falg should be 0x00")
+        XCTAssert(!subackPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!subackPacket.fixedHeader.retain, "packet retain should be false")
+        XCTAssert(subackPacket.fixedHeader.qos == .qos0, "packet Qos should be .qos0")
         
         XCTAssert(subackPacket.packetId == packetId, "packet id should be \(packetId)")
         
@@ -471,11 +471,11 @@ extension MqttPacketTests {
         
         let unsubsPacket = UnsubscribePacket(packetId: packetId)
         
-        XCTAssert(unsubsPacket.fixHeader.type == .unsubscribe, "packet type should be .unsubscribe")
-        XCTAssert(unsubsPacket.fixHeader.flag == 0x02, "packet flag should be 0x02")
-        XCTAssert(!unsubsPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!unsubsPacket.fixHeader.retain, "packet retain should be false")
-        XCTAssert(unsubsPacket.fixHeader.qos == .qos1, "packet Qos should be .qos1")
+        XCTAssert(unsubsPacket.fixedHeader.type == .unsubscribe, "packet type should be .unsubscribe")
+        XCTAssert(unsubsPacket.fixedHeader.flag == 0x02, "packet flag should be 0x02")
+        XCTAssert(!unsubsPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!unsubsPacket.fixedHeader.retain, "packet retain should be false")
+        XCTAssert(unsubsPacket.fixedHeader.qos == .qos1, "packet Qos should be .qos1")
         
         XCTAssert(unsubsPacket.packetId == packetId, "packet id should be \(packetId)")
 
@@ -512,11 +512,11 @@ extension MqttPacketTests {
         
         let unsusackPacket = UnsubAckPacket(packetId: packetId)
 
-        XCTAssert(unsusackPacket.fixHeader.type == .unsuback, "packet type should be .unsuback")
-        XCTAssert(unsusackPacket.fixHeader.flag == 0x00, "packet flag should be 0")
-        XCTAssert(!unsusackPacket.fixHeader.dup, "packet dup should be 0")
-        XCTAssert(unsusackPacket.fixHeader.qos == .qos0, "packet Qos should be .qos0")
-        XCTAssert(!unsusackPacket.fixHeader.retain, "packet retain should be false")
+        XCTAssert(unsusackPacket.fixedHeader.type == .unsuback, "packet type should be .unsuback")
+        XCTAssert(unsusackPacket.fixedHeader.flag == 0x00, "packet flag should be 0")
+        XCTAssert(!unsusackPacket.fixedHeader.dup, "packet dup should be 0")
+        XCTAssert(unsusackPacket.fixedHeader.qos == .qos0, "packet Qos should be .qos0")
+        XCTAssert(!unsusackPacket.fixedHeader.retain, "packet retain should be false")
         
         XCTAssert(unsusackPacket.packetId == packetId, "packet id should be \(packetId)")
         XCTAssert(unsusackPacket.payload.count == 0, "packet payload count should be 0")
@@ -541,11 +541,11 @@ extension MqttPacketTests {
         
         let pingreqPacket = PingReqPacket()
         
-        XCTAssert(pingreqPacket.fixHeader.type == .pingreq, "packet type should be .pingreq")
-        XCTAssert(pingreqPacket.fixHeader.flag == 0, "packet flag should be 0")
-        XCTAssert(!pingreqPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!pingreqPacket.fixHeader.retain, "packet retain should be false")
-        XCTAssert(pingreqPacket.fixHeader.qos == .qos0, "packet Qos should be .qos0")
+        XCTAssert(pingreqPacket.fixedHeader.type == .pingreq, "packet type should be .pingreq")
+        XCTAssert(pingreqPacket.fixedHeader.flag == 0, "packet flag should be 0")
+        XCTAssert(!pingreqPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!pingreqPacket.fixedHeader.retain, "packet retain should be false")
+        XCTAssert(pingreqPacket.fixedHeader.qos == .qos0, "packet Qos should be .qos0")
         
         XCTAssert(pingreqPacket.varHeader.count == 0, "packet varheader should be 0")
         XCTAssert(pingreqPacket.payload.count == 0, "packet payload should be 0")
@@ -563,11 +563,11 @@ extension MqttPacketTests {
     func testPingResp_init() {
         let pingrespPacket = PingRespPacket()
         
-        XCTAssert(pingrespPacket.fixHeader.type == .pingresp, "packet type should be .pingreq")
-        XCTAssert(pingrespPacket.fixHeader.flag == 0, "packet flag should be 0")
-        XCTAssert(!pingrespPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!pingrespPacket.fixHeader.retain, "packet retain should be false")
-        XCTAssert(pingrespPacket.fixHeader.qos == .qos0, "packet Qos should be .qos0")
+        XCTAssert(pingrespPacket.fixedHeader.type == .pingresp, "packet type should be .pingreq")
+        XCTAssert(pingrespPacket.fixedHeader.flag == 0, "packet flag should be 0")
+        XCTAssert(!pingrespPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!pingrespPacket.fixedHeader.retain, "packet retain should be false")
+        XCTAssert(pingrespPacket.fixedHeader.qos == .qos0, "packet Qos should be .qos0")
         
         XCTAssert(pingrespPacket.varHeader.count == 0, "packet varheader should be 0")
         XCTAssert(pingrespPacket.payload.count == 0, "packet payload should be 0")
@@ -585,11 +585,11 @@ extension MqttPacketTests {
     func testDisconect_init() {
         let disconnectPacket = DisconnectPacket()
         
-        XCTAssert(disconnectPacket.fixHeader.type == .disconnect, "packet type should be .disconnect")
-        XCTAssert(disconnectPacket.fixHeader.flag == 0, "packet flag should be 0")
-        XCTAssert(!disconnectPacket.fixHeader.dup, "packet dup should be false")
-        XCTAssert(!disconnectPacket.fixHeader.retain, "packet retain should be false")
-        XCTAssert(disconnectPacket.fixHeader.qos == .qos0, "packet Qos should be .qos0")
+        XCTAssert(disconnectPacket.fixedHeader.type == .disconnect, "packet type should be .disconnect")
+        XCTAssert(disconnectPacket.fixedHeader.flag == 0, "packet flag should be 0")
+        XCTAssert(!disconnectPacket.fixedHeader.dup, "packet dup should be false")
+        XCTAssert(!disconnectPacket.fixedHeader.retain, "packet retain should be false")
+        XCTAssert(disconnectPacket.fixedHeader.qos == .qos0, "packet Qos should be .qos0")
         
         XCTAssert(disconnectPacket.varHeader.count == 0, "packet varheader should be 0")
         XCTAssert(disconnectPacket.payload.count == 0, "packet payload should be 0")

@@ -174,7 +174,7 @@ extension MqttClient: MqttReaderDelegate {
         delegate?.mqtt(self, didRecvMessage: publish)
         
         // feedback ack
-        switch publish.fixHeader.qos {
+        switch publish.fixedHeader.qos {
         case .qos0:
             break
         case .qos1:

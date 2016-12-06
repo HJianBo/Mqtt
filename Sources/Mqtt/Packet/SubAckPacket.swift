@@ -43,7 +43,7 @@ enum SubsAckReturnCode: UInt8 {
  */
 struct SubAckPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     // MARK: Varibale Header
     var packetId: UInt16
@@ -61,7 +61,7 @@ struct SubAckPacket: Packet {
     }
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .suback)
+        fixedHeader = FixedHeader(type: .suback)
         self.packetId = packetId
         
         returnCodes = []
@@ -70,9 +70,9 @@ struct SubAckPacket: Packet {
 
 extension SubAckPacket {
     
-    init(header: PacketFixHeader, bytes: [UInt8]) {
+    init(header: FixedHeader, bytes: [UInt8]) {
         
-        fixHeader = header
+        fixedHeader = header
         
         packetId = UInt16(bytes[0]*127+bytes[1])
         

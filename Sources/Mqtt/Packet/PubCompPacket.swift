@@ -26,7 +26,7 @@ import Foundation
  */
 struct PubCompPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     var packetId: UInt16
     
@@ -37,12 +37,12 @@ struct PubCompPacket: Packet {
     var payload = [UInt8]()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .pubcomp)
+        fixedHeader = FixedHeader(type: .pubcomp)
         self.packetId = packetId
     }
     
-    init(header: PacketFixHeader, bytes: [UInt8]) {
-        fixHeader = header
+    init(header: FixedHeader, bytes: [UInt8]) {
+        fixedHeader = header
         
         packetId = UInt16(bytes[0]*127 + bytes[1])
     }

@@ -23,13 +23,13 @@ import Foundation
  */
 struct PingReqPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     var varHeader = [UInt8]()
     
     var payload   = [UInt8]()
     
     init() {
-        fixHeader = PacketFixHeader(type: .pingreq)
+        fixedHeader = FixedHeader(type: .pingreq)
     }
 }

@@ -15,13 +15,13 @@ import Foundation
  */
 struct DisconnectPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     var varHeader = [UInt8]()
     
     var payload   = [UInt8]()
     
     init() {
-        fixHeader = PacketFixHeader(type: .disconnect)
+        fixedHeader = FixedHeader(type: .disconnect)
     }
 }

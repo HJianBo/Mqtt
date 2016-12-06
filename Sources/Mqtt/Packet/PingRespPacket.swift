@@ -10,13 +10,13 @@ import Foundation
 
 struct PingRespPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     var varHeader = [UInt8]()
     
     var payload   = [UInt8]()
     
     init() {
-        fixHeader = PacketFixHeader(type: .pingresp)
+        fixedHeader = FixedHeader(type: .pingresp)
     }
 }

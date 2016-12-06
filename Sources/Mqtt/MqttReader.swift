@@ -30,7 +30,7 @@ protocol MqttReaderDelegate {
 
 // TODO:
 //  1. read circle
-//  2. 
+//  2.
 //
 
 
@@ -71,7 +71,7 @@ extension MqttReader {
         semaphore.signal()
     }
     
-    func tl_read() throws {
+    fileprivate func tl_read() throws {
         assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
                "this method should only be run at sepcific queue")
         
@@ -113,7 +113,10 @@ extension MqttReader {
 extension MqttReader {
     
     // sync method to read a header
-    func readHeader() throws -> PacketFixHeader {
+    fileprivate func readHeader() throws -> FixedHeader {
+        assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
+               "this method should only be run at sepcific queue")
+        
         let readLength = 1
         
         var buffer = try socket.receive(maxBytes: readLength)
@@ -121,7 +124,7 @@ extension MqttReader {
             throw ReaderError.errorLength
         }
         
-        guard let header = PacketFixHeader(byte: buffer[0]) else {
+        guard let header = FixedHeader(byte: buffer[0]) else {
             throw ReaderError.invaildPacket
         }
         
@@ -129,7 +132,10 @@ extension MqttReader {
     }
     
     // sync method to read length
-    func readLength() throws -> Int {
+    fileprivate func readLength() throws -> Int {
+        assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
+               "this method should only be run at sepcific queue")
+        
         let readLength = 1
         
         var multiply = 1
@@ -155,7 +161,10 @@ extension MqttReader {
     }
     
     // read variable header and payload
-    func readPayload(len: Int) throws -> [UInt8] {
+    fileprivate func readPayload(len: Int) throws -> [UInt8] {
+        assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
+               "this method should only be run at sepcific queue")
+        
         let buffer = try socket.receive(maxBytes: len)
         guard buffer.count == len else {
             throw ReaderError.errorLength

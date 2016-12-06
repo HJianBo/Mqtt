@@ -31,7 +31,7 @@ import Foundation
  */
 public struct SubscribePacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     // MARK: Varibale Header
     public var packetId: UInt16
@@ -54,9 +54,9 @@ public struct SubscribePacket: Packet {
     
     
     init(packetId: UInt16) {
-        fixHeader     =  PacketFixHeader(type: .subscribe)
+        fixedHeader     =  FixedHeader(type: .subscribe)
         // flag reserved values (0010)
-        fixHeader.qos = .qos1
+        fixedHeader.qos = .qos1
         
         self.packetId     = packetId
     }

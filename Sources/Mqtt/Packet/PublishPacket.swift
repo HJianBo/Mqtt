@@ -32,7 +32,7 @@ import Foundation
  */
 public struct PublishPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     // MARK: Variable Header
     public var topicName: String
@@ -42,7 +42,7 @@ public struct PublishPacket: Packet {
     var varHeader: Array<UInt8> {
         var value = topicName.mq_stringData
         
-        if fixHeader.qos > .qos0 {
+        if fixedHeader.qos > .qos0 {
             value.append(contentsOf: packetId.bytes)
         }
         return value
@@ -51,28 +51,28 @@ public struct PublishPacket: Packet {
     public var payload: Array<UInt8>
     
     init(packetId: UInt16, topic: String, payload: Array<UInt8>, dup: Bool = false, qos: Qos = .qos0, retain: Bool = false) {
-        fixHeader = PacketFixHeader(type: .publish)
+        fixedHeader = FixedHeader(type: .publish)
         
         self.topicName = topic
         self.packetId  = packetId
         
-        self.fixHeader.dup = dup
-        self.fixHeader.qos = qos
-        self.fixHeader.retain = retain
+        self.fixedHeader.dup = dup
+        self.fixedHeader.qos = qos
+        self.fixedHeader.retain = retain
         self.payload = payload
     }
 }
 
 extension PublishPacket {
-    init(header: PacketFixHeader, bytes: [UInt8]) {
-        fixHeader = header
+    init(header: FixedHeader, bytes: [UInt8]) {
+        fixedHeader = header
         
         // parse topic
         let topicLen = Int(bytes[0]*127 + bytes[1])
         topicName = String(bytes: bytes[2..<topicLen+2], encoding: .utf8)!
         
         // parse qos and payload
-        if fixHeader.qos > .qos0 {
+        if fixedHeader.qos > .qos0 {
             packetId = UInt16(bytes[topicLen+2]*127 + bytes[topicLen+3])
             payload = Array<UInt8>(bytes.suffix(from: topicLen+4))
         } else {

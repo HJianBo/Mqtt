@@ -30,7 +30,7 @@ import Foundation
 struct PubRelPacket: Packet {
     
     /// flag is reserved, the value is 0010
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     var packetId: UInt16
     
@@ -41,10 +41,10 @@ struct PubRelPacket: Packet {
     var payload = [UInt8]()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .pubrel)
+        fixedHeader = FixedHeader(type: .pubrel)
         
         // set flag to 0010
-        fixHeader.qos = .qos1
+        fixedHeader.qos = .qos1
         self.packetId = packetId
     }
 }

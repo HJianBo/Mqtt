@@ -25,7 +25,7 @@ import Foundation
  */
 struct PubRecPacket: Packet {
     
-    var fixHeader: PacketFixHeader
+    var fixedHeader: FixedHeader
     
     var packetId: UInt16
     
@@ -36,12 +36,12 @@ struct PubRecPacket: Packet {
     var payload = [UInt8]()
     
     init(packetId: UInt16) {
-        fixHeader = PacketFixHeader(type: .pubrec)
+        fixedHeader = FixedHeader(type: .pubrec)
         self.packetId = packetId
     }
     
-    init(header: PacketFixHeader, bytes: [UInt8]) {
-        self.fixHeader = header
+    init(header: FixedHeader, bytes: [UInt8]) {
+        self.fixedHeader = header
         
         packetId = UInt16(bytes[0]*127 + bytes[1])
     }
