@@ -12,7 +12,6 @@ import Dispatch
 private let OP_QUEUE_SPECIFIC_KEY = DispatchSpecificKey<String>()
 private let OP_QUEUE_SPECIFIC_VAL = "QUEUEVAL_READER"
 
-
 protocol MqttReaderDelegate {
     
     func reader(_ reader: MqttReader, didRecvConnectAck connack: ConnAckPacket)
@@ -45,17 +44,19 @@ public class MqttReader {
     
     var semaphore: DispatchSemaphore
     
-    var opQueue: DispatchQueue
+    var readQueue: DispatchQueue
     
     var delegate: MqttReaderDelegate?
     
     init(socks: TCPClient, del: MqttReaderDelegate?) {
         socket = socks
         delegate = del
-        opQueue = DispatchQueue(label: "com.mqtt.reader")
-        opQueue.setSpecific(key: OP_QUEUE_SPECIFIC_KEY, value: OP_QUEUE_SPECIFIC_VAL)
-        semaphore = DispatchSemaphore(value: 0)
-        opQueue.async { [unowned self] in
+        readQueue = DispatchQueue(label: "com.mqtt.reader", qos: .background)
+        readQueue.setSpecific(key: OP_QUEUE_SPECIFIC_KEY, value: OP_QUEUE_SPECIFIC_VAL)
+        semaphore = DispatchSemaphore(value: 1)
+        
+        // read cicrle
+        readQueue.async { [unowned self] in
             while true {
                 self.semaphore.wait()
                 try? self.tl_read()
@@ -67,10 +68,6 @@ public class MqttReader {
 
 extension MqttReader {
 
-    func read() throws {
-        semaphore.signal()
-    }
-    
     fileprivate func tl_read() throws {
         assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
                "this method should only be run at sepcific queue")

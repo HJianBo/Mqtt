@@ -70,15 +70,6 @@ public final class MqttClient {
         
         // TODO: when socket is nil, throw a error
         try socket?.send(bytes: packet.packToBytes)
-        
-        // TODO: when reader is nil, throw a error
-        if recv {
-            try reader?.read()
-        }
-    }
-    
-    fileprivate func readPacket() throws {
-        try reader?.read()
     }
 }
 
@@ -108,15 +99,13 @@ extension MqttClient {
     public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1) throws {
         let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload, qos: qos)
         
-        try send(packet: packet, recv: false)
-        
         if qos == .qos0 {
+            try send(packet: packet, recv: false)
             delegate?.mqtt(self, didPublish: packet)
         } else {
             storedPubPacket[packet.packetId] = packet
+            try send(packet: packet, recv: false)
         }
-        
-        try readPacket()
     }
     
     public func subscribe(topic: String, qos: Qos = .qos1) throws {
@@ -124,11 +113,10 @@ extension MqttClient {
         
         packet.topics.append((topic, qos))
         
-        try send(packet: packet, recv: false)
-        
+        // stored subscribe packet
         storedSubsPacket[packet.packetId] = packet
         
-        try readPacket()
+        try send(packet: packet, recv: false)
     }
     
     public func unsubscribe(topics: [String]) throws {

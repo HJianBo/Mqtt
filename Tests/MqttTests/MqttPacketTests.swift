@@ -58,7 +58,7 @@ extension MqttPacketTests {
         XCTAssert(connetPacket.password == nil, "password should be nil")
         
         //XCTAssert(connetPacket.remainLength == [], "remain length should be 0")
-        print(connetPacket.description)
+        //print(connetPacket.description)
     }
     
     func testConnectPacket_property() {

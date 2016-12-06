@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public enum ETLogLevel: UInt8 {
+public enum ETLogLevel: UInt8 {
     
     /// 不显示日志
     case off  = 0
@@ -31,33 +31,33 @@ import Foundation
 
 var logLevel: ETLogLevel  = .info
 
-func DDLogVerbose(_ format: String) {
+func DDLogVerbose(_ format: CustomStringConvertible) {
     if logLevel >= .verbose {
-        NSLog("[Verbs]: \(format)")
+        print("[Verbs]: \(format)")
     }
 }
 
-func DDLogInfo(_ format: String) {
+func DDLogInfo(_ format: CustomStringConvertible) {
     if logLevel >= .info {
-        NSLog("[Info ]: \(format)")
+        print("[Info ]: \(format)")
     }
 }
 
-func DDLogDebug(_ format: String) {
+func DDLogDebug(_ format: CustomStringConvertible) {
     if logLevel >= .debug {
-        NSLog("[Debug]: \(format)")
+        print("[Debug]: \(format)")
     }
 }
 
-func DDLogWarn(_ format: String) {
+func DDLogWarn(_ format: CustomStringConvertible) {
     if logLevel >= .warning {
-        NSLog("[Warn ]: \(format)")
+        print("[Warn ]: \(format)")
     }
 }
 
-func DDLogError(_ format: String) {
+func DDLogError(_ format: CustomStringConvertible) {
     if logLevel >= .error {
-        NSLog("[Error]: \(format)")
+        print("[Error]: \(format)")
     }
 }
 

@@ -208,14 +208,7 @@ extension Packet {
     }
 }
 
-extension Packet {
-    var description: String {
-        return "\n fixedheader: \(fixedHeader).\n remainlen: \(remainLength).\n varheader: \(varHeader).\n payload: \(payload).\n"
-    }
-}
-
 ///
-
 protocol InitializeWithResponse {
     init(header: FixedHeader, bytes: [UInt8])
 }
