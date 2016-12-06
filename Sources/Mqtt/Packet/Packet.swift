@@ -120,7 +120,15 @@ struct FixedHeader {
 
 /// Fixed Header flag members getter/setter
 extension FixedHeader {
-    /// Duplicate delivery of a PUBLISH Control Packet
+    /**
+     Duplicate delivery of a PUBLISH Control Packet.
+     
+     
+     The value of flag from an incoming PUBLISH packet is not propagated when the PUBLISH packet is sent to subscribers by the server.
+     
+     The DUP flag in the outgoing PUBLISH packet is set independently to incoming PUBLISH packet,  its value MUST be determined solely by whether the outgoing PUBLISH packet is a retransmission.
+     
+     */
     var dup: Bool {
         get { return ((flag & 0x08) >> 3 == 1) ? true : false }
         
@@ -143,6 +151,9 @@ extension FixedHeader {
         set {
             flag &= ~0x06
             flag |= (newValue.rawValue << 1)
+            
+            // the DUP flag must set to 0 for all qos0 message
+            if newValue == .qos0 { dup = false }
         }
     }
     

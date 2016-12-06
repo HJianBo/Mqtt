@@ -25,6 +25,9 @@ public final class MqttClient {
     
     public var delegate: MqttClientDelegate?
     
+    // TODO:
+    public var sessionState: Int = 0
+    
     var clientId: String
     
     var cleanSession: Bool
@@ -76,7 +79,11 @@ public final class MqttClient {
 // MARK: MQTT method
 extension MqttClient {
     
-    public func connect(host: String, port: UInt16) throws {
+    /**
+     
+     - parameter port: TCP ports 8883 and 1883 are registered with IANA for MQTT TLS and non TLS communication respectively.
+     */
+    public func connect(host: String, port: UInt16 = 1883) throws {
         let addr = InternetAddress(hostname: host, port: port)
         
         // create socket and connect to address
@@ -103,7 +110,9 @@ extension MqttClient {
             try send(packet: packet, recv: false)
             delegate?.mqtt(self, didPublish: packet)
         } else {
+            // store message
             storedPubPacket[packet.packetId] = packet
+            // send PUBLISH Qos1/2 DUP0
             try send(packet: packet, recv: false)
         }
     }
