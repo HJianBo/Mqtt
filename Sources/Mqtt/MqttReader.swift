@@ -12,7 +12,7 @@ import Dispatch
 private let OP_QUEUE_SPECIFIC_KEY = DispatchSpecificKey<String>()
 private let OP_QUEUE_SPECIFIC_VAL = "QUEUEVAL_READER"
 
-protocol MqttReaderDelegate {
+protocol MqttReaderDelegate: class {
     
     func reader(_ reader: MqttReader, didRecvConnectAck connack: ConnAckPacket)
     
@@ -25,6 +25,8 @@ protocol MqttReaderDelegate {
     func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket)
     
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket)
+    
+    func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket)
 }
 
 // TODO:
@@ -46,7 +48,7 @@ public class MqttReader {
     
     var readQueue: DispatchQueue
     
-    var delegate: MqttReaderDelegate?
+    weak var delegate: MqttReaderDelegate?
     
     init(socks: TCPClient, del: MqttReaderDelegate?) {
         socket = socks
@@ -98,7 +100,10 @@ extension MqttReader {
         case .suback:
             let suback = SubAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvSubAck: suback)
-            
+         
+        case .unsuback:
+            let unsuback = UnsubAckPacket(header: header, bytes: payload)
+            delegate?.reader(self, didRecvUnsuback: unsuback)
         default:
             assert(false)
         }

@@ -24,7 +24,7 @@ import Foundation
      packet with no payload
  
  */
-struct UnsubscribePacket: Packet {
+public struct UnsubscribePacket: Packet {
     
     var fixedHeader: FixedHeader
     

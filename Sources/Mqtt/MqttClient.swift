@@ -14,9 +14,11 @@ public protocol MqttClientDelegate {
     
     func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket)
     
-    func mqtt(_ mqtt: MqttClient, didSubcribe packet: SubscribePacket)
+    func mqtt(_ mqtt: MqttClient, didSubscribe packet: SubscribePacket)
     
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket)
+    
+    func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket)
 }
 
 public final class MqttClient {
@@ -47,6 +49,8 @@ public final class MqttClient {
     var storedPubPacket = [UInt16: PublishPacket]()
     
     var storedSubsPacket = [UInt16: SubscribePacket]()
+    
+    var storedUnsubsPacket = [UInt16: UnsubscribePacket]()
 
     public init(clientId: String,
                 cleanSession: Bool = false,
@@ -67,6 +71,13 @@ public final class MqttClient {
         self.socket = socket
         reader = MqttReader(socks: socket, del: self)
     }
+    
+    // 在发送消息时
+    // 1. 是否需要收到返回
+    // 2. in-flight window 的重发机制是否可以考虑使用 信号量+生产者消费者模式 来实现
+    // 3. 心跳超时机制 (考虑什么时候发送心跳、什么时候计算为超时)
+    // 4. packetId 是否应用一个机制，来保障不重复
+    
     
     // sync method
     fileprivate func send(packet: Packet, recv: Bool = true) throws {
@@ -132,6 +143,10 @@ extension MqttClient {
         var packet = UnsubscribePacket(packetId: nextPacketId)
         packet.topics = topics
         
+        // stored packet
+        storedUnsubsPacket[packet.packetId] = packet
+        
+        // send
         try send(packet: packet)
     }
     
@@ -187,7 +202,7 @@ extension MqttClient: MqttReaderDelegate {
         DDLogDebug("recv publish ack \(puback)")
         
         guard let publish = storedPubPacket[puback.packetId] else {
-            assert(false)
+            DDLogWarn("recv publish ack, but not stored in cache")
             return
         }
         
@@ -200,7 +215,7 @@ extension MqttClient: MqttReaderDelegate {
         DDLogDebug("recv publish rec \(pubrec)")
         
         guard let _ = storedPubPacket[pubrec.packetId] else {
-            assert(false)
+            DDLogWarn("recv public recv, but not stored in cache")
             return
         }
         
@@ -212,7 +227,7 @@ extension MqttClient: MqttReaderDelegate {
     func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket) {
         DDLogDebug("recv publish comp \(pubcomp)")
         guard let publish = storedPubPacket[pubcomp.packetId] else {
-            assert(false)
+            DDLogWarn("recv publish comp, but not stored in cache")
             return
         }
         
@@ -224,10 +239,22 @@ extension MqttClient: MqttReaderDelegate {
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket) {
         DDLogDebug("recv subscribe ack \(suback)")
         guard let packet = storedSubsPacket[suback.packetId] else {
-            DDLogWarn("recv a suback, but not in stored subscribe packet")
+            DDLogWarn("recv a suback, but not stored in cache")
             return
         }
         storedSubsPacket.removeValue(forKey: suback.packetId)
-        delegate?.mqtt(self, didSubcribe: packet)
+        delegate?.mqtt(self, didSubscribe: packet)
+    }
+    
+    func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket) {
+        DDLogDebug("recv unsubscribe ack \(unsuback)")
+        
+        guard let packet = storedUnsubsPacket[unsuback.packetId] else {
+            DDLogWarn("recv a unsubscribe ack, but not stored in cache")
+            return
+        }
+        
+        storedUnsubsPacket.removeValue(forKey: unsuback.packetId)
+        delegate?.mqtt(self, didUnsubscribe: packet)
     }
 }
