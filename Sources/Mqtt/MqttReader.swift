@@ -27,6 +27,8 @@ protocol MqttReaderDelegate: class {
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket)
     
     func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket)
+    
+    func reader(_ reader: MqttReader, didRecvPingresp pingresp: PingRespPacket)
 }
 
 // TODO:
@@ -100,12 +102,14 @@ extension MqttReader {
         case .suback:
             let suback = SubAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvSubAck: suback)
-         
         case .unsuback:
             let unsuback = UnsubAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvUnsuback: unsuback)
+        case .pingresp:
+            let pingresp = PingRespPacket(header: header, bytes: payload)
+            delegate?.reader(self, didRecvPingresp: pingresp)
         default:
-            assert(false)
+            assert(false, "recv a packet type \(header.type), should be handle.")
         }
     }
 }
@@ -166,6 +170,10 @@ extension MqttReader {
     fileprivate func readPayload(len: Int) throws -> [UInt8] {
         assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
                "this method should only be run at sepcific queue")
+        
+        guard len > 0 else {
+            return []
+        }
         
         let buffer = try socket.receive(maxBytes: len)
         guard buffer.count == len else {

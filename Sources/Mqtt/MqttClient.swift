@@ -21,6 +21,10 @@ public protocol MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket)
 }
 
+extension MqttClientDelegate {
+    public func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {}
+}
+
 public final class MqttClient {
     
     private var _packetId: UInt16 = 0
@@ -84,6 +88,12 @@ public final class MqttClient {
         
         // TODO: when socket is nil, throw a error
         try socket?.send(bytes: packet.packToBytes)
+    }
+    
+    fileprivate func close() throws {
+        
+        // TODO: save message queue before close network connection ??
+        try socket?.close()
     }
 }
 
@@ -160,6 +170,11 @@ extension MqttClient {
         let packet = DisconnectPacket()
         
         try send(packet: packet)
+        
+        // must close the network connect 
+        // must not send any more control packets on that network connection
+        
+        
     }
 }
 
@@ -256,5 +271,11 @@ extension MqttClient: MqttReaderDelegate {
         
         storedUnsubsPacket.removeValue(forKey: unsuback.packetId)
         delegate?.mqtt(self, didUnsubscribe: packet)
+    }
+    
+    func reader(_ reader: MqttReader, didRecvPingresp pingresp: PingRespPacket) {
+        DDLogDebug("recv ping response \(pingresp)")
+        
+        delegate?.mqtt(self, didRecvPingresp: pingresp)
     }
 }

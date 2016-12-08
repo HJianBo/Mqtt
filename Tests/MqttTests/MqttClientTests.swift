@@ -23,6 +23,10 @@ class MqttClientTests: XCTestCase {
     
     var expUnsubscribe: XCTestExpectation?
     
+    var expPing: XCTestExpectation?
+    
+    var expDisconnect: XCTestExpectation?
+    
     var client: MqttClient!
     
     override func setUp() {
@@ -77,6 +81,28 @@ class MqttClientTests: XCTestCase {
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
+    
+    func testPing() {
+        expPing = expectation(description: "PING")
+        do {
+            try client.ping()
+        } catch {
+            XCTAssert(false, "\(error)")
+        }
+        
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testDisconnect() {
+        expDisconnect = expectation(description: "DISCONNECT")
+        
+        do {
+            try client.disconnect()
+        } catch {
+            XCTAssert(false, "\(error)")
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
 }
 
 extension MqttClientTests: MqttClientDelegate {
@@ -105,5 +131,10 @@ extension MqttClientTests: MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket) {
         expUnsubscribe?.fulfill()
         expUnsubscribe = nil
+    }
+    
+    func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {
+        expPing?.fulfill()
+        expPing = nil
     }
 }
