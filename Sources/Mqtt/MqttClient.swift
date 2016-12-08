@@ -19,6 +19,8 @@ public protocol MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket)
     
     func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket)
+    
+    func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?)
 }
 
 extension MqttClientDelegate {
@@ -76,13 +78,7 @@ public final class MqttClient {
         reader = MqttReader(socks: socket, del: self)
     }
     
-    // 在发送消息时
-    // 1. 是否需要收到返回
-    // 2. in-flight window 的重发机制是否可以考虑使用 信号量+生产者消费者模式 来实现
-    // 3. 心跳超时机制 (考虑什么时候发送心跳、什么时候计算为超时)
-    // 4. packetId 是否应用一个机制，来保障不重复
-    
-    
+    // TODO: 需改为 sender 进行代理消息的发送
     // sync method
     fileprivate func send(packet: Packet, recv: Bool = true) throws {
         
@@ -173,8 +169,8 @@ extension MqttClient {
         
         // must close the network connect 
         // must not send any more control packets on that network connection
-        
-        
+        try close()
+        delegate?.mqtt(self, didDisconnect: nil)
     }
 }
 

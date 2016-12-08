@@ -48,9 +48,18 @@ class MqttClientTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        
+        expDisconnect = expectation(description: "DISCONNECT")
+        
+        do {
+            try client.disconnect()
+        } catch {
+            XCTAssert(false, "\(error)")
+        }
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
-    func testPublish() {
+    func test001_Publish() {
         expPublish = expectation(description: "PUBLISH")
         
         do {
@@ -61,7 +70,7 @@ class MqttClientTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
-    func testSubscribe() {
+    func test002_Subscribe() {
         expSubscribe = expectation(description: "SUBSCRIBE")
         
         do {
@@ -72,7 +81,7 @@ class MqttClientTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
-    func testUnsubscribe() {
+    func test003_Unsubscribe() {
         expUnsubscribe = expectation(description: "UNSUBSCRIBE")
         do {
             try client.unsubscribe(topics: ["topic1"])
@@ -82,7 +91,7 @@ class MqttClientTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
-    func testPing() {
+    func test004_Ping() {
         expPing = expectation(description: "PING")
         do {
             try client.ping()
@@ -90,17 +99,6 @@ class MqttClientTests: XCTestCase {
             XCTAssert(false, "\(error)")
         }
         
-        waitForExpectations(timeout: 10, handler: nil)
-    }
-    
-    func testDisconnect() {
-        expDisconnect = expectation(description: "DISCONNECT")
-        
-        do {
-            try client.disconnect()
-        } catch {
-            XCTAssert(false, "\(error)")
-        }
         waitForExpectations(timeout: 10, handler: nil)
     }
 }
@@ -136,5 +134,10 @@ extension MqttClientTests: MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {
         expPing?.fulfill()
         expPing = nil
+    }
+    
+    func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?) {
+        expDisconnect?.fulfill()
+        expDisconnect = nil
     }
 }

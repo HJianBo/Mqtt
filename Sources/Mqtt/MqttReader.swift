@@ -32,12 +32,15 @@ protocol MqttReaderDelegate: class {
 }
 
 // TODO:
-//  1. read circle
-//  2.
+// 1. read circle
+// 2. 使用 readbuffer 然后通过 buffer 来组包, 组包完成则丢在上层处理
+// 3. 可以使用多线程, 和信号量的方式. 控制 每次读满 buffer 就开始等待, buffer 有空就继续读。
+// 4. 读数据和组包可以分开在俩个线程进行执行, 但必须都是顺序执行才行
+
 //
 
 
-public class MqttReader {
+class MqttReader {
     
     enum ReaderError: Error {
         case invaildPacket
@@ -70,6 +73,8 @@ public class MqttReader {
     }
 }
 
+
+// MARK: Helper
 extension MqttReader {
 
     fileprivate func tl_read() throws {
@@ -108,18 +113,17 @@ extension MqttReader {
         case .pingresp:
             let pingresp = PingRespPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvPingresp: pingresp)
+        case .reserved, .reserved2:
+            // should disconnect 
+            DDLogWarn("should close the network connect, when recv reserved header type.")
+            break
         default:
             assert(false, "recv a packet type \(header.type), should be handle.")
         }
     }
-}
-
-
-// Helper
-extension MqttReader {
     
     // sync method to read a header
-    fileprivate func readHeader() throws -> FixedHeader {
+    private func readHeader() throws -> FixedHeader {
         assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
                "this method should only be run at sepcific queue")
         
@@ -138,7 +142,7 @@ extension MqttReader {
     }
     
     // sync method to read length
-    fileprivate func readLength() throws -> Int {
+    private func readLength() throws -> Int {
         assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
                "this method should only be run at sepcific queue")
         
@@ -167,7 +171,7 @@ extension MqttReader {
     }
     
     // read variable header and payload
-    fileprivate func readPayload(len: Int) throws -> [UInt8] {
+    private func readPayload(len: Int) throws -> [UInt8] {
         assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
                "this method should only be run at sepcific queue")
         
