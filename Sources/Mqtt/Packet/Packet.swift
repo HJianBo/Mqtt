@@ -219,7 +219,20 @@ extension Packet {
     }
 }
 
-///
+/// packet initalize error
+enum PacketError: Error {
+    /// fix header type illegal
+    case typeIllegal
+    
+    /// arg of bytes count illegal
+    case byteCountIllegal
+    
+    /// arg of bytes content illegal
+    case byteContentIllegal
+}
+
 protocol InitializeWithResponse {
-    init(header: FixedHeader, bytes: [UInt8])
+    
+    init(header: FixedHeader, bytes: [UInt8]) throws
+    
 }

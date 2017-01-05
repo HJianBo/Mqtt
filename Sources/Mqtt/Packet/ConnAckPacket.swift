@@ -85,10 +85,27 @@ extension ConnAckPacket {
 
 extension ConnAckPacket: InitializeWithResponse {
     
-    init(header: FixedHeader, bytes: [UInt8]) {
-        fixedHeader = header
+    
+    /**
+     bytes count is 2 bytes
+     byte1: return code
+     byte2: connack flags
+     */
+    init(header: FixedHeader, bytes: [UInt8]) throws {
+        guard bytes.count == 2 else {
+            throw PacketError.byteCountIllegal
+        }
         
+        guard let code = ConnAckReturnCode(rawValue: bytes[1]) else {
+            throw PacketError.byteContentIllegal
+        }
+        
+        guard header.type == .connack else {
+            throw PacketError.typeIllegal
+        }
+        
+        fixedHeader = header
         connackFlags = bytes[0]
-        returnCode = ConnAckReturnCode(rawValue: bytes[1])!
+        returnCode = code
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Socks
+import Dispatch
 
 // 在发送消息时
 // 1. 是否需要收到返回
@@ -15,7 +16,36 @@ import Socks
 // 4. packetId 是否应用一个机制，来保障不重复
 protocol Sender {
     
+    var socket: TCPClient { get }
+    
+    /// serial queue
+    var opQueue: DispatchQueue { get set }
+    
+    /// serial queue
+    var cbQueue: DispatchQueue { get set }
+    
     init(sock: TCPClient)
     
     func send(packet: Packet) throws
 }
+
+class MqttSender: Sender {
+    
+    var socket: TCPClient
+    
+    var opQueue: DispatchQueue
+    
+    var cbQueue: DispatchQueue
+    
+    required init(sock: TCPClient) {
+        socket = sock
+        
+        opQueue = DispatchQueue(label: "com.mqtt.sender.op")
+        cbQueue = DispatchQueue(label: "com.mqtt.sender.cb")
+    }
+    
+    func send(packet: Packet) {
+        
+    }
+}
+

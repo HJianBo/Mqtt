@@ -70,10 +70,16 @@ struct SubAckPacket: Packet {
 
 extension SubAckPacket: InitializeWithResponse {
     
-    init(header: FixedHeader, bytes: [UInt8]) {
+    init(header: FixedHeader, bytes: [UInt8]) throws {
+        guard header.type == .suback else {
+            throw PacketError.typeIllegal
+        }
+        
+        guard bytes.count >= 2 else {
+            throw PacketError.byteContentIllegal
+        }
         
         fixedHeader = header
-        
         packetId = UInt16(bytes[0]*127+bytes[1])
         
         // XXX: endindex????

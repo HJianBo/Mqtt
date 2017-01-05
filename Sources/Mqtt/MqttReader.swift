@@ -66,7 +66,11 @@ class MqttReader {
         readQueue.async { [unowned self] in
             while true {
                 self.semaphore.wait()
-                try? self.tl_read()
+                do {
+                    try self.tl_read()
+                } catch {
+                    DDLogError("read error \(error)")
+                }
                 self.semaphore.signal()
             }
         }
@@ -87,10 +91,10 @@ extension MqttReader {
         if remainLength != 0 {
             payload = try readPayload(len: remainLength)
         }
-        
+        DDLogVerbose("did recv h: \(header), l: \(remainLength), p: \(payload)")
         switch header.type {
         case .connack:
-            let conack = ConnAckPacket(header: header, bytes: payload)
+            let conack = try ConnAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvConnectAck: conack)
         case .publish:
             let publish = PublishPacket(header: header, bytes: payload)
@@ -105,7 +109,7 @@ extension MqttReader {
             let pubcmp = PubCompPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvPubComp: pubcmp)
         case .suback:
-            let suback = SubAckPacket(header: header, bytes: payload)
+            let suback = try SubAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvSubAck: suback)
         case .unsuback:
             let unsuback = UnsubAckPacket(header: header, bytes: payload)
@@ -137,7 +141,7 @@ extension MqttReader {
         guard let header = FixedHeader(byte: buffer[0]) else {
             throw ReaderError.invaildPacket
         }
-        
+        DDLogVerbose("did recv header \(header)")
         return header
     }
     
@@ -166,7 +170,7 @@ extension MqttReader {
         }
         
         // when length equal 0, the payload is empty
-        //
+        DDLogVerbose("did recv length \(length)")
         return length
     }
     

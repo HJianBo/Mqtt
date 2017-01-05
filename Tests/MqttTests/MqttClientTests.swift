@@ -10,7 +10,8 @@ import XCTest
 import Mqtt
 
 
-let sDefaultHost = "q.emqtt.com"
+//let sDefaultHost = "q.emqtt.com"
+let sDefaultHost = "127.0.0.1"
 let sDefaultPort = UInt16(1883)
 
 class MqttClientTests: XCTestCase {
@@ -34,8 +35,10 @@ class MqttClientTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         expConnect = expectation(description: "CONNECT")
         
-        client = MqttClient(clientId: "macbookpro-test")
+        client = MqttClient(clientId: "macbookpro-test\(arc4random())")
+        client.cleanSession = true
         client.delegate = self
+        print("------------ clientId \(client.clientId)")
         do {
             try client.connect(host: sDefaultHost, port: sDefaultPort)
         } catch {
@@ -63,7 +66,7 @@ class MqttClientTests: XCTestCase {
         expPublish = expectation(description: "PUBLISH")
         
         do {
-            try client.publish(topic: "topic1", payload: "hello mqtt server!", qos: .qos2)
+            try client.publish(topic: "topic2", payload: "hello mqtt server!", qos: .qos2)
         } catch {
             XCTAssert(false, "\(error)")
         }

@@ -21,11 +21,16 @@ public protocol MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket)
     
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?)
+    
+    func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket)
 }
 
-extension MqttClientDelegate {
-    public func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {}
-}
+// 扩展协议具有默认实现.
+// 当 `协议实现者` 实现该协议后, 实现了该方法. 
+// 那么调用者, 调用该方法时是调用的哪个实现？
+//extension MqttClientDelegate {
+//    public func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {}
+//}
 
 public final class MqttClient {
     
@@ -36,15 +41,15 @@ public final class MqttClient {
     // TODO:
     public var sessionState: Int = 0
     
-    var clientId: String
+    public var clientId: String
     
-    var cleanSession: Bool
+    public var cleanSession: Bool
     
-    var keepAlive: UInt16
+    public var keepAlive: UInt16
     
-    var username: String?
+    public var username: String?
     
-    var password: String?
+    public var password: String?
     
     var willMessage: PublishPacket?
     
@@ -84,6 +89,7 @@ public final class MqttClient {
         
         // TODO: when socket is nil, throw a error
         try socket?.send(bytes: packet.packToBytes)
+        DDLogVerbose("did send \(packet)")
     }
     
     fileprivate func close() throws {
