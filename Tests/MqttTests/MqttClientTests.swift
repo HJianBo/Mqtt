@@ -142,5 +142,6 @@ extension MqttClientTests: MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?) {
         expDisconnect?.fulfill()
         expDisconnect = nil
+        client = nil
     }
 }

@@ -179,8 +179,14 @@ extension FixedHeader {
     }
 }
 
+extension FixedHeader: CustomStringConvertible {
+    public var description: String {
+        return "Header(type: \(type), flag: \(flag))"
+    }
+}
 
-protocol Packet {
+
+protocol Packet: CustomStringConvertible {
     
     // 1. Fixed header, require
     var fixedHeader: FixedHeader { get }
@@ -216,6 +222,10 @@ extension Packet {
         } while len > 0
         
         return bytes
+    }
+    
+    public var description: String {
+        return "Packet(h: \(fixedHeader), v: \(varHeader), p: \(payload.count)bytes)"
     }
 }
 

@@ -96,6 +96,8 @@ public final class MqttClient {
         
         // TODO: save message queue before close network connection ??
         try socket?.close()
+        socket = nil
+        reader = nil
     }
 }
 

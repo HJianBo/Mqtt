@@ -63,15 +63,16 @@ class MqttReader {
         semaphore = DispatchSemaphore(value: 1)
         
         // read cicrle
-        readQueue.async { [unowned self] in
+        readQueue.async { [weak self] in
             while true {
-                self.semaphore.wait()
+                guard let weakSelf = self else { break }
+                weakSelf.semaphore.wait()
                 do {
-                    try self.tl_read()
+                    try weakSelf.tl_read()
                 } catch {
                     DDLogError("read error \(error)")
                 }
-                self.semaphore.signal()
+                weakSelf.semaphore.signal()
             }
         }
     }
@@ -91,7 +92,7 @@ extension MqttReader {
         if remainLength != 0 {
             payload = try readPayload(len: remainLength)
         }
-        DDLogVerbose("did recv h: \(header), l: \(remainLength), p: \(payload)")
+        DDLogVerbose("did recv H: \(header), L: \(remainLength), P: \(payload)")
         switch header.type {
         case .connack:
             let conack = try ConnAckPacket(header: header, bytes: payload)
