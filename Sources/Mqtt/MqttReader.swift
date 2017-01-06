@@ -39,7 +39,6 @@ protocol MqttReaderDelegate: class {
 
 //
 
-
 class MqttReader {
     
     enum ReaderError: Error {
@@ -48,8 +47,6 @@ class MqttReader {
     }
     
     var socket: TCPClient
-    
-    var semaphore: DispatchSemaphore
     
     var readQueue: DispatchQueue
     
@@ -60,21 +57,23 @@ class MqttReader {
         delegate = del
         readQueue = DispatchQueue(label: "com.mqtt.reader", qos: .background)
         readQueue.setSpecific(key: OP_QUEUE_SPECIFIC_KEY, value: OP_QUEUE_SPECIFIC_VAL)
-        semaphore = DispatchSemaphore(value: 1)
         
         // read cicrle
-        readQueue.async { [weak self] in
-            while true {
-                guard let weakSelf = self else { break }
-                weakSelf.semaphore.wait()
-                do {
-                    try weakSelf.tl_read()
-                } catch {
-                    DDLogError("read error \(error)")
-                }
-                weakSelf.semaphore.signal()
-            }
+        readQueue.async(execute: backgroundReciveLoop)
+    }
+    
+    private func backgroundReciveLoop() {
+        guard socket.socket.descriptor != -1 else {
+            DDLogError("revoke recive loop, socket descripotr is euqal -1")
+            return
         }
+        do {
+            try tl_read()
+        } catch {
+            DDLogWarn("read error: \(error)")
+        }
+        
+        backgroundReciveLoop()
     }
 }
 
@@ -92,7 +91,7 @@ extension MqttReader {
         if remainLength != 0 {
             payload = try readPayload(len: remainLength)
         }
-        DDLogVerbose("did recv H: \(header), L: \(remainLength), P: \(payload)")
+        DDLogInfo("RECV H: \(header), L: \(remainLength), P: \(payload)")
         switch header.type {
         case .connack:
             let conack = try ConnAckPacket(header: header, bytes: payload)

@@ -81,11 +81,3 @@ extension PublishPacket: InitializeWithResponse {
         }
     }
 }
-
-extension PublishPacket: CustomStringConvertible {
-    public var description: String {
-        return "topic: \(topicName)"
-    }
-}
-
-

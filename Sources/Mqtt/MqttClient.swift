@@ -7,6 +7,7 @@
 //
 
 import Socks
+import Foundation
 
 public protocol MqttClientDelegate {
     
@@ -32,30 +33,50 @@ public protocol MqttClientDelegate {
 //    public func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {}
 //}
 
+/// client session state
+public enum SessionState: Int {
+    
+    /// receive connack is not .accept
+    case denied = -1
+    
+    /// `MqttClient` class has init
+    case initialization
+    
+    /// executing connect method, but not recevie connack packet
+    case connecting
+    
+    /// receive .accept of connack
+    case connected
+    
+    /// executed disconnect success, session end
+    case disconnected
+}
+
 public final class MqttClient {
     
     private var _packetId: UInt16 = 0
     
     public var delegate: MqttClientDelegate?
     
-    // TODO:
-    public var sessionState: Int = 0
+    public fileprivate(set) var sessionState: SessionState = .initialization
     
-    public var clientId: String
+    public fileprivate(set) var clientId: String
     
-    public var cleanSession: Bool
+    public fileprivate(set) var cleanSession: Bool
     
-    public var keepAlive: UInt16
+    public fileprivate(set) var keepAlive: UInt16
     
-    public var username: String?
+    public fileprivate(set) var username: String?
     
-    public var password: String?
+    public fileprivate(set) var password: String?
     
     var willMessage: PublishPacket?
     
     private var socket: TCPClient?
     
     private var reader: MqttReader?
+    
+    var stateLock: NSLock
     
     var storedPubPacket = [UInt16: PublishPacket]()
     
@@ -64,12 +85,19 @@ public final class MqttClient {
     var storedUnsubsPacket = [UInt16: UnsubscribePacket]()
 
     public init(clientId: String,
-                cleanSession: Bool = false,
-                keepAlive: UInt16 = 60
+                cleanSession: Bool,
+                keepAlive: UInt16,
+                username: String?,
+                password: String?,
+                willMessage: PublishPacket?
         ) {
         self.clientId     = clientId
         self.cleanSession = cleanSession
         self.keepAlive    = keepAlive
+        self.username     = username
+        self.password     = password
+        self.willMessage  = willMessage
+        self.stateLock    = NSLock()
     }
     
     fileprivate var nextPacketId: UInt16 {
@@ -89,7 +117,7 @@ public final class MqttClient {
         
         // TODO: when socket is nil, throw a error
         try socket?.send(bytes: packet.packToBytes)
-        DDLogVerbose("did send \(packet)")
+        DDLogInfo("SEND \(packet)")
     }
     
     fileprivate func close() throws {
@@ -101,6 +129,24 @@ public final class MqttClient {
     }
 }
 
+// MARK: convenience init
+extension MqttClient {
+    
+    public convenience init(clientId: String) {
+        self.init(clientId: clientId, cleanSession: false, keepAlive: 60, username: nil, password: nil, willMessage: nil)
+    }
+    
+    public convenience init(clientId: String, cleanSession: Bool) {
+        self.init(clientId: clientId, cleanSession: cleanSession, keepAlive: 60, username: nil, password: nil, willMessage: nil)
+    }
+    
+    public convenience init(clientId: String, cleanSession: Bool, keepAlive: UInt16) {
+        self.init(clientId: clientId, cleanSession: cleanSession, keepAlive: keepAlive, username: nil, password: nil, willMessage: nil)
+    }
+    
+    
+}
+
 // MARK: MQTT method
 extension MqttClient {
     
@@ -109,6 +155,13 @@ extension MqttClient {
      - parameter port: TCP ports 8883 and 1883 are registered with IANA for MQTT TLS and non TLS communication respectively.
      */
     public func connect(host: String, port: UInt16 = 1883) throws {
+        stateLock.lock()
+        
+        defer {
+            sessionState = .connecting
+            stateLock.unlock()
+        }
+        
         let addr = InternetAddress(hostname: host, port: port)
         
         // create socket and connect to address
@@ -171,6 +224,7 @@ extension MqttClient {
     }
     
     public func disconnect() throws {
+        stateLock.lock()
         let packet = DisconnectPacket()
         
         try send(packet: packet)
@@ -178,6 +232,10 @@ extension MqttClient {
         // must close the network connect 
         // must not send any more control packets on that network connection
         try close()
+        
+        sessionState = .disconnected
+        stateLock.unlock()
+        
         delegate?.mqtt(self, didDisconnect: nil)
     }
 }
@@ -194,13 +252,21 @@ extension MqttClient: MqttReaderDelegate {
     
     // when recv connect ack
     func reader(_ reader: MqttReader, didRecvConnectAck connack: ConnAckPacket) {
-        DDLogDebug("recv connect ack \(connack)")
+        DDLogInfo("reader recv connect ack \(connack)")
+        
+        stateLock.lock()
+        if connack.returnCode == .accepted {
+            sessionState = .connected
+        } else {
+            sessionState = .denied
+        }
+        stateLock.unlock()
         
         delegate?.mqtt(self, didRecvConnack: connack)
     }
     
     func reader(_ reader: MqttReader, didRecvPublish publish: PublishPacket) {
-        DDLogDebug("recv publish \(publish)")
+        DDLogInfo("reader recv publish \(publish)")
         
         delegate?.mqtt(self, didRecvMessage: publish)
         
@@ -218,7 +284,7 @@ extension MqttClient: MqttReaderDelegate {
     }
     
     func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket) {
-        DDLogDebug("recv publish ack \(puback)")
+        DDLogInfo("reader recv publish ack \(puback)")
         
         guard let publish = storedPubPacket[puback.packetId] else {
             DDLogWarn("recv publish ack, but not stored in cache")
@@ -231,7 +297,7 @@ extension MqttClient: MqttReaderDelegate {
     }
     
     func reader(_ reader: MqttReader, didRecvPubRec pubrec: PubRecPacket) throws {
-        DDLogDebug("recv publish rec \(pubrec)")
+        DDLogInfo("reader recv publish rec \(pubrec)")
         
         guard let _ = storedPubPacket[pubrec.packetId] else {
             DDLogWarn("recv public recv, but not stored in cache")
@@ -244,7 +310,7 @@ extension MqttClient: MqttReaderDelegate {
     }
     
     func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket) {
-        DDLogDebug("recv publish comp \(pubcomp)")
+        DDLogInfo("reader recv publish comp \(pubcomp)")
         guard let publish = storedPubPacket[pubcomp.packetId] else {
             DDLogWarn("recv publish comp, but not stored in cache")
             return
@@ -256,7 +322,7 @@ extension MqttClient: MqttReaderDelegate {
     }
     
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket) {
-        DDLogDebug("recv subscribe ack \(suback)")
+        DDLogInfo("reader recv subscribe ack \(suback)")
         guard let packet = storedSubsPacket[suback.packetId] else {
             DDLogWarn("recv a suback, but not stored in cache")
             return
@@ -266,7 +332,7 @@ extension MqttClient: MqttReaderDelegate {
     }
     
     func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket) {
-        DDLogDebug("recv unsubscribe ack \(unsuback)")
+        DDLogInfo("reader recv unsubscribe ack \(unsuback)")
         
         guard let packet = storedUnsubsPacket[unsuback.packetId] else {
             DDLogWarn("recv a unsubscribe ack, but not stored in cache")
@@ -278,7 +344,7 @@ extension MqttClient: MqttReaderDelegate {
     }
     
     func reader(_ reader: MqttReader, didRecvPingresp pingresp: PingRespPacket) {
-        DDLogDebug("recv ping response \(pingresp)")
+        DDLogInfo("reader recv ping response \(pingresp)")
         
         delegate?.mqtt(self, didRecvPingresp: pingresp)
     }

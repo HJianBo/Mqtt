@@ -35,8 +35,7 @@ class MqttClientTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         expConnect = expectation(description: "CONNECT")
         
-        client = MqttClient(clientId: "macbookpro-test\(arc4random())")
-        client.cleanSession = true
+        client = MqttClient(clientId: "macbookpro-test", cleanSession: false)
         client.delegate = self
         print("------------ clientId \(client.clientId)")
         do {
@@ -108,11 +107,15 @@ class MqttClientTests: XCTestCase {
 
 extension MqttClientTests: MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didRecvConnack packet: ConnAckPacket) {
-        XCTAssertEqual(packet.returnCode, .accepted)
         if packet.returnCode == .accepted {
             expConnect?.fulfill()
             expConnect = nil
+            XCTAssertEqual(mqtt.sessionState, .connected)
+        } else {
+            XCTAssertEqual(mqtt.sessionState, .denied)
         }
+        
+        XCTAssertEqual(packet.returnCode, .accepted)
     }
     
     func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket) {
@@ -143,5 +146,6 @@ extension MqttClientTests: MqttClientDelegate {
         expDisconnect?.fulfill()
         expDisconnect = nil
         client = nil
+        XCTAssertEqual(mqtt.sessionState, .disconnected)
     }
 }
