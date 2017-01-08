@@ -36,7 +36,7 @@ public struct UnsubscribePacket: Packet {
     }
     
     // MARK: Payload
-    var topics = Array<String>()
+    public var topics = Array<String>()
     
     var payload: Array<UInt8> {
         

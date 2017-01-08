@@ -79,6 +79,8 @@ public final class MqttClient {
     private var socket: TCPClient?
     
     private var reader: MqttReader?
+
+    var delegateQueue: DispatchQueue
     
     var stateLock: NSLock
     
@@ -102,6 +104,7 @@ public final class MqttClient {
         self.password     = password
         self.willMessage  = willMessage
         self.stateLock    = NSLock()
+        self.delegateQueue = DispatchQueue.main
     }
     
     fileprivate var nextPacketId: UInt16 {
@@ -124,7 +127,7 @@ public final class MqttClient {
             throw ClientError.socketIsNil
         }
         
-        sock.send(bytes: packet.packToBytes)
+        try sock.send(bytes: packet.packToBytes)
         
         DDLogInfo("SEND \(packet)")
     }
@@ -195,9 +198,13 @@ extension MqttClient {
         
         if qos == .qos0 {
             try send(packet: packet, recv: false)
-            delegate?.mqtt(self, didPublish: packet)
+            delegateQueue.async { [weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.delegate?.mqtt(weakSelf, didPublish: packet)
+            }
         } else {
             // store message
+            // XXX: 当固定时间没有收到回复时, 应该重发该消息
             storedPubPacket[packet.packetId] = packet
             // send PUBLISH Qos1/2 DUP0
             try send(packet: packet, recv: false)
@@ -244,8 +251,10 @@ extension MqttClient {
         
         sessionState = .disconnected
         stateLock.unlock()
-        
-        delegate?.mqtt(self, didDisconnect: nil)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didDisconnect: nil)
+        }
     }
 }
 
@@ -270,14 +279,19 @@ extension MqttClient: MqttReaderDelegate {
             sessionState = .denied
         }
         stateLock.unlock()
-        
-        delegate?.mqtt(self, didRecvConnack: connack)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didRecvConnack: connack)
+        }
     }
     
     func reader(_ reader: MqttReader, didRecvPublish publish: PublishPacket) {
         DDLogInfo("reader recv publish \(publish)")
         
-        delegate?.mqtt(self, didRecvMessage: publish)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didRecvMessage: publish)
+        }
         
         // feedback ack
         switch publish.fixedHeader.qos {
@@ -287,6 +301,9 @@ extension MqttClient: MqttReaderDelegate {
             let packet = PubAckPacket(packetId: publish.packetId)
             try? send(packet: packet)
         case .qos2:
+            
+            // TODO: should stored the packet id, when qos is equal 2
+            // XXXX: 如果在某个时间段未收到 pubrec 的返回, 那么应该使用这个 id 再次发送 pubrel
             let packet = PubRecPacket(packetId: publish.packetId)
             try? send(packet: packet)
         }
@@ -301,7 +318,10 @@ extension MqttClient: MqttReaderDelegate {
         }
         
         // publish is compelate, when qos equal 1
-        delegate?.mqtt(self, didPublish: publish)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
+        }
         storedPubPacket.removeValue(forKey: puback.packetId)
     }
     
@@ -326,8 +346,17 @@ extension MqttClient: MqttReaderDelegate {
         }
         
         // publish is compelate, when qos equal 2
-        delegate?.mqtt(self, didPublish: publish)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
+        }
         storedPubPacket.removeValue(forKey: pubcomp.packetId)
+    }
+    
+    func reader(_ reader: MqttReader, didRecvPubRel pubrel: PubRelPacket) {
+        DDLogInfo("reader recv publish rel \(pubrel)")
+        
+        // TODO: when recv pubrel should discard stored packet id
     }
     
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket) {
@@ -337,7 +366,10 @@ extension MqttClient: MqttReaderDelegate {
             return
         }
         storedSubsPacket.removeValue(forKey: suback.packetId)
-        delegate?.mqtt(self, didSubscribe: packet)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didSubscribe: packet)
+        }
     }
     
     func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket) {
@@ -349,12 +381,18 @@ extension MqttClient: MqttReaderDelegate {
         }
         
         storedUnsubsPacket.removeValue(forKey: unsuback.packetId)
-        delegate?.mqtt(self, didUnsubscribe: packet)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didUnsubscribe: packet)
+        }
     }
     
     func reader(_ reader: MqttReader, didRecvPingresp pingresp: PingRespPacket) {
         DDLogInfo("reader recv ping response \(pingresp)")
         
-        delegate?.mqtt(self, didRecvPingresp: pingresp)
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didRecvPingresp: pingresp)
+        }
     }
 }

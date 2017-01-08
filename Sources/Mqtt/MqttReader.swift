@@ -24,6 +24,8 @@ protocol MqttReaderDelegate: class {
     
     func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket)
     
+    func reader(_ reader: MqttReader, didRecvPubRel pubrel: PubRelPacket)
+    
     func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket)
     
     func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket)
@@ -108,6 +110,9 @@ extension MqttReader {
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvPubComp: pubcmp)
+        case .pubrel:
+            let pubrel = try PubRelPacket(header: header, bytes: payload)
+            delegate?.reader(self, didRecvPubRel: pubrel)
         case .suback:
             let suback = try SubAckPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvSubAck: suback)

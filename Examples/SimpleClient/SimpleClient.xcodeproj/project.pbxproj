@@ -1,0 +1,442 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8232AEDE1E226C770038D429 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8232AEDD1E226C770038D429 /* AppDelegate.swift */; };
+		8232AEE31E226C770038D429 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8232AEE11E226C770038D429 /* Main.storyboard */; };
+		8232AEE51E226C770038D429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8232AEE41E226C770038D429 /* Assets.xcassets */; };
+		8232AEE81E226C770038D429 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8232AEE61E226C770038D429 /* LaunchScreen.storyboard */; };
+		8232AF091E226E590038D429 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8232AEFC1E226C9A0038D429 /* Mqtt.framework */; };
+		8232AF0A1E226E590038D429 /* Mqtt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8232AEFC1E226C9A0038D429 /* Mqtt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8232AF0F1E2271550038D429 /* ClientSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8232AF0E1E2271550038D429 /* ClientSessionViewController.swift */; };
+		8232AF111E22716F0038D429 /* ClientConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8232AF101E22716F0038D429 /* ClientConfigurationViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8232AEF71E226C9A0038D429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = OBJ_57;
+			remoteInfo = Socks;
+		};
+		8232AEF91E226C9A0038D429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = OBJ_58;
+			remoteInfo = SocksCore;
+		};
+		8232AEFB1E226C9A0038D429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = OBJ_59;
+			remoteInfo = Mqtt;
+		};
+		8232AEFD1E226C9A0038D429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = OBJ_60;
+			remoteInfo = MqttTests;
+		};
+		8232AF0B1E226E590038D429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = OBJ_95;
+			remoteInfo = Mqtt;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8232AF0D1E226E5A0038D429 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8232AF0A1E226E590038D429 /* Mqtt.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		8232AEDA1E226C770038D429 /* SimpleClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8232AEDD1E226C770038D429 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8232AEE21E226C770038D429 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8232AEE41E226C770038D429 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8232AEE71E226C770038D429 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8232AEE91E226C770038D429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mqtt.xcodeproj; path = ../../Mqtt.xcodeproj; sourceTree = "<group>"; };
+		8232AF0E1E2271550038D429 /* ClientSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientSessionViewController.swift; sourceTree = "<group>"; };
+		8232AF101E22716F0038D429 /* ClientConfigurationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8232AED71E226C770038D429 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8232AF091E226E590038D429 /* Mqtt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8232AED11E226C770038D429 = {
+			isa = PBXGroup;
+			children = (
+				8232AEDC1E226C770038D429 /* SimpleClient */,
+				8232AEEF1E226C8E0038D429 /* Frameworks */,
+				8232AEDB1E226C770038D429 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8232AEDB1E226C770038D429 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8232AEDA1E226C770038D429 /* SimpleClient.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8232AEDC1E226C770038D429 /* SimpleClient */ = {
+			isa = PBXGroup;
+			children = (
+				8232AEDD1E226C770038D429 /* AppDelegate.swift */,
+				8232AF0E1E2271550038D429 /* ClientSessionViewController.swift */,
+				8232AF101E22716F0038D429 /* ClientConfigurationViewController.swift */,
+				8232AEE11E226C770038D429 /* Main.storyboard */,
+				8232AF121E2271750038D429 /* Supporting Files */,
+			);
+			path = SimpleClient;
+			sourceTree = "<group>";
+		};
+		8232AEEF1E226C8E0038D429 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8232AEF11E226C9A0038D429 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8232AEF81E226C9A0038D429 /* Socks.framework */,
+				8232AEFA1E226C9A0038D429 /* SocksCore.framework */,
+				8232AEFC1E226C9A0038D429 /* Mqtt.framework */,
+				8232AEFE1E226C9A0038D429 /* MqttTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8232AF121E2271750038D429 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8232AEE41E226C770038D429 /* Assets.xcassets */,
+				8232AEE61E226C770038D429 /* LaunchScreen.storyboard */,
+				8232AEE91E226C770038D429 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8232AED91E226C770038D429 /* SimpleClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8232AEEC1E226C770038D429 /* Build configuration list for PBXNativeTarget "SimpleClient" */;
+			buildPhases = (
+				8232AED61E226C770038D429 /* Sources */,
+				8232AED71E226C770038D429 /* Frameworks */,
+				8232AED81E226C770038D429 /* Resources */,
+				8232AF0D1E226E5A0038D429 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8232AF0C1E226E590038D429 /* PBXTargetDependency */,
+			);
+			name = SimpleClient;
+			productName = SimpleClient;
+			productReference = 8232AEDA1E226C770038D429 /* SimpleClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8232AED21E226C770038D429 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = beidouapp;
+				TargetAttributes = {
+					8232AED91E226C770038D429 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 8232AED51E226C770038D429 /* Build configuration list for PBXProject "SimpleClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8232AED11E226C770038D429;
+			productRefGroup = 8232AEDB1E226C770038D429 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8232AEF11E226C9A0038D429 /* Products */;
+					ProjectRef = 8232AEF01E226C9A0038D429 /* Mqtt.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8232AED91E226C770038D429 /* SimpleClient */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8232AEF81E226C9A0038D429 /* Socks.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Socks.framework;
+			remoteRef = 8232AEF71E226C9A0038D429 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8232AEFA1E226C9A0038D429 /* SocksCore.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SocksCore.framework;
+			remoteRef = 8232AEF91E226C9A0038D429 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8232AEFC1E226C9A0038D429 /* Mqtt.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Mqtt.framework;
+			remoteRef = 8232AEFB1E226C9A0038D429 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8232AEFE1E226C9A0038D429 /* MqttTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MqttTests.xctest;
+			remoteRef = 8232AEFD1E226C9A0038D429 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8232AED81E226C770038D429 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8232AEE81E226C770038D429 /* LaunchScreen.storyboard in Resources */,
+				8232AEE51E226C770038D429 /* Assets.xcassets in Resources */,
+				8232AEE31E226C770038D429 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8232AED61E226C770038D429 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8232AF0F1E2271550038D429 /* ClientSessionViewController.swift in Sources */,
+				8232AEDE1E226C770038D429 /* AppDelegate.swift in Sources */,
+				8232AF111E22716F0038D429 /* ClientConfigurationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8232AF0C1E226E590038D429 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Mqtt;
+			targetProxy = 8232AF0B1E226E590038D429 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8232AEE11E226C770038D429 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8232AEE21E226C770038D429 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8232AEE61E226C770038D429 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8232AEE71E226C770038D429 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8232AEEA1E226C770038D429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8232AEEB1E226C770038D429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8232AEED1E226C770038D429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SimpleClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beidouapp.SimpleClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		8232AEEE1E226C770038D429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SimpleClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beidouapp.SimpleClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8232AED51E226C770038D429 /* Build configuration list for PBXProject "SimpleClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8232AEEA1E226C770038D429 /* Debug */,
+				8232AEEB1E226C770038D429 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8232AEEC1E226C770038D429 /* Build configuration list for PBXNativeTarget "SimpleClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8232AEED1E226C770038D429 /* Debug */,
+				8232AEEE1E226C770038D429 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8232AED21E226C770038D429 /* Project object */;
+}

@@ -48,3 +48,19 @@ struct PubRelPacket: Packet {
         self.packetId = packetId
     }
 }
+
+extension PubRelPacket: InitializeWithResponse {
+    
+    init(header: FixedHeader, bytes: [UInt8]) throws {
+        guard header.type == .pubrel else {
+            throw PacketError.typeIllegal
+        }
+        
+        guard bytes.count == 2 else {
+            throw PacketError.byteCountIllegal
+        }
+        
+        fixedHeader = header
+        packetId = UInt16(bytes[0]*127 + bytes[1])
+    }
+}

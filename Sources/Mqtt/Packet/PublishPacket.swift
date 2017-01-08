@@ -81,3 +81,11 @@ extension PublishPacket: InitializeWithResponse {
         }
     }
 }
+
+extension PublishPacket {
+    
+    /// return payload string value by encoding with encoding
+    public var payloadStringValue: String {
+        return String(bytes: payload, encoding: .utf8) ?? ""
+    }
+}
