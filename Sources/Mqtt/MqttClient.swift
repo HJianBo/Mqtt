@@ -52,6 +52,10 @@ public enum SessionState: Int {
     case disconnected
 }
 
+public enum ClientError: Error {
+    case socketIsNil
+}
+
 public final class MqttClient {
     
     private var _packetId: UInt16 = 0
@@ -101,7 +105,9 @@ public final class MqttClient {
     }
     
     fileprivate var nextPacketId: UInt16 {
-        // FIXME: over flow?
+        if _packetId + 1 >= UInt16.max {
+            _packetId = 0
+        }
         _packetId += 1
         return _packetId
     }
@@ -114,9 +120,12 @@ public final class MqttClient {
     // TODO: 需改为 sender 进行代理消息的发送
     // sync method
     fileprivate func send(packet: Packet, recv: Bool = true) throws {
+        guard let sock = socket else {
+            throw ClientError.socketIsNil
+        }
         
-        // TODO: when socket is nil, throw a error
-        try socket?.send(bytes: packet.packToBytes)
+        sock.send(bytes: packet.packToBytes)
+        
         DDLogInfo("SEND \(packet)")
     }
     

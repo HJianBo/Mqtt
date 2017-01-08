@@ -32,7 +32,7 @@ protocol MqttReaderDelegate: class {
 }
 
 // TODO:
-// 1. read circle
+// 1. read circle  -- [OK]
 // 2. 使用 readbuffer 然后通过 buffer 来组包, 组包完成则丢在上层处理
 // 3. 可以使用多线程, 和信号量的方式. 控制 每次读满 buffer 就开始等待, buffer 有空就继续读。
 // 4. 读数据和组包可以分开在俩个线程进行执行, 但必须都是顺序执行才行
