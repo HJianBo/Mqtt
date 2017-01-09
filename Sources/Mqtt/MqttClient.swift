@@ -80,6 +80,8 @@ public final class MqttClient {
     
     private var reader: MqttReader?
 
+    var mqttQueue: DispatchQueue
+    
     var delegateQueue: DispatchQueue
     
     var stateLock: NSLock
@@ -104,7 +106,9 @@ public final class MqttClient {
         self.password     = password
         self.willMessage  = willMessage
         self.stateLock    = NSLock()
+        self.mqttQueue    = DispatchQueue(label: "com.mqtt.client")
         self.delegateQueue = DispatchQueue.main
+        
     }
     
     fileprivate var nextPacketId: UInt16 {
@@ -118,18 +122,37 @@ public final class MqttClient {
     fileprivate func set(socket: TCPClient) {
         self.socket = socket
         reader = MqttReader(socks: socket, del: self)
+        reader?.startRecevie()
     }
     
-    // TODO: 需改为 sender 进行代理消息的发送
     // sync method
-    fileprivate func send(packet: Packet, recv: Bool = true) throws {
-        guard let sock = socket else {
-            throw ClientError.socketIsNil
+    fileprivate func send(packet: Packet) throws {
+        try mqttQueue.sync {
+            guard let sock = socket else {
+                throw ClientError.socketIsNil
+            }
+            
+            try sock.send(bytes: packet.packToBytes)
+            
+            DDLogInfo("SEND \(packet)")
         }
-        
-        try sock.send(bytes: packet.packToBytes)
-        
-        DDLogInfo("SEND \(packet)")
+    }
+    
+    fileprivate func asyncSend(packet: Packet, handler: @escaping (Error?) -> Void) {
+        mqttQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            guard let sock = weakSelf.socket else {
+                handler(ClientError.socketIsNil)
+                return
+            }
+            do {
+                try sock.send(bytes: packet.packToBytes)
+                DDLogInfo("SEND \(packet)")
+                handler(nil)
+            } catch {
+                handler(error)
+            }
+        }
     }
     
     fileprivate func close() throws {
@@ -177,6 +200,7 @@ extension MqttClient {
         let addr = InternetAddress(hostname: host, port: port)
         
         // create socket and connect to address
+        
         let socket = try TCPClient(address: addr)
         
         // set socket instance to client
@@ -197,7 +221,7 @@ extension MqttClient {
         let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload, qos: qos)
         
         if qos == .qos0 {
-            try send(packet: packet, recv: false)
+            try send(packet: packet)
             delegateQueue.async { [weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.delegate?.mqtt(weakSelf, didPublish: packet)
@@ -207,7 +231,7 @@ extension MqttClient {
             // XXX: 当固定时间没有收到回复时, 应该重发该消息
             storedPubPacket[packet.packetId] = packet
             // send PUBLISH Qos1/2 DUP0
-            try send(packet: packet, recv: false)
+            try send(packet: packet)
         }
     }
     
@@ -219,7 +243,7 @@ extension MqttClient {
         // stored subscribe packet
         storedSubsPacket[packet.packetId] = packet
         
-        try send(packet: packet, recv: false)
+        try send(packet: packet)
     }
     
     public func unsubscribe(topics: [String]) throws {

@@ -59,9 +59,6 @@ class MqttReader {
         delegate = del
         readQueue = DispatchQueue(label: "com.mqtt.reader", qos: .background)
         readQueue.setSpecific(key: OP_QUEUE_SPECIFIC_KEY, value: OP_QUEUE_SPECIFIC_VAL)
-        
-        // read cicrle
-        readQueue.async(execute: backgroundReciveLoop)
     }
     
     private func backgroundReciveLoop() {
@@ -77,26 +74,20 @@ class MqttReader {
         
         backgroundReciveLoop()
     }
-}
-
-
-// MARK: Helper
-extension MqttReader {
-
-    fileprivate func tl_read() throws {
-        assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
-               "this method should only be run at sepcific queue")
+    
+    func startRecevie() {
+        // read cicrle
+        readQueue.async(execute: backgroundReciveLoop)
+    }
+    
+    func didReceviePacket(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
+        // handle packet, then callback to delegate
+        DDLogInfo("RECV H: \(header), L: \(remainLen), P: \(payload)")
         
-        let header = try readHeader()
-        let remainLength = try readLength()
-        var payload: [UInt8] = []
-        if remainLength != 0 {
-            payload = try readPayload(len: remainLength)
-        }
-        DDLogInfo("RECV H: \(header), L: \(remainLength), P: \(payload)")
         switch header.type {
         case .connack:
             let conack = try ConnAckPacket(header: header, bytes: payload)
+            
             delegate?.reader(self, didRecvConnectAck: conack)
         case .publish:
             let publish = PublishPacket(header: header, bytes: payload)
@@ -123,12 +114,31 @@ extension MqttReader {
             let pingresp = PingRespPacket(header: header, bytes: payload)
             delegate?.reader(self, didRecvPingresp: pingresp)
         case .reserved, .reserved2:
-            // should disconnect 
+            // should disconnect
             DDLogWarn("should close the network connect, when recv reserved header type.")
             break
         default:
             assert(false, "recv a packet type \(header.type), should be handle.")
         }
+    }
+}
+
+
+// MARK: Helper
+extension MqttReader {
+
+    fileprivate func tl_read() throws {
+        assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
+               "this method should only be run at sepcific queue")
+        
+        let header = try readHeader()
+        let remainLength = try readLength()
+        var payload: [UInt8] = []
+        if remainLength != 0 {
+            payload = try readPayload(len: remainLength)
+        }
+        
+        try didReceviePacket(header: header, remainLen: remainLength, payload: payload)
     }
     
     // sync method to read a header
