@@ -67,34 +67,3 @@ extension String {
         return len.bytes + utf8
     }
 }
-
-
-extension Foundation.Stream.Status: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .notOpen:  return "NotOpen"
-        case .opening:  return "Opening"
-        case .open:     return "Open"
-        case .reading:  return "Reading"
-        case .writing:  return "Writing"
-        case .atEnd:    return "AtEnd"
-        case .closed:   return "Closed"
-        case .error:    return "Error"
-        }
-    }
-}
-
-extension Foundation.Stream.Event: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case Foundation.Stream.Event():                return "None"
-        case Foundation.Stream.Event.openCompleted:       return "OpenComleted"
-        case Foundation.Stream.Event.hasBytesAvailable:   return "HasBytesAvailable"
-        case Foundation.Stream.Event.hasSpaceAvailable:   return "HasSpaceAvailable"
-        case Foundation.Stream.Event.errorOccurred:       return "ErrorOccurred"
-        case Foundation.Stream.Event.endEncountered:      return "EndEncountered"
-        default:
-            assert(false, "unknown")
-        }
-    }
-}

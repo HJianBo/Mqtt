@@ -53,9 +53,20 @@ public enum SessionState: Int {
 }
 
 public enum ClientError: Error {
+    
+    case aleadryConnected
+    
+    case hasDisconnected
+    
+    case notConnected
+    
     case socketIsNil
 }
 
+// TODO: 
+//  1. 再被远端断开连接后, 需要及时通知程序本身, 及时改变 client 状态, 以及返回码
+//  2. 
+//
 public final class MqttClient {
     
     private var _packetId: UInt16 = 0
@@ -128,8 +139,8 @@ public final class MqttClient {
     // sync method
     fileprivate func send(packet: Packet) throws {
         try mqttQueue.sync {
-            guard let sock = socket else {
-                throw ClientError.socketIsNil
+            guard let sock = socket, !sock.socket.closed else {
+                throw ClientError.notConnected
             }
             
             try sock.send(bytes: packet.packToBytes)
@@ -142,7 +153,7 @@ public final class MqttClient {
         mqttQueue.async { [weak self] in
             guard let weakSelf = self else { return }
             guard let sock = weakSelf.socket else {
-                handler(ClientError.socketIsNil)
+                handler(ClientError.notConnected)
                 return
             }
             do {
@@ -190,8 +201,10 @@ extension MqttClient {
      - parameter port: TCP ports 8883 and 1883 are registered with IANA for MQTT TLS and non TLS communication respectively.
      */
     public func connect(host: String, port: UInt16 = 1883) throws {
+        guard sessionState != .connected else {
+            throw ClientError.aleadryConnected
+        }
         stateLock.lock()
-        
         defer {
             sessionState = .connecting
             stateLock.unlock()
@@ -264,7 +277,14 @@ extension MqttClient {
     }
     
     public func disconnect() throws {
+        guard sessionState == .connected else {
+            return
+        }
         stateLock.lock()
+        defer {
+            sessionState = .disconnected
+            stateLock.unlock()
+        }
         let packet = DisconnectPacket()
         
         try send(packet: packet)
@@ -272,13 +292,12 @@ extension MqttClient {
         // must close the network connect 
         // must not send any more control packets on that network connection
         try close()
-        
-        sessionState = .disconnected
-        stateLock.unlock()
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didDisconnect: nil)
-        }
+
+        // 改为从reader的socket读取到的状态进行判断
+        //delegateQueue.async { [weak self] in
+        //    guard let weakSelf = self else { return }
+        //    weakSelf.delegate?.mqtt(weakSelf, didDisconnect: nil)
+        //}
     }
 }
 
@@ -417,6 +436,21 @@ extension MqttClient: MqttReaderDelegate {
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.delegate?.mqtt(weakSelf, didRecvPingresp: pingresp)
+        }
+    }
+    
+    func reader(_ reader: MqttReader, didDisconnect error: Error) {
+        DDLogInfo("reader disconect event error: \(error)")
+        stateLock.lock()
+        defer {
+            sessionState = .disconnected
+            stateLock.unlock()
+        }
+        
+        let diserror: Error? = sessionState == .disconnected ? nil : error
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didDisconnect: diserror)
         }
     }
 }

@@ -26,6 +26,9 @@ class ClientSessionViewController: UIViewController {
         mqtt = MqttClient(clientId: "iosclient")
         mqtt.delegate = self
     }
+    @IBAction func touchedGetClientState(_ sender: Any) {
+        log("\(mqtt.sessionState)")
+    }
 }
 
 extension ClientSessionViewController {

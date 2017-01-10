@@ -31,6 +31,9 @@ protocol MqttReaderDelegate: class {
     func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket)
     
     func reader(_ reader: MqttReader, didRecvPingresp pingresp: PingRespPacket)
+    
+    // XXX: disconnect 事件应该由socket上报, 而非 reader
+    func reader(_ reader: MqttReader, didDisconnect error: Error)
 }
 
 // TODO:
@@ -41,7 +44,7 @@ protocol MqttReaderDelegate: class {
 
 //
 
-class MqttReader {
+internal final class MqttReader {
     
     enum ReaderError: Error {
         case invaildPacket
@@ -61,23 +64,25 @@ class MqttReader {
         readQueue.setSpecific(key: OP_QUEUE_SPECIFIC_KEY, value: OP_QUEUE_SPECIFIC_VAL)
     }
     
-    private func backgroundReciveLoop() {
-        guard socket.socket.descriptor != -1 else {
-            DDLogError("revoke recive loop, socket descripotr is euqal -1")
-            return
-        }
-        do {
-            try tl_read()
-        } catch {
-            DDLogWarn("read error: \(error)")
-        }
-        
-        backgroundReciveLoop()
-    }
-    
     func startRecevie() {
         // read cicrle
         readQueue.async(execute: backgroundReciveLoop)
+    }
+    
+    private func backgroundReciveLoop() {
+        do {
+            try tl_read()
+        } catch {
+            // occur a error, close a network connection
+            DDLogWarn("read error: \(error)")
+            guard !socket.socket.closed else {
+                DDLogError("revoke recevie loop, socket is colsed.")
+                delegate?.reader(self, didDisconnect: error)
+                return
+            }
+        }
+        
+        backgroundReciveLoop()
     }
     
     func didReceviePacket(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
