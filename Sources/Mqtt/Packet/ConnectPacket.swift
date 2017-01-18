@@ -99,9 +99,9 @@ struct ConnectPacket: Packet {
     }
     
     
-    var userName: String? {
+    var username: String? {
         didSet {
-            userNameFlag = (userName != nil)
+            usernameFlag = (username != nil)
         }
     }
     
@@ -132,8 +132,8 @@ struct ConnectPacket: Packet {
                 }
             }
             
-            if userNameFlag {
-                if let uname = userName {
+            if usernameFlag {
+                if let uname = username {
                     value.append(contentsOf: uname.mq_stringData)
                 } else {
                     value.append(contentsOf: "".mq_stringData)
@@ -170,7 +170,7 @@ extension ConnectPacket {
      +--------------------------------------------------------------------------------------------------+
      */
     
-    var userNameFlag: Bool {
+    var usernameFlag: Bool {
         get {
             return Bool(intValue: connectFlags.bitAt(7))
         }
@@ -258,5 +258,11 @@ extension ConnectPacket {
         get {
             return Bool(intValue: connectFlags.bitAt(0))
         }
+    }
+}
+
+extension ConnectPacket {
+    public var description: String {
+        return "Connect(clientId: \(clientId), username: \(username), password: \(password), keepalive: \(keepAlive), cleanSession: \(cleanSession))"
     }
 }

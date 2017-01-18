@@ -85,7 +85,6 @@ extension ConnAckPacket {
 
 extension ConnAckPacket: InitializeWithResponse {
     
-    
     /**
      bytes count is 2 bytes
      byte1: return code
@@ -107,5 +106,11 @@ extension ConnAckPacket: InitializeWithResponse {
         fixedHeader = header
         connackFlags = bytes[0]
         returnCode = code
+    }
+}
+
+extension ConnAckPacket {
+    public var description: String {
+        return "ConnAck(returnCode: \(returnCode), sessionPresent: \(sessionPresent))"
     }
 }

@@ -222,7 +222,7 @@ extension MqttClient {
         // send connect packet
         var packet = ConnectPacket(clientId: clientId)
         
-        packet.userName = username
+        packet.username = username
         packet.password = password
         packet.cleanSession = cleanSession
         packet.keepAlive = keepAlive
