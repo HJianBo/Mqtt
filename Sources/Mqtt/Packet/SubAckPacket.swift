@@ -80,7 +80,7 @@ extension SubAckPacket: InitializeWithResponse {
         }
         
         fixedHeader = header
-        packetId = UInt16(bytes[0]*127+bytes[1])
+        packetId = UInt16(bytes[0])*256+UInt16(bytes[1])
         
         // XXX: endindex????
         returnCodes = bytes[2..<bytes.endIndex].map {
@@ -89,5 +89,11 @@ extension SubAckPacket: InitializeWithResponse {
             }
             return returnCode
         }
+    }
+}
+
+extension SubAckPacket {
+    public var description: String {
+        return "SubAck(packetId: \(packetId))"
     }
 }

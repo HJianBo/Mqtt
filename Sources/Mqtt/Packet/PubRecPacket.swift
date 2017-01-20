@@ -46,6 +46,12 @@ extension PubRecPacket: InitializeWithResponse {
     init(header: FixedHeader, bytes: [UInt8]) {
         self.fixedHeader = header
         
-        packetId = UInt16(bytes[0]*127 + bytes[1])
+        packetId = UInt16(bytes[0])*256+UInt16(bytes[1])
+    }
+}
+
+extension PubRecPacket {
+    public var description: String {
+        return "PubRec(packetId: \(packetId))"
     }
 }

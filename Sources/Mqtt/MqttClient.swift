@@ -56,6 +56,8 @@ public enum ClientError: Error {
     
     case aleadryConnected
     
+    case aleadryConnecting
+    
     case hasDisconnected
     
     case notConnected
@@ -201,15 +203,22 @@ extension MqttClient {
      - parameter port: TCP ports 8883 and 1883 are registered with IANA for MQTT TLS and non TLS communication respectively.
      */
     public func connect(host: String, port: UInt16 = 1883) throws {
+        stateLock.lock()
+        
         guard sessionState != .connected else {
+            stateLock.unlock()
             throw ClientError.aleadryConnected
         }
-        stateLock.lock()
+        
+        guard sessionState != .connecting else {
+            stateLock.unlock()
+            throw ClientError.aleadryConnecting
+        }
+        
         defer {
             sessionState = .connecting
             stateLock.unlock()
         }
-        
         let addr = InternetAddress(hostname: host, port: port)
         
         // create socket and connect to address

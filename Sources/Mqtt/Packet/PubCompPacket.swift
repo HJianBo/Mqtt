@@ -47,6 +47,12 @@ extension PubCompPacket: InitializeWithResponse {
     init(header: FixedHeader, bytes: [UInt8]) {
         fixedHeader = header
         
-        packetId = UInt16(bytes[0]*127 + bytes[1])
+        packetId = UInt16(bytes[0])*256+UInt16(bytes[1])
+    }
+}
+
+extension PubCompPacket {
+    public var description: String {
+        return "PubComp(packetId: \(packetId))"
     }
 }

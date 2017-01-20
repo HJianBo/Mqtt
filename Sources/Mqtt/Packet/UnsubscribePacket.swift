@@ -55,3 +55,9 @@ public struct UnsubscribePacket: Packet {
         self.packetId = packetId
     }
 }
+
+extension UnsubscribePacket {
+    public var description: String {
+        return "Unsubscribe(packetId: \(packetId), topics: \(topics))"
+    }
+}

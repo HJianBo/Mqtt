@@ -71,7 +71,9 @@ extension ClientSessionViewController {
             let topic = txtTopic.text ?? ""
             let payload = txtPayload.text ?? ""
             let qos   = Qos(rawValue: UInt8(segQos.selectedSegmentIndex)) ?? .qos0
-            try mqtt.publish(topic: topic, payload: payload, qos: qos)
+            for _ in 0..<1000 {
+                try mqtt.publish(topic: topic, payload: payload, qos: qos)
+            }
         } catch {
             log("\(#function) throw a error: \(error)")
         }
@@ -125,6 +127,9 @@ extension ClientSessionViewController: MqttClientDelegate {
 extension ClientSessionViewController {
     
     func log(_ s: String) {
+        if txtLogConsole.text.utf8.count > 1000 {
+           txtLogConsole.text = ""
+        }
         txtLogConsole.text = s + "\n" + txtLogConsole.text
     }
 }

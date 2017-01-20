@@ -61,6 +61,12 @@ extension PubRelPacket: InitializeWithResponse {
         }
         
         fixedHeader = header
-        packetId = UInt16(bytes[0]*127 + bytes[1])
+        packetId = UInt16(bytes[0])*256+UInt16(bytes[1])
+    }
+}
+
+extension PubRelPacket {
+    public var description: String {
+        return "PubRel(packetId: \(packetId))"
     }
 }

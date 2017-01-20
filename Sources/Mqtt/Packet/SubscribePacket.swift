@@ -61,3 +61,9 @@ public struct SubscribePacket: Packet {
         self.packetId     = packetId
     }
 }
+
+extension SubscribePacket {
+    public var description: String {
+        return "Subscribe(packetId: \(packetId), topics: \(topics))"
+    }
+}

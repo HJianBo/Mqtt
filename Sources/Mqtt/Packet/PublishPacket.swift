@@ -68,12 +68,12 @@ extension PublishPacket: InitializeWithResponse {
         fixedHeader = header
         
         // parse topic
-        let topicLen = Int(bytes[0]*127 + bytes[1])
+        let topicLen = Int(bytes[0])*256 + Int(bytes[1])
         topicName = String(bytes: bytes[2..<topicLen+2], encoding: .utf8)!
         
         // parse qos and payload
         if fixedHeader.qos > .qos0 {
-            packetId = UInt16(bytes[topicLen+2]*127 + bytes[topicLen+3])
+            packetId = UInt16(bytes[topicLen+2])*256 + UInt16(bytes[topicLen+3])
             payload = Array<UInt8>(bytes.suffix(from: topicLen+4))
         } else {
             packetId = 0

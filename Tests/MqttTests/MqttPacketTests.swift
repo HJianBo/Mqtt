@@ -44,7 +44,7 @@ extension MqttPacketTests {
         XCTAssert(connetPacket.keepAlive == DefaultKeepAlive, "keep alive should be default")
         
         // XXX: connectFlags Default is 0 ??
-        XCTAssert(connetPacket.userNameFlag == false, "username flag should be false")
+        XCTAssert(connetPacket.usernameFlag == false, "username flag should be false")
         XCTAssert(connetPacket.passwordFlag == false, "password flag should be false")
         XCTAssert(connetPacket.willRetain == false, "will retain should be 0")
         XCTAssert(connetPacket.willQos == .qos0, "will qos should be 0")
@@ -54,7 +54,7 @@ extension MqttPacketTests {
         
         // PAYLOAD
         XCTAssert(connetPacket.clientId == clientId, "clientId not match!")
-        XCTAssert(connetPacket.userName == nil, "username should be nil")
+        XCTAssert(connetPacket.username == nil, "username should be nil")
         XCTAssert(connetPacket.password == nil, "password should be nil")
         
         //XCTAssert(connetPacket.remainLength == [], "remain length should be 0")
@@ -75,9 +75,9 @@ extension MqttPacketTests {
         connetPacket.clientId = newClientId
         XCTAssert(connetPacket.clientId == newClientId, "clientId should be \(newClientId)")
         
-        connetPacket.userName = username
-        XCTAssert(connetPacket.userName == username, "username should be \(username)")
-        XCTAssert(connetPacket.userNameFlag, "username flag should be 1")
+        connetPacket.username = username
+        XCTAssert(connetPacket.username == username, "username should be \(username)")
+        XCTAssert(connetPacket.usernameFlag, "username flag should be 1")
         
         connetPacket.password = password
         XCTAssert(connetPacket.password == password, "password should be \(password)")
@@ -95,9 +95,9 @@ extension MqttPacketTests {
         XCTAssert(connetPacket.willQos == .qos1, "will qos default should be .qos1")
         XCTAssert(connetPacket.willRetain == false, "will retain default should be false")
         
-        connetPacket.userName = nil
-        XCTAssert(connetPacket.userName == nil, "username should be nil")
-        XCTAssert(connetPacket.userNameFlag == false, "username flag should be 0")
+        connetPacket.username = nil
+        XCTAssert(connetPacket.username == nil, "username should be nil")
+        XCTAssert(connetPacket.usernameFlag == false, "username flag should be 0")
         
         connetPacket.password = nil
         XCTAssert(connetPacket.password == nil, "password should be nil")
@@ -115,8 +115,8 @@ extension MqttPacketTests {
         XCTAssert(connetPacket.willQos == .qos0, "will qos default should be .qos0")
         XCTAssert(connetPacket.willRetain == false, "will retain default should be false")
         
-        connetPacket.userNameFlag = true
-        XCTAssert(connetPacket.userNameFlag, "username flag should be true")
+        connetPacket.usernameFlag = true
+        XCTAssert(connetPacket.usernameFlag, "username flag should be true")
         
         connetPacket.passwordFlag = true
         XCTAssert(connetPacket.passwordFlag, "password flag should be true")
@@ -134,8 +134,8 @@ extension MqttPacketTests {
         XCTAssert(connetPacket.cleanSession, "clean session should be true")
         
         
-        connetPacket.userNameFlag = false
-        XCTAssert(!connetPacket.userNameFlag, "username flag should be false")
+        connetPacket.usernameFlag = false
+        XCTAssert(!connetPacket.usernameFlag, "username flag should be false")
         
         connetPacket.passwordFlag = false
         XCTAssert(!connetPacket.passwordFlag, "password flag should be false")
