@@ -91,7 +91,9 @@ public final class MqttClient {
     
     private var socket: TCPClient?
     
-    private var reader: MqttReader?
+    fileprivate var reader: MqttReader?
+    
+    fileprivate var sender: MqttSender?
 
     var mqttQueue: DispatchQueue
     
@@ -136,37 +138,17 @@ public final class MqttClient {
         self.socket = socket
         reader = MqttReader(socks: socket, del: self)
         reader?.startRecevie()
+        
+        sender = MqttSender(sock: socket)
     }
     
-    // sync method
     fileprivate func send(packet: Packet) throws {
-        try mqttQueue.sync {
-            guard let sock = socket, !sock.socket.closed else {
-                throw ClientError.notConnected
-            }
-            
-            try sock.send(bytes: packet.packToBytes)
-            
-            DDLogInfo("SEND \(packet)")
+        guard let sock = socket, !sock.socket.closed, let sender = sender else {
+            throw ClientError.notConnected
         }
+        sender.send(packet: packet)
     }
     
-    fileprivate func asyncSend(packet: Packet, handler: @escaping (Error?) -> Void) {
-        mqttQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            guard let sock = weakSelf.socket else {
-                handler(ClientError.notConnected)
-                return
-            }
-            do {
-                try sock.send(bytes: packet.packToBytes)
-                DDLogInfo("SEND \(packet)")
-                handler(nil)
-            } catch {
-                handler(error)
-            }
-        }
-    }
     
     fileprivate func close() throws {
         
@@ -374,6 +356,9 @@ extension MqttClient: MqttReaderDelegate {
             guard let weakSelf = self else { return }
             weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
         }
+        
+        sender?.someMessageMaybeCompelate(by: puback)
+        
         storedPubPacket.removeValue(forKey: puback.packetId)
     }
     

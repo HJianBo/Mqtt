@@ -7,5 +7,8 @@ let package = Package(
     ],
     dependencies: [
         .Package(url: "https://github.com/vapor/socks", majorVersion: 1, minor: 2)
+    ],
+    exclude: [
+        "Examples"
     ]
 )

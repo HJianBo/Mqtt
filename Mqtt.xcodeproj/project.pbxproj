@@ -7,97 +7,97 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		OBJ_100 /* DDLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* DDLog.swift */; };
-		OBJ_101 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* Extension.swift */; };
-		OBJ_102 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* MqttClient.swift */; };
-		OBJ_103 /* MqttReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* MqttReader.swift */; };
-		OBJ_104 /* MqttSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* MqttSender.swift */; };
-		OBJ_105 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* ConnAckPacket.swift */; };
-		OBJ_106 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* ConnectPacket.swift */; };
-		OBJ_107 /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* DisconnectPacket.swift */; };
-		OBJ_108 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* Packet.swift */; };
-		OBJ_109 /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* PingReqPacket.swift */; };
-		OBJ_110 /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* PingRespPacket.swift */; };
-		OBJ_111 /* PubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* PubAckPacket.swift */; };
-		OBJ_112 /* PubCompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* PubCompPacket.swift */; };
-		OBJ_113 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* PublishPacket.swift */; };
-		OBJ_114 /* PubRecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* PubRecPacket.swift */; };
-		OBJ_115 /* PubRelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* PubRelPacket.swift */; };
-		OBJ_116 /* SubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* SubAckPacket.swift */; };
-		OBJ_117 /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* SubscribePacket.swift */; };
-		OBJ_118 /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* UnsubAckPacket.swift */; };
-		OBJ_119 /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* UnsubscribePacket.swift */; };
-		OBJ_121 /* SocksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* SocksCore.framework */; };
-		OBJ_122 /* Socks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* Socks.framework */; };
-		OBJ_130 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_54 /* MqttClientTests.swift */; };
-		OBJ_131 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_55 /* MqttPacketTests.swift */; };
-		OBJ_133 /* SocksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* SocksCore.framework */; };
-		OBJ_134 /* Socks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* Socks.framework */; };
-		OBJ_135 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* Mqtt.framework */; };
-		OBJ_66 /* Socks.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Socks.swift */; };
-		OBJ_67 /* SynchronousTCPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* SynchronousTCPServer.swift */; };
-		OBJ_68 /* SynchronousUDPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* SynchronousUDPServer.swift */; };
-		OBJ_69 /* TCPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* TCPClient.swift */; };
-		OBJ_70 /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* UDPClient.swift */; };
-		OBJ_72 /* SocksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* SocksCore.framework */; };
-		OBJ_79 /* Address+C.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* Address+C.swift */; };
-		OBJ_80 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Address.swift */; };
-		OBJ_81 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* Bytes.swift */; };
-		OBJ_82 /* Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Conversions.swift */; };
-		OBJ_83 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* Error.swift */; };
-		OBJ_84 /* FDSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* FDSet.swift */; };
-		OBJ_85 /* InternetSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* InternetSocket.swift */; };
-		OBJ_86 /* Pipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* Pipe.swift */; };
-		OBJ_87 /* Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Select.swift */; };
-		OBJ_88 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* Socket.swift */; };
-		OBJ_89 /* SocketOptions+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* SocketOptions+Deprecated.swift */; };
-		OBJ_90 /* SocketOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* SocketOptions.swift */; };
-		OBJ_91 /* TCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* TCPSocket.swift */; };
-		OBJ_92 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* Types.swift */; };
-		OBJ_93 /* UDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* UDPSocket.swift */; };
+		OBJ_103 /* DDLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* DDLog.swift */; };
+		OBJ_104 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* Extension.swift */; };
+		OBJ_105 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* MqttClient.swift */; };
+		OBJ_106 /* MqttReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* MqttReader.swift */; };
+		OBJ_107 /* MqttSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* MqttSender.swift */; };
+		OBJ_108 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* ConnAckPacket.swift */; };
+		OBJ_109 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* ConnectPacket.swift */; };
+		OBJ_110 /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* DisconnectPacket.swift */; };
+		OBJ_111 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* Packet.swift */; };
+		OBJ_112 /* PingReqPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* PingReqPacket.swift */; };
+		OBJ_113 /* PingRespPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* PingRespPacket.swift */; };
+		OBJ_114 /* PubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* PubAckPacket.swift */; };
+		OBJ_115 /* PubCompPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* PubCompPacket.swift */; };
+		OBJ_116 /* PublishPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* PublishPacket.swift */; };
+		OBJ_117 /* PubRecPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* PubRecPacket.swift */; };
+		OBJ_118 /* PubRelPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* PubRelPacket.swift */; };
+		OBJ_119 /* SubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* SubAckPacket.swift */; };
+		OBJ_120 /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* SubscribePacket.swift */; };
+		OBJ_121 /* UnsubAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* UnsubAckPacket.swift */; };
+		OBJ_122 /* UnsubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_52 /* UnsubscribePacket.swift */; };
+		OBJ_124 /* SocksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* SocksCore.framework */; };
+		OBJ_125 /* Socks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* Socks.framework */; };
+		OBJ_133 /* MqttClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_55 /* MqttClientTests.swift */; };
+		OBJ_134 /* MqttPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_56 /* MqttPacketTests.swift */; };
+		OBJ_136 /* SocksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* SocksCore.framework */; };
+		OBJ_137 /* Socks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* Socks.framework */; };
+		OBJ_138 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_61 /* Mqtt.framework */; };
+		OBJ_68 /* Socks.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Socks.swift */; };
+		OBJ_69 /* SynchronousTCPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* SynchronousTCPServer.swift */; };
+		OBJ_70 /* SynchronousUDPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* SynchronousUDPServer.swift */; };
+		OBJ_71 /* TCPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* TCPClient.swift */; };
+		OBJ_72 /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* UDPClient.swift */; };
+		OBJ_74 /* SocksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* SocksCore.framework */; };
+		OBJ_81 /* Address+C.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* Address+C.swift */; };
+		OBJ_82 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Address.swift */; };
+		OBJ_83 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* Bytes.swift */; };
+		OBJ_84 /* Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Conversions.swift */; };
+		OBJ_85 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* Error.swift */; };
+		OBJ_86 /* FDSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* FDSet.swift */; };
+		OBJ_87 /* InternetSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* InternetSocket.swift */; };
+		OBJ_88 /* Pipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* Pipe.swift */; };
+		OBJ_89 /* Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Select.swift */; };
+		OBJ_90 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* Socket.swift */; };
+		OBJ_91 /* SocketOptions+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* SocketOptions+Deprecated.swift */; };
+		OBJ_92 /* SocketOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* SocketOptions.swift */; };
+		OBJ_93 /* TCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* TCPSocket.swift */; };
+		OBJ_94 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* Types.swift */; };
+		OBJ_95 /* UDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* UDPSocket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8232AECB1E1E40AD0038D429 /* PBXContainerItemProxy */ = {
+		827168E01E444BB0007EC164 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = OBJ_74;
+			remoteGlobalIDString = OBJ_76;
 			remoteInfo = SocksCore;
 		};
-		8232AECC1E1E40AD0038D429 /* PBXContainerItemProxy */ = {
+		827168E11E444BB0007EC164 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = OBJ_74;
+			remoteGlobalIDString = OBJ_76;
 			remoteInfo = SocksCore;
 		};
-		8232AECD1E1E40AD0038D429 /* PBXContainerItemProxy */ = {
+		827168E21E444BB0007EC164 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = OBJ_61;
+			remoteGlobalIDString = OBJ_63;
 			remoteInfo = Socks;
 		};
-		8232AECE1E1E40AD0038D429 /* PBXContainerItemProxy */ = {
+		827168E31E444BB0007EC164 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = OBJ_74;
+			remoteGlobalIDString = OBJ_76;
 			remoteInfo = SocksCore;
 		};
-		8232AECF1E1E40AD0038D429 /* PBXContainerItemProxy */ = {
+		827168E41E444BB0007EC164 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = OBJ_61;
+			remoteGlobalIDString = OBJ_63;
 			remoteInfo = Socks;
 		};
-		8232AED01E1E40AD0038D429 /* PBXContainerItemProxy */ = {
+		827168E51E444BB0007EC164 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = OBJ_95;
+			remoteGlobalIDString = OBJ_97;
 			remoteInfo = Mqtt;
 		};
 /* End PBXContainerItemProxy section */
@@ -122,65 +122,65 @@
 		OBJ_27 /* TCPSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPSocket.swift; sourceTree = "<group>"; };
 		OBJ_28 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		OBJ_29 /* UDPSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPSocket.swift; sourceTree = "<group>"; };
-		OBJ_31 /* DDLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDLog.swift; sourceTree = "<group>"; };
-		OBJ_32 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		OBJ_33 /* MqttClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
-		OBJ_34 /* MqttReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttReader.swift; sourceTree = "<group>"; };
-		OBJ_35 /* MqttSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttSender.swift; sourceTree = "<group>"; };
-		OBJ_37 /* ConnAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
-		OBJ_38 /* ConnectPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
-		OBJ_39 /* DisconnectPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
-		OBJ_40 /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
-		OBJ_41 /* PingReqPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
-		OBJ_42 /* PingRespPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
-		OBJ_43 /* PubAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubAckPacket.swift; sourceTree = "<group>"; };
-		OBJ_44 /* PubCompPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubCompPacket.swift; sourceTree = "<group>"; };
-		OBJ_45 /* PublishPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
-		OBJ_46 /* PubRecPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubRecPacket.swift; sourceTree = "<group>"; };
-		OBJ_47 /* PubRelPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubRelPacket.swift; sourceTree = "<group>"; };
-		OBJ_48 /* SubAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubAckPacket.swift; sourceTree = "<group>"; };
-		OBJ_49 /* SubscribePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
-		OBJ_50 /* UnsubAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
-		OBJ_51 /* UnsubscribePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
-		OBJ_54 /* MqttClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttClientTests.swift; sourceTree = "<group>"; };
-		OBJ_55 /* MqttPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttPacketTests.swift; sourceTree = "<group>"; };
-		OBJ_57 /* Socks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Socks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_58 /* SocksCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocksCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_59 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_32 /* DDLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDLog.swift; sourceTree = "<group>"; };
+		OBJ_33 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		OBJ_34 /* MqttClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
+		OBJ_35 /* MqttReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MqttReader.swift; path = ../MqttReader.swift; sourceTree = "<group>"; };
+		OBJ_36 /* MqttSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MqttSender.swift; path = ../MqttSender.swift; sourceTree = "<group>"; };
+		OBJ_38 /* ConnAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
+		OBJ_39 /* ConnectPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
+		OBJ_40 /* DisconnectPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
+		OBJ_41 /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		OBJ_42 /* PingReqPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingReqPacket.swift; sourceTree = "<group>"; };
+		OBJ_43 /* PingRespPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingRespPacket.swift; sourceTree = "<group>"; };
+		OBJ_44 /* PubAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubAckPacket.swift; sourceTree = "<group>"; };
+		OBJ_45 /* PubCompPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubCompPacket.swift; sourceTree = "<group>"; };
+		OBJ_46 /* PublishPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishPacket.swift; sourceTree = "<group>"; };
+		OBJ_47 /* PubRecPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubRecPacket.swift; sourceTree = "<group>"; };
+		OBJ_48 /* PubRelPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubRelPacket.swift; sourceTree = "<group>"; };
+		OBJ_49 /* SubAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubAckPacket.swift; sourceTree = "<group>"; };
+		OBJ_50 /* SubscribePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
+		OBJ_51 /* UnsubAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsubAckPacket.swift; sourceTree = "<group>"; };
+		OBJ_52 /* UnsubscribePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsubscribePacket.swift; sourceTree = "<group>"; };
+		OBJ_55 /* MqttClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttClientTests.swift; sourceTree = "<group>"; };
+		OBJ_56 /* MqttPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttPacketTests.swift; sourceTree = "<group>"; };
+		OBJ_59 /* Socks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Socks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_60 /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_60 /* SocksCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocksCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_61 /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_62 /* MqttTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_9 /* Socks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_120 /* Frameworks */ = {
+		OBJ_123 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_121 /* SocksCore.framework in Frameworks */,
-				OBJ_122 /* Socks.framework in Frameworks */,
+				OBJ_124 /* SocksCore.framework in Frameworks */,
+				OBJ_125 /* Socks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_132 /* Frameworks */ = {
+		OBJ_135 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_133 /* SocksCore.framework in Frameworks */,
-				OBJ_134 /* Socks.framework in Frameworks */,
-				OBJ_135 /* Mqtt.framework in Frameworks */,
+				OBJ_136 /* SocksCore.framework in Frameworks */,
+				OBJ_137 /* Socks.framework in Frameworks */,
+				OBJ_138 /* Mqtt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_71 /* Frameworks */ = {
+		OBJ_73 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_72 /* SocksCore.framework in Frameworks */,
+				OBJ_74 /* SocksCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_94 /* Frameworks */ = {
+		OBJ_96 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
@@ -190,6 +190,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8281D2211E496C2F00A20D3B /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_35 /* MqttReader.swift */,
+				OBJ_36 /* MqttSender.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
 		OBJ_14 /* SocksCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,41 +219,40 @@
 				OBJ_29 /* UDPSocket.swift */,
 			);
 			name = SocksCore;
-			path = "Packages/Socks-1.2.2/Sources/SocksCore";
+			path = "Packages/Socks-1.2.4/Sources/SocksCore";
 			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_30 /* Mqtt */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_31 /* DDLog.swift */,
-				OBJ_32 /* Extension.swift */,
-				OBJ_33 /* MqttClient.swift */,
-				OBJ_34 /* MqttReader.swift */,
-				OBJ_35 /* MqttSender.swift */,
-				OBJ_36 /* Packet */,
+				OBJ_32 /* DDLog.swift */,
+				OBJ_33 /* Extension.swift */,
+				OBJ_34 /* MqttClient.swift */,
+				8281D2211E496C2F00A20D3B /* Session */,
+				OBJ_37 /* Packet */,
 			);
 			name = Mqtt;
 			path = Sources/Mqtt;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_36 /* Packet */ = {
+		OBJ_37 /* Packet */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_37 /* ConnAckPacket.swift */,
-				OBJ_38 /* ConnectPacket.swift */,
-				OBJ_39 /* DisconnectPacket.swift */,
-				OBJ_40 /* Packet.swift */,
-				OBJ_41 /* PingReqPacket.swift */,
-				OBJ_42 /* PingRespPacket.swift */,
-				OBJ_43 /* PubAckPacket.swift */,
-				OBJ_44 /* PubCompPacket.swift */,
-				OBJ_45 /* PublishPacket.swift */,
-				OBJ_46 /* PubRecPacket.swift */,
-				OBJ_47 /* PubRelPacket.swift */,
-				OBJ_48 /* SubAckPacket.swift */,
-				OBJ_49 /* SubscribePacket.swift */,
-				OBJ_50 /* UnsubAckPacket.swift */,
-				OBJ_51 /* UnsubscribePacket.swift */,
+				OBJ_38 /* ConnAckPacket.swift */,
+				OBJ_39 /* ConnectPacket.swift */,
+				OBJ_40 /* DisconnectPacket.swift */,
+				OBJ_41 /* Packet.swift */,
+				OBJ_42 /* PingReqPacket.swift */,
+				OBJ_43 /* PingRespPacket.swift */,
+				OBJ_44 /* PubAckPacket.swift */,
+				OBJ_45 /* PubCompPacket.swift */,
+				OBJ_46 /* PublishPacket.swift */,
+				OBJ_47 /* PubRecPacket.swift */,
+				OBJ_48 /* PubRelPacket.swift */,
+				OBJ_49 /* SubAckPacket.swift */,
+				OBJ_50 /* SubscribePacket.swift */,
+				OBJ_51 /* UnsubAckPacket.swift */,
+				OBJ_52 /* UnsubscribePacket.swift */,
 			);
 			path = Packet;
 			sourceTree = "<group>";
@@ -254,36 +262,36 @@
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				OBJ_52 /* Tests */,
-				OBJ_56 /* Products */,
+				OBJ_53 /* Tests */,
+				OBJ_58 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		OBJ_52 /* Tests */ = {
+		OBJ_53 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_53 /* MqttTests */,
+				OBJ_54 /* MqttTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		OBJ_53 /* MqttTests */ = {
+		OBJ_54 /* MqttTests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_54 /* MqttClientTests.swift */,
-				OBJ_55 /* MqttPacketTests.swift */,
+				OBJ_55 /* MqttClientTests.swift */,
+				OBJ_56 /* MqttPacketTests.swift */,
 			);
 			name = MqttTests;
 			path = Tests/MqttTests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_56 /* Products */ = {
+		OBJ_58 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_57 /* Socks.framework */,
-				OBJ_58 /* SocksCore.framework */,
-				OBJ_59 /* Mqtt.framework */,
-				OBJ_60 /* MqttTests.xctest */,
+				OBJ_59 /* Socks.framework */,
+				OBJ_60 /* SocksCore.framework */,
+				OBJ_61 /* Mqtt.framework */,
+				OBJ_62 /* MqttTests.xctest */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -308,54 +316,54 @@
 				OBJ_13 /* UDPClient.swift */,
 			);
 			name = Socks;
-			path = "Packages/Socks-1.2.2/Sources/Socks";
+			path = "Packages/Socks-1.2.4/Sources/Socks";
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		OBJ_125 /* MqttTests */ = {
+		OBJ_128 /* MqttTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_126 /* Build configuration list for PBXNativeTarget "MqttTests" */;
+			buildConfigurationList = OBJ_129 /* Build configuration list for PBXNativeTarget "MqttTests" */;
 			buildPhases = (
-				OBJ_129 /* Sources */,
-				OBJ_132 /* Frameworks */,
+				OBJ_132 /* Sources */,
+				OBJ_135 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_136 /* PBXTargetDependency */,
-				OBJ_137 /* PBXTargetDependency */,
-				OBJ_138 /* PBXTargetDependency */,
+				OBJ_139 /* PBXTargetDependency */,
+				OBJ_140 /* PBXTargetDependency */,
+				OBJ_141 /* PBXTargetDependency */,
 			);
 			name = MqttTests;
 			productName = MqttTests;
-			productReference = OBJ_60 /* MqttTests.xctest */;
+			productReference = OBJ_62 /* MqttTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		OBJ_61 /* Socks */ = {
+		OBJ_63 /* Socks */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_62 /* Build configuration list for PBXNativeTarget "Socks" */;
+			buildConfigurationList = OBJ_64 /* Build configuration list for PBXNativeTarget "Socks" */;
 			buildPhases = (
-				OBJ_65 /* Sources */,
-				OBJ_71 /* Frameworks */,
+				OBJ_67 /* Sources */,
+				OBJ_73 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_73 /* PBXTargetDependency */,
+				OBJ_75 /* PBXTargetDependency */,
 			);
 			name = Socks;
 			productName = Socks;
-			productReference = OBJ_57 /* Socks.framework */;
+			productReference = OBJ_59 /* Socks.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		OBJ_74 /* SocksCore */ = {
+		OBJ_76 /* SocksCore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_75 /* Build configuration list for PBXNativeTarget "SocksCore" */;
+			buildConfigurationList = OBJ_77 /* Build configuration list for PBXNativeTarget "SocksCore" */;
 			buildPhases = (
-				OBJ_78 /* Sources */,
-				OBJ_94 /* Frameworks */,
+				OBJ_80 /* Sources */,
+				OBJ_96 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -363,25 +371,25 @@
 			);
 			name = SocksCore;
 			productName = SocksCore;
-			productReference = OBJ_58 /* SocksCore.framework */;
+			productReference = OBJ_60 /* SocksCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		OBJ_95 /* Mqtt */ = {
+		OBJ_97 /* Mqtt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_96 /* Build configuration list for PBXNativeTarget "Mqtt" */;
+			buildConfigurationList = OBJ_98 /* Build configuration list for PBXNativeTarget "Mqtt" */;
 			buildPhases = (
-				OBJ_99 /* Sources */,
-				OBJ_120 /* Frameworks */,
+				OBJ_101 /* Sources */,
+				OBJ_123 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_123 /* PBXTargetDependency */,
-				OBJ_124 /* PBXTargetDependency */,
+				OBJ_126 /* PBXTargetDependency */,
+				OBJ_127 /* PBXTargetDependency */,
 			);
 			name = Mqtt;
 			productName = Mqtt;
-			productReference = OBJ_59 /* Mqtt.framework */;
+			productReference = OBJ_61 /* Mqtt.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -390,7 +398,7 @@
 		OBJ_1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 9999;
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Mqtt" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -400,129 +408,149 @@
 				en,
 			);
 			mainGroup = OBJ_5;
-			productRefGroup = OBJ_56 /* Products */;
+			productRefGroup = OBJ_58 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				OBJ_61 /* Socks */,
-				OBJ_74 /* SocksCore */,
-				OBJ_95 /* Mqtt */,
-				OBJ_125 /* MqttTests */,
+				OBJ_63 /* Socks */,
+				OBJ_76 /* SocksCore */,
+				OBJ_97 /* Mqtt */,
+				OBJ_128 /* MqttTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_129 /* Sources */ = {
+		OBJ_101 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_130 /* MqttClientTests.swift in Sources */,
-				OBJ_131 /* MqttPacketTests.swift in Sources */,
+				OBJ_103 /* DDLog.swift in Sources */,
+				OBJ_104 /* Extension.swift in Sources */,
+				OBJ_105 /* MqttClient.swift in Sources */,
+				OBJ_106 /* MqttReader.swift in Sources */,
+				OBJ_107 /* MqttSender.swift in Sources */,
+				OBJ_108 /* ConnAckPacket.swift in Sources */,
+				OBJ_109 /* ConnectPacket.swift in Sources */,
+				OBJ_110 /* DisconnectPacket.swift in Sources */,
+				OBJ_111 /* Packet.swift in Sources */,
+				OBJ_112 /* PingReqPacket.swift in Sources */,
+				OBJ_113 /* PingRespPacket.swift in Sources */,
+				OBJ_114 /* PubAckPacket.swift in Sources */,
+				OBJ_115 /* PubCompPacket.swift in Sources */,
+				OBJ_116 /* PublishPacket.swift in Sources */,
+				OBJ_117 /* PubRecPacket.swift in Sources */,
+				OBJ_118 /* PubRelPacket.swift in Sources */,
+				OBJ_119 /* SubAckPacket.swift in Sources */,
+				OBJ_120 /* SubscribePacket.swift in Sources */,
+				OBJ_121 /* UnsubAckPacket.swift in Sources */,
+				OBJ_122 /* UnsubscribePacket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_65 /* Sources */ = {
+		OBJ_132 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_66 /* Socks.swift in Sources */,
-				OBJ_67 /* SynchronousTCPServer.swift in Sources */,
-				OBJ_68 /* SynchronousUDPServer.swift in Sources */,
-				OBJ_69 /* TCPClient.swift in Sources */,
-				OBJ_70 /* UDPClient.swift in Sources */,
+				OBJ_133 /* MqttClientTests.swift in Sources */,
+				OBJ_134 /* MqttPacketTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_78 /* Sources */ = {
+		OBJ_67 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_79 /* Address+C.swift in Sources */,
-				OBJ_80 /* Address.swift in Sources */,
-				OBJ_81 /* Bytes.swift in Sources */,
-				OBJ_82 /* Conversions.swift in Sources */,
-				OBJ_83 /* Error.swift in Sources */,
-				OBJ_84 /* FDSet.swift in Sources */,
-				OBJ_85 /* InternetSocket.swift in Sources */,
-				OBJ_86 /* Pipe.swift in Sources */,
-				OBJ_87 /* Select.swift in Sources */,
-				OBJ_88 /* Socket.swift in Sources */,
-				OBJ_89 /* SocketOptions+Deprecated.swift in Sources */,
-				OBJ_90 /* SocketOptions.swift in Sources */,
-				OBJ_91 /* TCPSocket.swift in Sources */,
-				OBJ_92 /* Types.swift in Sources */,
-				OBJ_93 /* UDPSocket.swift in Sources */,
+				OBJ_68 /* Socks.swift in Sources */,
+				OBJ_69 /* SynchronousTCPServer.swift in Sources */,
+				OBJ_70 /* SynchronousUDPServer.swift in Sources */,
+				OBJ_71 /* TCPClient.swift in Sources */,
+				OBJ_72 /* UDPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_99 /* Sources */ = {
+		OBJ_80 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_100 /* DDLog.swift in Sources */,
-				OBJ_101 /* Extension.swift in Sources */,
-				OBJ_102 /* MqttClient.swift in Sources */,
-				OBJ_103 /* MqttReader.swift in Sources */,
-				OBJ_104 /* MqttSender.swift in Sources */,
-				OBJ_105 /* ConnAckPacket.swift in Sources */,
-				OBJ_106 /* ConnectPacket.swift in Sources */,
-				OBJ_107 /* DisconnectPacket.swift in Sources */,
-				OBJ_108 /* Packet.swift in Sources */,
-				OBJ_109 /* PingReqPacket.swift in Sources */,
-				OBJ_110 /* PingRespPacket.swift in Sources */,
-				OBJ_111 /* PubAckPacket.swift in Sources */,
-				OBJ_112 /* PubCompPacket.swift in Sources */,
-				OBJ_113 /* PublishPacket.swift in Sources */,
-				OBJ_114 /* PubRecPacket.swift in Sources */,
-				OBJ_115 /* PubRelPacket.swift in Sources */,
-				OBJ_116 /* SubAckPacket.swift in Sources */,
-				OBJ_117 /* SubscribePacket.swift in Sources */,
-				OBJ_118 /* UnsubAckPacket.swift in Sources */,
-				OBJ_119 /* UnsubscribePacket.swift in Sources */,
+				OBJ_81 /* Address+C.swift in Sources */,
+				OBJ_82 /* Address.swift in Sources */,
+				OBJ_83 /* Bytes.swift in Sources */,
+				OBJ_84 /* Conversions.swift in Sources */,
+				OBJ_85 /* Error.swift in Sources */,
+				OBJ_86 /* FDSet.swift in Sources */,
+				OBJ_87 /* InternetSocket.swift in Sources */,
+				OBJ_88 /* Pipe.swift in Sources */,
+				OBJ_89 /* Select.swift in Sources */,
+				OBJ_90 /* Socket.swift in Sources */,
+				OBJ_91 /* SocketOptions+Deprecated.swift in Sources */,
+				OBJ_92 /* SocketOptions.swift in Sources */,
+				OBJ_93 /* TCPSocket.swift in Sources */,
+				OBJ_94 /* Types.swift in Sources */,
+				OBJ_95 /* UDPSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		OBJ_123 /* PBXTargetDependency */ = {
+		OBJ_126 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = OBJ_74 /* SocksCore */;
-			targetProxy = 8232AECC1E1E40AD0038D429 /* PBXContainerItemProxy */;
+			target = OBJ_76 /* SocksCore */;
+			targetProxy = 827168E11E444BB0007EC164 /* PBXContainerItemProxy */;
 		};
-		OBJ_124 /* PBXTargetDependency */ = {
+		OBJ_127 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = OBJ_61 /* Socks */;
-			targetProxy = 8232AECD1E1E40AD0038D429 /* PBXContainerItemProxy */;
+			target = OBJ_63 /* Socks */;
+			targetProxy = 827168E21E444BB0007EC164 /* PBXContainerItemProxy */;
 		};
-		OBJ_136 /* PBXTargetDependency */ = {
+		OBJ_139 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = OBJ_74 /* SocksCore */;
-			targetProxy = 8232AECE1E1E40AD0038D429 /* PBXContainerItemProxy */;
+			target = OBJ_76 /* SocksCore */;
+			targetProxy = 827168E31E444BB0007EC164 /* PBXContainerItemProxy */;
 		};
-		OBJ_137 /* PBXTargetDependency */ = {
+		OBJ_140 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = OBJ_61 /* Socks */;
-			targetProxy = 8232AECF1E1E40AD0038D429 /* PBXContainerItemProxy */;
+			target = OBJ_63 /* Socks */;
+			targetProxy = 827168E41E444BB0007EC164 /* PBXContainerItemProxy */;
 		};
-		OBJ_138 /* PBXTargetDependency */ = {
+		OBJ_141 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = OBJ_95 /* Mqtt */;
-			targetProxy = 8232AED01E1E40AD0038D429 /* PBXContainerItemProxy */;
+			target = OBJ_97 /* Mqtt */;
+			targetProxy = 827168E51E444BB0007EC164 /* PBXContainerItemProxy */;
 		};
-		OBJ_73 /* PBXTargetDependency */ = {
+		OBJ_75 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = OBJ_74 /* SocksCore */;
-			targetProxy = 8232AECB1E1E40AD0038D429 /* PBXContainerItemProxy */;
+			target = OBJ_76 /* SocksCore */;
+			targetProxy = 827168E01E444BB0007EC164 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		OBJ_127 /* Debug */ = {
+		OBJ_100 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = Mqtt.xcodeproj/Mqtt_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Mqtt;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				TARGET_NAME = Mqtt;
+			};
+			name = Release;
+		};
+		OBJ_130 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -536,10 +564,10 @@
 			};
 			name = Debug;
 		};
-		OBJ_128 /* Release */ = {
+		OBJ_131 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -556,35 +584,17 @@
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -596,41 +606,24 @@
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 3.0;
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
 		};
-		OBJ_63 /* Debug */ = {
+		OBJ_65 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -650,7 +643,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_64 /* Release */ = {
+		OBJ_66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -670,7 +663,7 @@
 			};
 			name = Release;
 		};
-		OBJ_76 /* Debug */ = {
+		OBJ_78 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -690,7 +683,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_77 /* Release */ = {
+		OBJ_79 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -710,7 +703,7 @@
 			};
 			name = Release;
 		};
-		OBJ_97 /* Debug */ = {
+		OBJ_99 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -720,48 +713,24 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Mqtt.xcodeproj/Mqtt_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = Mqtt;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
 				TARGET_NAME = Mqtt;
 			};
 			name = Debug;
-		};
-		OBJ_98 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Mqtt.xcodeproj/Mqtt_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Mqtt;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				TARGET_NAME = Mqtt;
-			};
-			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		OBJ_126 /* Build configuration list for PBXNativeTarget "MqttTests" */ = {
+		OBJ_129 /* Build configuration list for PBXNativeTarget "MqttTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_127 /* Debug */,
-				OBJ_128 /* Release */,
+				OBJ_130 /* Debug */,
+				OBJ_131 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -775,29 +744,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_62 /* Build configuration list for PBXNativeTarget "Socks" */ = {
+		OBJ_64 /* Build configuration list for PBXNativeTarget "Socks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_63 /* Debug */,
-				OBJ_64 /* Release */,
+				OBJ_65 /* Debug */,
+				OBJ_66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_75 /* Build configuration list for PBXNativeTarget "SocksCore" */ = {
+		OBJ_77 /* Build configuration list for PBXNativeTarget "SocksCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_76 /* Debug */,
-				OBJ_77 /* Release */,
+				OBJ_78 /* Debug */,
+				OBJ_79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_96 /* Build configuration list for PBXNativeTarget "Mqtt" */ = {
+		OBJ_98 /* Build configuration list for PBXNativeTarget "Mqtt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_97 /* Debug */,
-				OBJ_98 /* Release */,
+				OBJ_99 /* Debug */,
+				OBJ_100 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

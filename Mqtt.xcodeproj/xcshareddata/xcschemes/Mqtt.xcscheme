@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0820"
+   LastUpgradeVersion = "9999"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_61"
+               BlueprintIdentifier = "OBJ_63"
                BuildableName = "Socks.framework"
                BlueprintName = "Socks"
                ReferencedContainer = "container:Mqtt.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_74"
+               BlueprintIdentifier = "OBJ_76"
                BuildableName = "SocksCore.framework"
                BlueprintName = "SocksCore"
                ReferencedContainer = "container:Mqtt.xcodeproj">
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_95"
+               BlueprintIdentifier = "OBJ_97"
                BuildableName = "Mqtt.framework"
                BlueprintName = "Mqtt"
                ReferencedContainer = "container:Mqtt.xcodeproj">
@@ -60,7 +60,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_125"
+               BlueprintIdentifier = "OBJ_128"
                BuildableName = "MqttTests.xctest"
                BlueprintName = "MqttTests"
                ReferencedContainer = "container:Mqtt.xcodeproj">
@@ -83,7 +83,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "OBJ_61"
+            BlueprintIdentifier = "OBJ_63"
             BuildableName = "Socks.framework"
             BlueprintName = "Socks"
             ReferencedContainer = "container:Mqtt.xcodeproj">

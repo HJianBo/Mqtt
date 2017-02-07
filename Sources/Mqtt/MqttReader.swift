@@ -73,7 +73,7 @@ internal final class MqttReader {
         do {
             try tl_read()
         } catch {
-            // occur a error, close a network connection
+            // occur a error, close the network connection
             // XXX: 当出现 read error 时, 是否一定关闭连接？
             DDLogError("revoke recevie loop, read error \(error)")
             delegate?.reader(self, didDisconnect: error)
