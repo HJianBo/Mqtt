@@ -126,6 +126,10 @@ public final class MqttClient {
         
     }
     
+    deinit {
+        sender?.endTaskNow()
+    }
+    
     fileprivate var nextPacketId: UInt16 {
         if _packetId + 1 >= UInt16.max {
             _packetId = 0
@@ -139,7 +143,12 @@ public final class MqttClient {
         reader = MqttReader(socks: socket, del: self)
         reader?.startRecevie()
         
-        sender = MqttSender(sock: socket)
+        if sender != nil {
+            sender?.endTaskNow()
+            sender = nil
+        }
+        
+        sender = MqttSender(sock: socket, del: self)
     }
     
     fileprivate func send(packet: Packet) throws {
@@ -226,10 +235,6 @@ extension MqttClient {
         
         if qos == .qos0 {
             try send(packet: packet)
-            delegateQueue.async { [weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.delegate?.mqtt(weakSelf, didPublish: packet)
-            }
         } else {
             // store message
             // XXX: 当固定时间没有收到回复时, 应该重发该消息
@@ -300,6 +305,7 @@ extension MqttClient {
     }
 }
 
+// MARK: - MqttReaderDelegate
 extension MqttClient: MqttReaderDelegate {
     
     // when recv connect ack
@@ -346,17 +352,12 @@ extension MqttClient: MqttReaderDelegate {
     func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket) {
         DDLogInfo("reader recv publish ack \(puback)")
         
-        guard let publish = storedPubPacket[puback.packetId] else {
+        guard let _ = storedPubPacket[puback.packetId] else {
             DDLogWarn("recv publish ack, but not stored in cache")
             return
         }
         
         // publish is compelate, when qos equal 1
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
-        }
-        
         sender?.someMessageMaybeCompelate(by: puback)
         
         storedPubPacket.removeValue(forKey: puback.packetId)
@@ -377,16 +378,14 @@ extension MqttClient: MqttReaderDelegate {
     
     func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket) {
         DDLogInfo("reader recv publish comp \(pubcomp)")
-        guard let publish = storedPubPacket[pubcomp.packetId] else {
+        guard let _ = storedPubPacket[pubcomp.packetId] else {
             DDLogWarn("recv publish comp, but not stored in cache")
             return
         }
         
         // publish is compelate, when qos equal 2
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
-        }
+        sender?.someMessageMaybeCompelate(by: pubcomp)
+        
         storedPubPacket.removeValue(forKey: pubcomp.packetId)
     }
     
@@ -438,6 +437,7 @@ extension MqttClient: MqttReaderDelegate {
         stateLock.lock()
         defer {
             sessionState = .disconnected
+            sender?.endTaskNow()
             stateLock.unlock()
         }
         
@@ -445,6 +445,21 @@ extension MqttClient: MqttReaderDelegate {
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.delegate?.mqtt(weakSelf, didDisconnect: diserror)
+        }
+    }
+}
+
+// MARK: - MqttSenderDelegate
+extension MqttClient: MqttSenderDelegate {
+    
+    func sender(_ sender: MqttSender, didSendPacket packet: Packet) {
+        DDLogInfo("sender did send packet \(packet)")
+        // message send successfuly
+        if packet is PublishPacket {
+            delegateQueue.async { [weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.delegate?.mqtt(weakSelf, didPublish: packet as! PublishPacket)
+            }
         }
     }
 }

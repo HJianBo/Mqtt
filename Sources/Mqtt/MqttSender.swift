@@ -56,10 +56,13 @@ final class MqttSender {
     // 
     var sendCondition: NSCondition
     
+    var needStopSendTask = false
+    
     weak var delegate: MqttSenderDelegate?
     
-    required init(sock: TCPClient) {
+    required init(sock: TCPClient, del: MqttSenderDelegate? = nil) {
         socket = sock
+        delegate = del
         
         opQueue = DispatchQueue(label: "com.mqtt.sender.op")
         cbQueue = DispatchQueue(label: "com.mqtt.sender.cb")
@@ -89,6 +92,11 @@ final class MqttSender {
         }
     }
     
+    func endTaskNow() {
+        needStopSendTask = true
+        sendCondition.signal()
+    }
+    
     deinit {
         // XXX: Sender 被释放后， Task 需要终止！
         
@@ -103,87 +111,154 @@ extension MqttSender {
         sendCondition.lock()
         sendCondition.wait()
         sendCondition.unlock()
-        guard pFligtWindow < flightWindow && pFligtWindow < messageQueue.count else {
+        
+        // 读取当前所需变量的状态
+        var _pFligtWindow: Int = 0                          // 窗口指针
+        var _flightWindow: Int = 0                          // 窗口大小
+        var _messageQueueCount: Int = 0                     // 当前消息队列大小
+        var _currentNeedSendPacket: PublishPacket? = nil    // 当前消息
+        
+        // XXX: 学艺不精的作法
+        //      此处避免多线程操作变量, 所以先在 opQueue 里从获取到相关值
+        opQueue.sync {
+            _pFligtWindow = pFligtWindow
+            _flightWindow = flightWindow
+            _messageQueueCount = messageQueue.count
+            if pFligtWindow < messageQueue.count {
+                _currentNeedSendPacket = messageQueue[pFligtWindow]
+            }
+        }
+        
+        guard needStopSendTask == false else {
+            DDLogInfo("send messages task will stop")
+            DDLogVerbose("remain messages number \(_messageQueueCount)")
+            // TODO: 保存未发送的数据
+            // ...
+            return
+        }
+        
+        guard _pFligtWindow < _flightWindow, let indxPacket = _currentNeedSendPacket else {
             // 如果条件任然不满足, 则继续
             sendMessageTask()
             return
         }
         
         // 2. send
-        let packet = messageQueue[pFligtWindow]
-        try? socket.send(bytes: packet.packToBytes)
+        try? socket.send(bytes: indxPacket.packToBytes)
         
         // 3. 发送成功后, 如果消息的Qos等级为:
         //     - Qos0 则当前元素出队列, 并提示发送成功
         //     - Qos1/2 则当前窗口指针+1
-        DDLogVerbose("sender did send \(packet)")
-        if packet.fixedHeader.qos == .qos0 {
-            opQueue.sync {
-                let _ = messageQueue.remove(at: pFligtWindow)
-            }
-            
-            // 提示发送成功
-            cbQueue.async { [weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.delegate?.sender(weakSelf, didSendPacket: packet)
-            }
-        } else {
-            pFligtWindow += 1
+        DDLogVerbose("sender did send \(indxPacket)")
+        
+        if indxPacket.fixedHeader.qos == .qos0 {
+            sendSuccessHandler(packet: indxPacket, at: _pFligtWindow)
         }
+        
+        pFligtWindow += 1
         
         // 4. 循环继续
         sendMessageTask()
     }
+    
+    // 成功发送
+    fileprivate func sendSuccessHandler(packet: PublishPacket, at index: Int) {
+        // 从设计来说, 如果要保证 MessageOrder 的话 index 必定为0
+        // 否则则不能认为发送成功, 还需要重新发送
+        // 
+        
+        guard index == 0 else {
+            DDLogError("call succesSend method in index = \(index)")
+            return
+        }
+        
+        // 出队列
+        opQueue.sync {
+            guard let first = messageQueue.first else {
+                assert(false, "message frist is empty")
+                return
+            }
+            
+            guard first.packetId == packet.packetId else {
+                assert(false, "packet id not equal, maybe exist bug")
+                return
+            }
+            
+            messageQueue.removeFirst()
+            
+            pFligtWindow -= 1
+            
+            DDLogInfo("packet id[\(first.packetId)][\(first.fixedHeader.qos)] has complated")
+            
+            // send success callback
+            cbQueue.async { [weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.delegate?.sender(weakSelf, didSendPacket: packet)
+            }
+        }
+    }
+    
+    //
 }
 
 extension MqttSender {
     
-    func someMessageMaybeCompelate(by packet: Packet) {
-
-        if packet is PubAckPacket {
-            // Qos1 的包收到了 ACK, 则
+    func someMessageMaybeCompelate(by response: Packet) {
+        guard let responseId = response.packetIdIfExisted else {
+            assert(false, "packet id is nil")
+            return
+        }
+        // 先取到对应的 Packet
+        var tmpPacket: PublishPacket? = nil
+        var index: Int = -1
+        opQueue.sync {
             
-            let packet = packet as! PubAckPacket
-            
-            opQueue.sync {
-                guard let first = messageQueue.first else {
-                    return
+            for i in 0 ..< messageQueue.count {
+                let p = messageQueue[i]
+                guard p.packetId == responseId else {
+                    continue
                 }
-                
-                guard first.packetId == packet.packetId else {
-                    DDLogWarn("recv publish ack is not message queue head response")
-                    return
-                }
-                
-                guard first.fixedHeader.qos == .qos1 else {
-                    return
-                }
-                
-                // qos1 has complated
-                DDLogInfo("packet id[\(first.packetId)][\(first.fixedHeader.qos)] has complated")
-                
-                let _ = messageQueue.removeFirst()
-                pFligtWindow -= 1
-                
-                cbQueue.async { [weak self] in
-                    guard let weakSelf = self else { return }
-                    weakSelf.delegate?.sender(weakSelf, didSendPacket: first)
-                }
+                tmpPacket = p
+                index = i
+                break
             }
-        } else if packet is PubRecPacket {
-            let _ = packet as! PubRecPacket
-            
-        } else if packet is PubRelPacket {
-            let _ = packet as! PubRelPacket
+        }
         
-        } else if packet is PubCompPacket {
-            let _ = packet as! PubCompPacket
-            
-        } else if packet is SubAckPacket {
-            let _ = packet as! SubAckPacket
+        guard let packet = tmpPacket else {
+            assert(false, "packet is nil")
+            return
+        }
         
-        } else if packet is UnsubAckPacket {
-            let _ = packet as! UnsubAckPacket
+        
+        if response is PubAckPacket {
+            let _ = response as! PubAckPacket
+            guard packet.fixedHeader.qos == .qos1 else {
+                assert(false, "\(packet.fixedHeader.qos) packet recv a `PubAckPacket` response")
+                return
+            }
+            // qos1 has complated
+            sendSuccessHandler(packet: packet, at: index)
+        } else if response is PubRecPacket {
+            let _ = response as! PubRecPacket
+            
+        } else if response is PubRelPacket {
+            let _ = response as! PubRelPacket
+        
+        } else if response is PubCompPacket {
+            let _ = response as! PubCompPacket
+            guard packet.fixedHeader.qos == .qos2 else {
+                assert(false, "\(packet.fixedHeader.qos) packet recv a `PubCompPacket` response")
+                return
+            }
+            
+            // qos2 has complated
+            sendSuccessHandler(packet: packet, at: index)
+            
+        } else if response is SubAckPacket {
+            let _ = response as! SubAckPacket
+        
+        } else if response is UnsubAckPacket {
+            let _ = response as! UnsubAckPacket
             
         }
     }

@@ -229,6 +229,27 @@ extension Packet {
     }
 }
 
+extension Packet {
+    
+    // XXX: 这种编程方式是否可取？？
+    var packetIdIfExisted: UInt16? {
+        
+        if self is PublishPacket {
+            return (self as! PublishPacket).packetId
+        } else if self is SubscribePacket {
+            return (self as! SubscribePacket).packetId
+        } else if self is UnsubscribePacket {
+            return (self as! UnsubscribePacket).packetId
+        } else if self is PubAckPacket {
+            return (self as! PubAckPacket).packetId
+        } else if self is PubCompPacket {
+            return (self as! PubCompPacket).packetId
+        }
+        
+        return nil
+    }
+}
+
 /// packet initalize error
 enum PacketError: Error {
     /// fix header type illegal

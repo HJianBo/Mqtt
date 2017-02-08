@@ -23,8 +23,7 @@ class ClientSessionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mqtt = MqttClient(clientId: "iosclient")
-        mqtt.delegate = self
+        
     }
     @IBAction func touchedGetClientState(_ sender: Any) {
         log("\(mqtt.sessionState)")
@@ -35,6 +34,8 @@ extension ClientSessionViewController {
     
     @IBAction func touchedConnect(_ sender: Any) {
         do {
+            mqtt = MqttClient(clientId: "iosclient")
+            mqtt.delegate = self
             try mqtt.connect(host: "q.emqtt.com")
         } catch {
             log("\(#function) throw a error: \(error)")
