@@ -36,13 +36,13 @@ public protocol MqttClientDelegate {
 /// client session state
 public enum SessionState: Int {
     
-    /// receive connack is not .accept
+    /// connack not equal .accept
     case denied = -1
     
     /// `MqttClient` class has init
     case initialization
     
-    /// executing connect method, but not recevie connack packet
+    /// executing connect method, waiting connack packet
     case connecting
     
     /// receive .accept of connack
@@ -75,7 +75,11 @@ public final class MqttClient {
     
     public var delegate: MqttClientDelegate?
     
-    public fileprivate(set) var sessionState: SessionState = .initialization
+    public fileprivate(set) var sessionState: SessionState {
+        didSet {
+            DDLogInfo("mqtt client session state did change to [\(sessionState)]")
+        }
+    }
     
     public fileprivate(set) var clientId: String
     
@@ -106,6 +110,8 @@ public final class MqttClient {
     var storedSubsPacket = [UInt16: SubscribePacket]()
     
     var storedUnsubsPacket = [UInt16: UnsubscribePacket]()
+    
+    var timer: Timer?
 
     public init(clientId: String,
                 cleanSession: Bool,
@@ -124,6 +130,7 @@ public final class MqttClient {
         self.mqttQueue    = DispatchQueue(label: "com.mqtt.client")
         self.delegateQueue = DispatchQueue.main
         
+        sessionState = .initialization
     }
     
     deinit {
@@ -156,6 +163,10 @@ public final class MqttClient {
         guard let sock = socket, !sock.socket.closed, let sender = sender else {
             throw ClientError.notConnected
         }
+        guard sessionState == .connected else {
+            throw ClientError.notConnected
+        }
+        
         sender.send(packet: packet)
     }
     
@@ -315,6 +326,31 @@ extension MqttClient {
     }
 }
 
+// MARK: - Private helper method
+extension MqttClient {
+    
+    fileprivate func startHeartbeatTimer() {
+        if timer != nil {
+            timer?.invalidate()
+            timer = nil
+        }
+        
+        timer = Timer(timeInterval: Double(keepAlive), target: self, selector: #selector(_heartbeatTimerArrive), userInfo: nil, repeats: true)
+        
+        RunLoop.main.add(timer!, forMode: .commonModes)
+    }
+    
+    fileprivate func stopHeartbeat() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    @objc private func _heartbeatTimerArrive() {
+        let ping = PingReqPacket()
+        try? send(packet: ping)
+    }
+}
+
 // MARK: - MqttReaderDelegate
 extension MqttClient: MqttReaderDelegate {
     
@@ -324,6 +360,7 @@ extension MqttClient: MqttReaderDelegate {
         
         stateLock.lock()
         if connack.returnCode == .accepted {
+            startHeartbeatTimer()
             sessionState = .connected
         } else {
             sessionState = .denied
@@ -446,6 +483,7 @@ extension MqttClient: MqttReaderDelegate {
         DDLogInfo("reader disconect event error: \(error)")
         stateLock.lock()
         defer {
+            stopHeartbeat()
             sessionState = .disconnected
             sender?.endTaskNow()
             stateLock.unlock()

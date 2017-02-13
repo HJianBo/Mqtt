@@ -22,7 +22,7 @@ class ClientSessionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mqtt = MqttClient(clientId: "iosclient")
+        mqtt = MqttClient(clientId: "iosclient", cleanSession: true, keepAlive: 10)
         mqtt.delegate = self
     }
     
