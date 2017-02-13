@@ -151,6 +151,7 @@ public final class MqttClient {
         sender = MqttSender(sock: socket, del: self)
     }
     
+    // async send by sender
     fileprivate func send(packet: Packet) throws {
         guard let sock = socket, !sock.socket.closed, let sender = sender else {
             throw ClientError.notConnected
@@ -213,21 +214,30 @@ extension MqttClient {
         let addr = InternetAddress(hostname: host, port: port)
         
         // create socket and connect to address
-        
-        let socket = try TCPClient(address: addr)
-        
-        // set socket instance to client
-        set(socket: socket)
-        
-        // send connect packet
-        var packet = ConnectPacket(clientId: clientId)
-        
-        packet.username = username
-        packet.password = password
-        packet.cleanSession = cleanSession
-        packet.keepAlive = keepAlive
-        
-        try send(packet: packet)
+        mqttQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            do {
+                let socket = try TCPClient(address: addr)
+                
+                // set socket instance to client
+                weakSelf.set(socket: socket)
+                
+                // send connect packet
+                var packet = ConnectPacket(clientId: weakSelf.clientId)
+                
+                packet.username = weakSelf.username
+                packet.password = weakSelf.password
+                packet.cleanSession = weakSelf.cleanSession
+                packet.keepAlive = weakSelf.keepAlive
+                
+                try weakSelf.send(packet: packet)
+            } catch {
+                weakSelf.stateLock.lock()
+                weakSelf.sessionState = .disconnected
+                weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)
+                weakSelf.stateLock.unlock()
+            }
+        }
     }
     
     public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1) throws {
