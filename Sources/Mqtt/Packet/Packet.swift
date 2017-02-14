@@ -248,6 +248,10 @@ extension Packet {
         
         return nil
     }
+    
+    var qos: Qos {
+        return fixedHeader.qos
+    }
 }
 
 /// packet initalize error
