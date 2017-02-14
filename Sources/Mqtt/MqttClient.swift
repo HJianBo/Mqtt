@@ -82,7 +82,11 @@ public final class MqttClient {
     }
     
     public fileprivate(set) var clientId: String
-    
+    /**
+     When a Client reconnects with CleanSession set to 0, both the Client and Server MUST re-send any
+     unacknowledged PUBLISH Packets (where QoS > 0) and PUBREL Packets using their original Packet
+     Idenitifiers
+     */
     public fileprivate(set) var cleanSession: Bool
     
     public fileprivate(set) var keepAlive: UInt16
@@ -163,9 +167,6 @@ public final class MqttClient {
         guard let sock = socket, !sock.socket.closed, let sender = sender else {
             throw ClientError.notConnected
         }
-        guard sessionState == .connected else {
-            throw ClientError.notConnected
-        }
         
         sender.send(packet: packet)
     }
@@ -243,10 +244,13 @@ extension MqttClient {
                 
                 try weakSelf.send(packet: packet)
             } catch {
-                weakSelf.stateLock.lock()
-                weakSelf.sessionState = .disconnected
-                weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)
-                weakSelf.stateLock.unlock()
+                DDLogError("connect throw \(error)")
+                weakSelf.delegateQueue.async {
+                    weakSelf.stateLock.lock()
+                    weakSelf.sessionState = .disconnected
+                    weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)
+                    weakSelf.stateLock.unlock()
+                }
             }
         }
     }

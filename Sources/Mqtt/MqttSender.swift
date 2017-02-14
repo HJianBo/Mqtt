@@ -32,11 +32,19 @@ import Foundation
 //    func send(packet: Packet) throws
 //}
 
+
 protocol MqttSenderDelegate: class {
     
     func sender(_ sender: MqttSender, didSendPacket packet: Packet)
 }
 
+/**
+ 负责 MQTT 所有的消息发送. 消息分成俩种处理方式
+  1. Publish/Subscribe/Unsubscribe: 进入消息队列排队进行发送
+  2. 其他类型: 使用优先队列, 优先进行发送
+ 对于前者, 需要等待其 ACK 回复, 若等待超时则重发该消息
+ 对于后者, 直接发送
+ */
 final class MqttSender {
     
     var socket: TCPClient
