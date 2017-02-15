@@ -79,22 +79,31 @@ extension Session {
     
     func connect(packet: ConnectPacket) {
         // connect server
-        do {
-            try socket.connect()
-        } catch {
-            delegate?.session(self, didDisconnect: error)
+        sendQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            
+            do {
+                try weakSelf.socket.connect()
+            } catch {
+                weakSelf.delegate?.session(weakSelf, didDisconnect: error)
+            }
+            
+            // send connect packet
+            weakSelf.send(packet: packet)
+            
+            // active recv task
+            weakSelf.startRecevie()
         }
-        
-        // send connect packet
-        self.send(packet: packet)
-        
-        // active recv task
-        self.startRecevie()
     }
     
     func send(packet: Packet) {
-        messageQueue.append(packet)
-        scheduleSendMessage()
+        let sendBlock = { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.messageQueue.append(packet)
+            weakSelf.scheduleSendMessage()
+        }
+        
+        sendQueue.async(execute: sendBlock)
     }
 
     private func scheduleSendMessage() {
@@ -149,6 +158,7 @@ extension Session {
 
 // MARK: - Recevice
 extension Session {
+    
     fileprivate func startRecevie() {
         // read cicrle
         DispatchQueue.global().async(execute: backgroundReciveLoop)
@@ -228,6 +238,8 @@ extension Session {
             // XXX: 收到 pubrec 则告诉上层 qos2 的 publish 发送成功
             delegate?.session(self, didPublish: sentPacket)
             
+            storedPacket.removeValue(forKey: pubrec.packetId)
+            
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
             DDLogInfo("RECV \(pubcmp.type), packet id \(pubcmp)")
@@ -236,8 +248,6 @@ extension Session {
             guard let _ = storedPacket[pubcmp.packetId] as? PubRelPacket else {
                 assert(false)
             }
-            
-            //delegate?.session(self, didSend: sentPacket)
             
         case .pubrel:
             let pubrel = try PubRelPacket(header: header, bytes: payload)
@@ -368,4 +378,3 @@ extension Session {
         return buffer
     }
 }
-
