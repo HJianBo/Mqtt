@@ -152,8 +152,7 @@ extension Session {
         
         // 4. callback did disconnect
         delegate?.session(self, didDisconnect: error)
-    }
-    
+    }    
 }
 
 // MARK: - Recevice
