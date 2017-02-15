@@ -92,9 +92,8 @@ extension ClientSessionViewController {
 }
 
 extension ClientSessionViewController: MqttClientDelegate {
-    
-    func mqtt(_ mqtt: MqttClient, didRecvConnack packet: ConnAckPacket) {
-        log("recevie connack: \(packet.returnCode)")
+    func mqtt(_ mqtt: MqttClient, didConnect address: String) {
+        log("mqtt did connect: \(address)")
     }
     
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?) {
@@ -109,16 +108,17 @@ extension ClientSessionViewController: MqttClientDelegate {
         log("recevie message: topic: \(packet.topicName), payload: \(packet.payloadStringValue)")
     }
     
-    func mqtt(_ mqtt: MqttClient, didSubscribe packet: SubscribePacket) {
-        log("did subscribe topics: \(packet.topics)")
+    func mqtt(_ mqtt: MqttClient, didSubscribe result: [String : SubsAckReturnCode]) {
+        log("did subscribe: \(result)")
+    }
+    
+    
+    func mqtt(_ mqtt: MqttClient, didUnsubscribe topics: [String]) {
+        log("did unsubscribe topics: \(topics)")
     }
     
     func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {
         log("recevie pong")
-    }
-    
-    func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket) {
-        log("did unsubscribe topics: \(packet.topics)")
     }
 }
 

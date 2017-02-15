@@ -11,15 +11,15 @@ import Foundation
 
 public protocol MqttClientDelegate {
     
-    func mqtt(_ mqtt: MqttClient, didRecvConnack packet: ConnAckPacket)
+    func mqtt(_ mqtt: MqttClient, didConnect address: String)
     
     func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket)
     
-    func mqtt(_ mqtt: MqttClient, didSubscribe packet: SubscribePacket)
-    
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket)
     
-    func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket)
+    func mqtt(_ mqtt: MqttClient, didSubscribe result: [String: SubsAckReturnCode])
+    
+    func mqtt(_ mqtt: MqttClient, didUnsubscribe topics: [String])
     
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?)
     
@@ -61,8 +61,6 @@ public enum ClientError: Error {
     case hasDisconnected
     
     case notConnected
-    
-    case socketIsNil
 }
 
 // TODO: 
@@ -97,23 +95,13 @@ public final class MqttClient {
     
     var willMessage: PublishPacket?
     
-    private var socket: TCPClient?
-    
-    fileprivate var reader: MqttReader?
-    
-    fileprivate var sender: MqttSender?
+    fileprivate var session: Session?
 
     var mqttQueue: DispatchQueue
     
     var delegateQueue: DispatchQueue
     
     var stateLock: NSLock
-    
-    var storedPubPacket = [UInt16: PublishPacket]()
-    
-    var storedSubsPacket = [UInt16: SubscribePacket]()
-    
-    var storedUnsubsPacket = [UInt16: UnsubscribePacket]()
     
     var timer: Timer?
 
@@ -138,7 +126,7 @@ public final class MqttClient {
     }
     
     deinit {
-        sender?.endTaskNow()
+        DDLogVerbose("MqttClient deinit")
     }
     
     fileprivate var nextPacketId: UInt16 {
@@ -149,35 +137,15 @@ public final class MqttClient {
         return _packetId
     }
     
-    fileprivate func set(socket: TCPClient) {
-        self.socket = socket
-        reader = MqttReader(socks: socket, del: self)
-        reader?.startRecevie()
-        
-        if sender != nil {
-            sender?.endTaskNow()
-            sender = nil
+    fileprivate func sessionSend(packet: Packet) throws {
+        guard let session = session else {
+            throw ClientError.notConnected
         }
-        
-        sender = MqttSender(sock: socket, del: self)
-    }
-    
-    // async send by sender
-    fileprivate func send(packet: Packet) throws {
-        guard let sock = socket, !sock.socket.closed, let sender = sender else {
+        guard sessionState == .connected else {
             throw ClientError.notConnected
         }
         
-        sender.send(packet: packet)
-    }
-    
-    
-    fileprivate func close() throws {
-        
-        // TODO: save message queue before close network connection ??
-        try socket?.close()
-        socket = nil
-        reader = nil
+        session.send(packet: packet)
     }
 }
 
@@ -223,50 +191,23 @@ extension MqttClient {
             sessionState = .connecting
             stateLock.unlock()
         }
-        let addr = InternetAddress(hostname: host, port: port)
         
-        // create socket and connect to address
-        mqttQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            do {
-                let socket = try TCPClient(address: addr)
-                
-                // set socket instance to client
-                weakSelf.set(socket: socket)
-                
-                // send connect packet
-                var packet = ConnectPacket(clientId: weakSelf.clientId)
-                
-                packet.username = weakSelf.username
-                packet.password = weakSelf.password
-                packet.cleanSession = weakSelf.cleanSession
-                packet.keepAlive = weakSelf.keepAlive
-                
-                try weakSelf.send(packet: packet)
-            } catch {
-                DDLogError("connect throw \(error)")
-                weakSelf.delegateQueue.async {
-                    weakSelf.stateLock.lock()
-                    weakSelf.sessionState = .disconnected
-                    weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)
-                    weakSelf.stateLock.unlock()
-                }
-            }
-        }
+        session = Session(host: host, port: port, del: self)
+        
+        // send connect packet
+        var packet = ConnectPacket(clientId: clientId)
+        
+        packet.username = username
+        packet.password = password
+        packet.cleanSession = cleanSession
+        packet.keepAlive = keepAlive
+        session?.connect(packet: packet)
     }
     
     public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1) throws {
         let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload, qos: qos)
         
-        if qos == .qos0 {
-            try send(packet: packet)
-        } else {
-            // store message
-            // XXX: 当固定时间没有收到回复时, 应该重发该消息
-            storedPubPacket[packet.packetId] = packet
-            // send PUBLISH Qos1/2 DUP0
-            try send(packet: packet)
-        }
+        try sessionSend(packet: packet)
     }
     
     public func subscribe(topic: String, qos: Qos = .qos1) throws {
@@ -274,27 +215,20 @@ extension MqttClient {
         
         packet.topics.append((topic, qos))
         
-        // stored subscribe packet
-        storedSubsPacket[packet.packetId] = packet
-        
-        try send(packet: packet)
+        try sessionSend(packet: packet)
     }
     
     public func unsubscribe(topics: [String]) throws {
         var packet = UnsubscribePacket(packetId: nextPacketId)
         packet.topics = topics
         
-        // stored packet
-        storedUnsubsPacket[packet.packetId] = packet
-        
-        // send
-        try send(packet: packet)
+        try sessionSend(packet: packet)
     }
     
     public func ping() throws {
         let packet = PingReqPacket()
         
-        try send(packet: packet)
+        try sessionSend(packet: packet)
     }
     
     public func disconnect() throws {
@@ -307,18 +241,7 @@ extension MqttClient {
             stateLock.unlock()
         }
         let packet = DisconnectPacket()
-        
-        try send(packet: packet)
-        
-        // must close the network connect 
-        // must not send any more control packets on that network connection
-        try close()
-
-        // 改为从reader的socket读取到的状态进行判断
-        //delegateQueue.async { [weak self] in
-        //    guard let weakSelf = self else { return }
-        //    weakSelf.delegate?.mqtt(weakSelf, didDisconnect: nil)
-        //}
+        try sessionSend(packet: packet)
     }
 }
 
@@ -351,167 +274,79 @@ extension MqttClient {
     
     @objc private func _heartbeatTimerArrive() {
         let ping = PingReqPacket()
-        try? send(packet: ping)
+        try? sessionSend(packet: ping)
     }
 }
 
-// MARK: - MqttReaderDelegate
-extension MqttClient: MqttReaderDelegate {
-    
-    // when recv connect ack
-    func reader(_ reader: MqttReader, didRecvConnectAck connack: ConnAckPacket) {
-        DDLogInfo("reader recv connect ack \(connack)")
-        
-        stateLock.lock()
-        if connack.returnCode == .accepted {
-            startHeartbeatTimer()
-            sessionState = .connected
-        } else {
-            sessionState = .denied
-        }
-        stateLock.unlock()
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didRecvConnack: connack)
-        }
-    }
-    
-    func reader(_ reader: MqttReader, didRecvPublish publish: PublishPacket) {
-        DDLogInfo("reader recv publish \(publish)")
-        
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didRecvMessage: publish)
-        }
-        
-        // feedback ack
-        switch publish.fixedHeader.qos {
-        case .qos0:
-            break
-        case .qos1:
-            let packet = PubAckPacket(packetId: publish.packetId)
-            try? send(packet: packet)
-        case .qos2:
-            
-            // TODO: should stored the packet id, when qos is equal 2
-            // XXXX: 如果在某个时间段未收到 pubrec 的返回, 那么应该使用这个 id 再次发送 pubrel
-            let packet = PubRecPacket(packetId: publish.packetId)
-            try? send(packet: packet)
-        }
-    }
-    
-    func reader(_ reader: MqttReader, didRecvPubAck puback: PubAckPacket) {
-        DDLogInfo("reader recv publish ack \(puback)")
-        
-        guard let _ = storedPubPacket[puback.packetId] else {
-            DDLogWarn("recv publish ack, but not stored in cache")
-            return
-        }
-        
-        // publish is compelate, when qos equal 1
-        sender?.someMessageMaybeCompelate(by: puback)
-        
-        storedPubPacket.removeValue(forKey: puback.packetId)
-    }
-    
-    func reader(_ reader: MqttReader, didRecvPubRec pubrec: PubRecPacket) throws {
-        DDLogInfo("reader recv publish rec \(pubrec)")
-        
-        guard let _ = storedPubPacket[pubrec.packetId] else {
-            DDLogWarn("recv public recv, but not stored in cache")
-            return
-        }
-        
-        // response PUBREL packet to server
-        let pubrel = PubRelPacket(packetId: pubrec.packetId)
-        try send(packet: pubrel)
-    }
-    
-    func reader(_ reader: MqttReader, didRecvPubComp pubcomp: PubCompPacket) {
-        DDLogInfo("reader recv publish comp \(pubcomp)")
-        guard let _ = storedPubPacket[pubcomp.packetId] else {
-            DDLogWarn("recv publish comp, but not stored in cache")
-            return
-        }
-        
-        // publish is compelate, when qos equal 2
-        sender?.someMessageMaybeCompelate(by: pubcomp)
-        
-        storedPubPacket.removeValue(forKey: pubcomp.packetId)
-    }
-    
-    func reader(_ reader: MqttReader, didRecvPubRel pubrel: PubRelPacket) {
-        DDLogInfo("reader recv publish rel \(pubrel)")
-        
-        // TODO: when recv pubrel should discard stored packet id
-    }
-    
-    func reader(_ reader: MqttReader, didRecvSubAck suback: SubAckPacket) {
-        DDLogInfo("reader recv subscribe ack \(suback)")
-        guard let packet = storedSubsPacket[suback.packetId] else {
-            DDLogWarn("recv a suback, but not stored in cache")
-            return
-        }
-        storedSubsPacket.removeValue(forKey: suback.packetId)
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didSubscribe: packet)
-        }
-    }
-    
-    func reader(_ reader: MqttReader, didRecvUnsuback unsuback: UnsubAckPacket) {
-        DDLogInfo("reader recv unsubscribe ack \(unsuback)")
-        
-        guard let packet = storedUnsubsPacket[unsuback.packetId] else {
-            DDLogWarn("recv a unsubscribe ack, but not stored in cache")
-            return
-        }
-        
-        storedUnsubsPacket.removeValue(forKey: unsuback.packetId)
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didUnsubscribe: packet)
-        }
-    }
-    
-    func reader(_ reader: MqttReader, didRecvPingresp pingresp: PingRespPacket) {
-        DDLogInfo("reader recv ping response \(pingresp)")
-        
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didRecvPingresp: pingresp)
-        }
-    }
-    
-    func reader(_ reader: MqttReader, didDisconnect error: Error) {
-        DDLogInfo("reader disconect event error: \(error)")
-        stateLock.lock()
-        defer {
-            stopHeartbeat()
-            sessionState = .disconnected
-            sender?.endTaskNow()
-            stateLock.unlock()
-        }
-        
-        let diserror: Error? = sessionState == .disconnected ? nil : error
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didDisconnect: diserror)
-        }
-    }
-}
 
-// MARK: - MqttSenderDelegate
-extension MqttClient: MqttSenderDelegate {
+extension MqttClient: SessionDelegate {
     
-    func sender(_ sender: MqttSender, didSendPacket packet: Packet) {
-        DDLogInfo("sender did send packet \(packet)")
-        // message send successfuly
-        if packet is PublishPacket {
-            delegateQueue.async { [weak self] in
-                guard let weakSelf = self else { return }
-                weakSelf.delegate?.mqtt(weakSelf, didPublish: packet as! PublishPacket)
-            }
+    func session(_ session: Session, didRecvPong: PingRespPacket) {
+        DDLogInfo("session did recv pong")
+    }
+    
+    func session(_ session: Session, didConnect address: String) {
+        DDLogInfo("session did connect \(address)")
+        
+        sessionState = .connected
+        
+        startHeartbeatTimer()
+        
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didConnect: address)
+        }
+    }
+
+    func session(_ session: Session, didRecvPublish packet: PublishPacket) {
+        DDLogInfo("session did recv publish \(packet)")
+        
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didRecvMessage: packet)
+        }
+    }
+    
+    func session(_ session: Session, didPublish publish: PublishPacket) {
+        DDLogInfo("session did send publish \(publish)")
+        
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
+        }
+    }
+    
+    func session(_ session: Session, didSend packet: Packet) {
+        DDLogVerbose("session did send packet \(packet)")
+        
+    }
+    
+    func session(_ session: Session, didSubscribe topics: [String : SubsAckReturnCode]) {
+        DDLogInfo("session did subscribe topics \(topics)")
+        
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didSubscribe: topics)
+        }
+    }
+    
+    func session(_ session: Session, didUnsubscribe topics: [String]) {
+        DDLogInfo("session did unsubscirbe topics \(topics)")
+        
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didUnsubscribe: topics)
+        }
+    }
+    
+    func session(_ session: Session, didDisconnect error: Error?) {
+        DDLogInfo("session did disconnect error: \(error)")
+        
+        sessionState = .disconnected
+        stopHeartbeat()
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)
         }
     }
 }

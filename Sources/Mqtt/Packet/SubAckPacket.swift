@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SubsAckReturnCode: UInt8 {
+public enum SubsAckReturnCode: UInt8 {
     
     case maxQos0 = 0x00
     

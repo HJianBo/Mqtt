@@ -244,6 +244,10 @@ extension Packet {
             return (self as! PubAckPacket).packetId
         } else if self is PubCompPacket {
             return (self as! PubCompPacket).packetId
+        } else if self is PubRelPacket {
+            return (self as! PubRelPacket).packetId
+        } else if self is PubRecPacket {
+            return (self as! PubRecPacket).packetId
         }
         
         return nil

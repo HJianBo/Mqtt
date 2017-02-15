@@ -12,16 +12,26 @@ import SocksCore
 
 protocol SessionDelegate: class {
     
-    func session(_ session: Session, didConnect connack: ConnAckPacket)
+    func session(_ session: Session, didConnect address: String)
     
     func session(_ session: Session, didRecvPublish packet: PublishPacket)
     
-    func session(_ session: Session, didSend packet: Packet)
+    // TODO: didSend 需要定义清楚！！！！ 消息从 socket 发送出去，还是这个消息流程完成
+    //func session(_ session: Session, didSend packet: Packet)
     
-    func session(_ session: Session, didSubscribe topcis: [String: SubsAckReturnCode])
+    // 所有 publish 成功的消息，回调从这里走
+    func session(_ session: Session, didPublish: PublishPacket)
     
+    // 收到 pong 从这里走
+    func session(_ session: Session, didRecvPong: PingRespPacket)
+    
+    // 订阅成功从这里走
+    func session(_ session: Session, didSubscribe topics: [String: SubsAckReturnCode])
+    
+    // 取消订阅成功从这里走
     func session(_ session: Session, didUnsubscribe topics: [String])
     
+    // 断开连接从这里走
     func session(_ session: Session, didDisconnect error: Error?)
 }
 
@@ -101,19 +111,19 @@ extension Session {
         
         do {
             try socket.send(data: packet.packToBytes)
+            
+            // remove
+            messageQueue.removeFirst()
+            
+            // callback
+            if packet.qos == .qos0 && packet is PublishPacket {
+                delegate?.session(self, didPublish: packet as! PublishPacket)
+            }
         } catch {
             DDLogError("send bytes error \(error)")
             DDLogVerbose("close network connection")
             
-            self.close()
-        }
-        
-        // remove
-        messageQueue.removeFirst()
-        
-        // callback
-        if packet.qos == .qos0 {
-            delegate?.session(self, didSend: packet)
+            self.close(withError: error)
         }
     }
 }
@@ -121,7 +131,7 @@ extension Session {
 // MARK: - Helper
 extension Session {
     
-    fileprivate func close() {
+    fileprivate func close(withError error: Error? = nil) {
         // 1. close socket
         try? socket.close()
         
@@ -132,6 +142,7 @@ extension Session {
         // TODO:
         
         // 4. callback did disconnect
+        delegate?.session(self, didDisconnect: error)
     }
     
 }
@@ -167,8 +178,9 @@ extension Session {
             DDLogInfo("RECV \(header.type), return code \(conack.returnCode)")
             
             if conack.returnCode == .accepted {
-                delegate?.session(self, didConnect: conack)
+                delegate?.session(self, didConnect: "\(remoteAddres.hostname):\(remoteAddres.port)")
             } else {
+                assert(false)
                 self.close()
             }
             
@@ -196,7 +208,7 @@ extension Session {
                 assert(false)
             }
             
-            delegate?.session(self, didSend: sentPacket)
+            delegate?.session(self, didPublish: sentPacket)
             
             storedPacket.removeValue(forKey: puback.packetId)
             
@@ -204,20 +216,28 @@ extension Session {
             let pubrec = PubRecPacket(header: header, bytes: payload)
             DDLogInfo("RECV \(pubrec.type), pakcet id \(pubrec.packetId)")
             
+            guard let sentPacket = storedPacket[pubrec.packetId] as? PublishPacket else {
+                DDLogError("no qos2 packet save in memeroy, when recv pubrec")
+                return
+            }
+            
             let pubrel = PubRelPacket(packetId: pubrec.packetId)
             
             self.send(packet: pubrel)
-
+            
+            // XXX: 收到 pubrec 则告诉上层 qos2 的 publish 发送成功
+            delegate?.session(self, didPublish: sentPacket)
+            
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
             DDLogInfo("RECV \(pubcmp.type), packet id \(pubcmp)")
             
-            // FIXME: 收到 PUBCOMP 时, 保存的相应的 PacketId 的内容, 是否已经是保存的 PUBREL 的结果了?
-            guard let sentPacket = storedPacket[pubcmp.packetId] as? PublishPacket else {
+            // 收到 PUBCOMP 时, storedPacket, 里面应该是保存的 PUBREL
+            guard let _ = storedPacket[pubcmp.packetId] as? PubRelPacket else {
                 assert(false)
             }
             
-            delegate?.session(self, didSend: sentPacket)
+            //delegate?.session(self, didSend: sentPacket)
             
         case .pubrel:
             let pubrel = try PubRelPacket(header: header, bytes: payload)

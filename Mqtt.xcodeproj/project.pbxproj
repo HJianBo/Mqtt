@@ -11,8 +11,6 @@
 		OBJ_103 /* DDLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* DDLog.swift */; };
 		OBJ_104 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* Extension.swift */; };
 		OBJ_105 /* MqttClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* MqttClient.swift */; };
-		OBJ_106 /* MqttReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* MqttReader.swift */; };
-		OBJ_107 /* MqttSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* MqttSender.swift */; };
 		OBJ_108 /* ConnAckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* ConnAckPacket.swift */; };
 		OBJ_109 /* ConnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* ConnectPacket.swift */; };
 		OBJ_110 /* DisconnectPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* DisconnectPacket.swift */; };
@@ -127,8 +125,6 @@
 		OBJ_32 /* DDLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDLog.swift; sourceTree = "<group>"; };
 		OBJ_33 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		OBJ_34 /* MqttClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
-		OBJ_35 /* MqttReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MqttReader.swift; path = ../MqttReader.swift; sourceTree = "<group>"; };
-		OBJ_36 /* MqttSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MqttSender.swift; path = ../MqttSender.swift; sourceTree = "<group>"; };
 		OBJ_38 /* ConnAckPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnAckPacket.swift; sourceTree = "<group>"; };
 		OBJ_39 /* ConnectPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPacket.swift; sourceTree = "<group>"; };
 		OBJ_40 /* DisconnectPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectPacket.swift; sourceTree = "<group>"; };
@@ -195,8 +191,6 @@
 		8281D2211E496C2F00A20D3B /* Session */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_35 /* MqttReader.swift */,
-				OBJ_36 /* MqttSender.swift */,
 				82D0E49A1E532BF900C87560 /* Session.swift */,
 			);
 			path = Session;
@@ -431,8 +425,6 @@
 				OBJ_103 /* DDLog.swift in Sources */,
 				OBJ_104 /* Extension.swift in Sources */,
 				OBJ_105 /* MqttClient.swift in Sources */,
-				OBJ_106 /* MqttReader.swift in Sources */,
-				OBJ_107 /* MqttSender.swift in Sources */,
 				OBJ_108 /* ConnAckPacket.swift in Sources */,
 				OBJ_109 /* ConnectPacket.swift in Sources */,
 				OBJ_110 /* DisconnectPacket.swift in Sources */,
