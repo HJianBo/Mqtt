@@ -12,7 +12,7 @@ import SocksCore
 
 protocol SessionDelegate: class {
     
-    func session(_ session: Session, didRecvConnack connack: ConnAckPacket)
+    func session(_ session: Session, didConnect connack: ConnAckPacket)
     
     func session(_ session: Session, didRecvPublish packet: PublishPacket)
     
@@ -77,6 +77,9 @@ extension Session {
         
         // send connect packet
         self.send(packet: packet)
+        
+        // active recv task
+        self.startRecevie()
     }
     
     func send(packet: Packet) {
@@ -127,10 +130,13 @@ extension Session {
         
         // 3. save message to localstoage
         // TODO:
+        
+        // 4. callback did disconnect
     }
     
 }
 
+// MARK: - Recevice
 extension Session {
     fileprivate func startRecevie() {
         // read cicrle
@@ -153,37 +159,107 @@ extension Session {
     
     private func didReceviePacket(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
         // handle packet, then callback to delegate
-        DDLogInfo("RECV H: \(header), L: \(remainLen), P: \(payload)")
+        DDLogVerbose("RECV H: \(header), L: \(remainLen), P: \(payload)")
         
         switch header.type {
         case .connack:
             let conack = try ConnAckPacket(header: header, bytes: payload)
+            DDLogInfo("RECV \(header.type), return code \(conack.returnCode)")
             
-        //delegate?.reader(self, didRecvConnectAck: conack)
+            if conack.returnCode == .accepted {
+                delegate?.session(self, didConnect: conack)
+            } else {
+                self.close()
+            }
+            
         case .publish:
             let publish = PublishPacket(header: header, bytes: payload)
-        //delegate?.reader(self, didRecvPublish: publish)
+            DDLogInfo("RECV \(publish.type), topic: \(publish.topicName), payload: \(publish.payload.count) bytes")
+            
+            delegate?.session(self, didRecvPublish: publish)
+            
+            // send ack 
+            switch publish.qos {
+            case .qos0: break
+            case .qos1:
+                let puback = PubAckPacket(packetId: publish.packetId)
+                self.send(packet: puback)
+            case .qos2:
+                let pubrec = PubRecPacket(packetId: publish.packetId)
+                self.send(packet: pubrec)
+            }
         case .puback:
             let puback = PubAckPacket(header: header, bytes: payload)
-        //delegate?.reader(self, didRecvPubAck: puback)
+            DDLogInfo("RECV \(puback.type), packet id \(puback.packetId)")
+            
+            guard let sentPacket = storedPacket[puback.packetId] as? PublishPacket else {
+                assert(false)
+            }
+            
+            delegate?.session(self, didSend: sentPacket)
+            
+            storedPacket.removeValue(forKey: puback.packetId)
+            
         case .pubrec:
             let pubrec = PubRecPacket(header: header, bytes: payload)
-        //try delegate?.reader(self, didRecvPubRec: pubrec)
+            DDLogInfo("RECV \(pubrec.type), pakcet id \(pubrec.packetId)")
+            
+            let pubrel = PubRelPacket(packetId: pubrec.packetId)
+            
+            self.send(packet: pubrel)
+
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
-        //delegate?.reader(self, didRecvPubComp: pubcmp)
+            DDLogInfo("RECV \(pubcmp.type), packet id \(pubcmp)")
+            
+            // FIXME: 收到 PUBCOMP 时, 保存的相应的 PacketId 的内容, 是否已经是保存的 PUBREL 的结果了?
+            guard let sentPacket = storedPacket[pubcmp.packetId] as? PublishPacket else {
+                assert(false)
+            }
+            
+            delegate?.session(self, didSend: sentPacket)
+            
         case .pubrel:
             let pubrel = try PubRelPacket(header: header, bytes: payload)
-        //delegate?.reader(self, didRecvPubRel: pubrel)
+            DDLogInfo("RECV \(pubrel.type), packet id \(pubrel.packetId)")
+            
+            let pubcmp = PubCompPacket(packetId: pubrel.packetId)
+            self.send(packet: pubcmp)
+            
         case .suback:
             let suback = try SubAckPacket(header: header, bytes: payload)
-        //delegate?.reader(self, didRecvSubAck: suback)
+            DDLogInfo("RECV \(suback.type), return codes \(suback.returnCodes)")
+            
+            guard let sentPacket = storedPacket[suback.packetId] as? SubscribePacket else {
+                assert(false)
+            }
+            var result = [String: SubsAckReturnCode]()
+            for i in 0 ..< sentPacket.topics.count {
+                let topic = sentPacket.topics[i].0
+                let retCode = suback.returnCodes[i]
+                result[topic] = retCode
+            }
+
+            delegate?.session(self, didSubscribe: result)
+            
+            storedPacket.removeValue(forKey: sentPacket.packetId)
+
         case .unsuback:
             let unsuback = UnsubAckPacket(header: header, bytes: payload)
-        //delegate?.reader(self, didRecvUnsuback: unsuback)
+            DDLogInfo("RECV \(unsuback.type), packet id \(unsuback.packetId)")
+            
+            guard let sentPacket = storedPacket[unsuback.packetId] as? UnsubscribePacket else {
+                assert(false)
+            }
+            
+            delegate?.session(self, didUnsubscribe: sentPacket.topics)
+            
+            storedPacket.removeValue(forKey: sentPacket.packetId)
+            
         case .pingresp:
             let pingresp = PingRespPacket(header: header, bytes: payload)
-        //delegate?.reader(self, didRecvPingresp: pingresp)
+            DDLogInfo("RECV \(pingresp.type)")
+            
         case .reserved, .reserved2:
             // should disconnect
             DDLogWarn("should close the network connect, when recv reserved header type.")

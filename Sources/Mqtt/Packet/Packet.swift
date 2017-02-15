@@ -252,6 +252,10 @@ extension Packet {
     var qos: Qos {
         return fixedHeader.qos
     }
+    
+    var type: PacketType {
+        return fixedHeader.type
+    }
 }
 
 /// packet initalize error
