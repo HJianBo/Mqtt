@@ -231,6 +231,7 @@ extension MqttClient {
         try sessionSend(packet: packet)
     }
     
+    // FIXME: disconnect 时应该 回调一个 error = nil 的结果
     public func disconnect() throws {
         guard sessionState == .connected else {
             return
@@ -342,8 +343,9 @@ extension MqttClient: SessionDelegate {
     func session(_ session: Session, didDisconnect error: Error?) {
         DDLogInfo("session did disconnect error: \(error)")
         
-        sessionState = .disconnected
         stopHeartbeat()
+        self.session = nil
+        sessionState = .disconnected
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)

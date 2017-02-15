@@ -37,6 +37,8 @@ protocol SessionDelegate: class {
 
 enum SessionError: Error {
     
+    case socketIsNil
+    
     case closeByRemote
     
     case recvInvaildPacket
@@ -46,30 +48,32 @@ enum SessionError: Error {
 // implment send/recv
 final class Session {
     
-    private(set) var socket: TCPInternetSocket
+    fileprivate var socket: TCPInternetSocket?
     
     private(set) var remoteAddres: InternetAddress
 
-    weak private(set) var delegate: SessionDelegate?
+    weak fileprivate var delegate: SessionDelegate?
     
     var sendQueue: DispatchQueue
+    
+    var readQueue: DispatchQueue
     
     var messageQueue: Array<Packet>
     
     var storedPacket: Dictionary<UInt16, Packet>
     
-    init?(host: String, port: UInt16, del: SessionDelegate?) {
+    init(host: String, port: UInt16, del: SessionDelegate?) {
         remoteAddres = InternetAddress(hostname: host, port: port)
-        do {
-            socket = try TCPInternetSocket(address: remoteAddres)
-        } catch {
-            return nil
-        }
         
         delegate = del
         sendQueue = DispatchQueue(label: "com.mqtt.session.send")
+        readQueue = DispatchQueue(label: "com.mqtt.session.read")
         messageQueue = []
         storedPacket = [:]
+    }
+    
+    deinit {
+        DDLogInfo("session deinit")
     }
 }
 
@@ -83,7 +87,8 @@ extension Session {
             guard let weakSelf = self else { return }
             
             do {
-                try weakSelf.socket.connect()
+                weakSelf.socket = try TCPInternetSocket(address: weakSelf.remoteAddres)
+                try weakSelf.socket!.connect()
             } catch {
                 weakSelf.delegate?.session(weakSelf, didDisconnect: error)
             }
@@ -113,6 +118,10 @@ extension Session {
             return
         }
         
+        guard let socket = socket else {
+            return
+        }
+        
         // stored packet when qos > 0
         if packet.qos != .qos0 {
             storedPacket[packet.packetIdIfExisted!] = packet
@@ -128,6 +137,11 @@ extension Session {
             if packet.qos == .qos0 && packet is PublishPacket {
                 delegate?.session(self, didPublish: packet as! PublishPacket)
             }
+            
+            // close connection, when sent DisconnectPacket
+            if packet is DisconnectPacket {
+                self.close(withError: nil)
+            }
         } catch {
             DDLogError("send bytes error \(error)")
             DDLogVerbose("close network connection")
@@ -142,10 +156,10 @@ extension Session {
     
     fileprivate func close(withError error: Error? = nil) {
         // 1. close socket
-        try? socket.close()
+        try? socket?.close()
         
         // 2. stop send/recv task
-        sendQueue.suspend()
+        
         
         // 3. save message to localstoage
         // TODO:
@@ -160,21 +174,20 @@ extension Session {
     
     fileprivate func startRecevie() {
         // read cicrle
-        DispatchQueue.global().async(execute: backgroundReciveLoop)
+        readQueue.async(execute: backgroundReciveLoop)
     }
     
     private func backgroundReciveLoop() {
         do {
             try tl_read()
+            backgroundReciveLoop()
         } catch {
             // occur a error, close the network connection
             // XXX: 当出现 read error 时, 是否一定关闭连接？
             DDLogError("revoke recevie loop, read error \(error)")
-            delegate?.session(self, didDisconnect: error)
+            self.close(withError: error)
             return
         }
-        
-        backgroundReciveLoop()
     }
     
     private func didReceviePacket(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
@@ -226,18 +239,20 @@ extension Session {
             DDLogInfo("RECV \(pubrec.type), pakcet id \(pubrec.packetId)")
             
             guard let sentPacket = storedPacket[pubrec.packetId] as? PublishPacket else {
-                DDLogError("no qos2 packet save in memeroy, when recv pubrec")
+                DDLogError("no qos2 packet saved in the cache, when recv pubrec")
                 return
             }
             
             let pubrel = PubRelPacket(packetId: pubrec.packetId)
             
+            // remove publish packet from cahce.
+            storedPacket.removeValue(forKey: pubrec.packetId)
+            
+            // send & save rel in cahce.
             self.send(packet: pubrel)
             
             // XXX: 收到 pubrec 则告诉上层 qos2 的 publish 发送成功
             delegate?.session(self, didPublish: sentPacket)
-            
-            storedPacket.removeValue(forKey: pubrec.packetId)
             
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
@@ -245,6 +260,7 @@ extension Session {
             
             // 收到 PUBCOMP 时, storedPacket, 里面应该是保存的 PUBREL
             guard let _ = storedPacket[pubcmp.packetId] as? PubRelPacket else {
+                DDLogError("no pubrel saved in the cahce, when recv pubcmp")
                 assert(false)
             }
             
@@ -317,6 +333,10 @@ extension Session {
         //assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
         //       "this method should only be run at sepcific queue")
         
+        guard let socket = socket else {
+            throw SessionError.socketIsNil
+        }
+        
         let readLength = 1
         
         var buffer = try socket.recv(maxBytes: readLength)
@@ -335,6 +355,10 @@ extension Session {
     private func readLength() throws -> Int {
         //assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
         //       "this method should only be run at sepcific queue")
+        
+        guard let socket = socket else {
+            throw SessionError.socketIsNil
+        }
         
         let readLength = 1
         
@@ -364,6 +388,10 @@ extension Session {
     private func readPayload(len: Int) throws -> [UInt8] {
         //assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
         //       "this method should only be run at sepcific queue")
+        
+        guard let socket = socket else {
+            throw SessionError.socketIsNil
+        }
         
         guard len > 0 else {
             return []
