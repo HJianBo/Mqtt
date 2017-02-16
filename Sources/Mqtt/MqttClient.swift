@@ -33,25 +33,6 @@ public protocol MqttClientDelegate {
 //    public func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {}
 //}
 
-/// client session state
-public enum SessionState: Int {
-    
-    /// connack not equal .accept
-    case denied = -1
-    
-    /// `MqttClient` class has init
-    case initialization
-    
-    /// executing connect method, waiting connack packet
-    case connecting
-    
-    /// receive .accept of connack
-    case connected
-    
-    /// executed disconnect success, session end
-    case disconnected
-}
-
 public enum ClientError: Error {
     
     case aleadryConnected
@@ -73,9 +54,10 @@ public final class MqttClient {
     
     public var delegate: MqttClientDelegate?
     
-    public fileprivate(set) var sessionState: SessionState {
-        didSet {
-            DDLogInfo("mqtt client session state did change to [\(sessionState)]")
+    public var sessionState: SessionState {
+        get {
+            guard let s = session?.state else { return .disconnected }
+            return s
         }
     }
     
@@ -101,8 +83,6 @@ public final class MqttClient {
     
     var delegateQueue: DispatchQueue
     
-    var stateLock: NSLock
-    
     var timer: Timer?
 
     public init(clientId: String,
@@ -118,11 +98,8 @@ public final class MqttClient {
         self.username     = username
         self.password     = password
         self.willMessage  = willMessage
-        self.stateLock    = NSLock()
         self.mqttQueue    = DispatchQueue(label: "com.mqtt.client")
         self.delegateQueue = DispatchQueue.main
-        
-        sessionState = .initialization
     }
     
     deinit {
@@ -141,7 +118,7 @@ public final class MqttClient {
         guard let session = session else {
             throw ClientError.notConnected
         }
-        guard sessionState == .connected else {
+        guard sessionState == .accepted else {
             throw ClientError.notConnected
         }
         
@@ -175,22 +152,14 @@ extension MqttClient {
      - parameter port: TCP ports 8883 and 1883 are registered with IANA for MQTT TLS and non TLS communication respectively.
      */
     public func connect(host: String, port: UInt16 = 1883) throws {
-        stateLock.lock()
-        
-        guard sessionState != .connected else {
-            stateLock.unlock()
+        guard sessionState != .accepted else {
             throw ClientError.aleadryConnected
         }
         
         guard sessionState != .connecting else {
-            stateLock.unlock()
             throw ClientError.aleadryConnecting
         }
         
-        defer {
-            sessionState = .connecting
-            stateLock.unlock()
-        }
         
         session = Session(host: host, port: port, del: self)
         
@@ -233,14 +202,10 @@ extension MqttClient {
     
     // FIXME: disconnect 时应该 回调一个 error = nil 的结果
     public func disconnect() throws {
-        guard sessionState == .connected else {
+        guard sessionState == .accepted else {
             return
         }
-        stateLock.lock()
-        defer {
-            sessionState = .disconnected
-            stateLock.unlock()
-        }
+        
         let packet = DisconnectPacket()
         try sessionSend(packet: packet)
     }
@@ -288,8 +253,6 @@ extension MqttClient: SessionDelegate {
     
     func session(_ session: Session, didConnect address: String) {
         DDLogInfo("session did connect \(address)")
-        
-        sessionState = .connected
         
         startHeartbeatTimer()
         
@@ -345,7 +308,6 @@ extension MqttClient: SessionDelegate {
         
         stopHeartbeat()
         self.session = nil
-        sessionState = .disconnected
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)

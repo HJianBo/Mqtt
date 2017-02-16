@@ -9,6 +9,21 @@
 import Foundation
 import SocksCore
 
+/// client session state
+public enum SessionState: Int {
+    
+    /// connack not equal .accept
+    case denied = -1
+    
+    /// executed disconnect success, session end
+    case disconnected
+    
+    /// executing connect method, waiting connack packet
+    case connecting
+    
+    /// receive .accept of connack
+    case accepted
+}
 
 protocol SessionDelegate: class {
     
@@ -50,12 +65,20 @@ final class Session {
     
     fileprivate var socket: TCPInternetSocket?
     
+    fileprivate(set) var state: SessionState {
+        didSet {
+            DDLogInfo("mqtt client session state did change to [\(state)]")
+        }
+    }
+    
     private(set) var remoteAddres: InternetAddress
 
     weak fileprivate var delegate: SessionDelegate?
     
+    // send message & modify variabel property in this queue
     var sendQueue: DispatchQueue
     
+    // read cicrle
     var readQueue: DispatchQueue
     
     var messageQueue: Array<Packet>
@@ -70,6 +93,8 @@ final class Session {
         readQueue = DispatchQueue(label: "com.mqtt.session.read")
         messageQueue = []
         storedPacket = [:]
+        
+        state = .disconnected
     }
     
     deinit {
@@ -82,15 +107,16 @@ final class Session {
 extension Session {
     
     func connect(packet: ConnectPacket) {
-        // connect server
-        sendQueue.async { [weak self] in
+        // connect server & send `ConnectPacket`
+        let connectBlock = { [weak self] in
             guard let weakSelf = self else { return }
-            
+            weakSelf.state = .connecting
             do {
                 weakSelf.socket = try TCPInternetSocket(address: weakSelf.remoteAddres)
                 try weakSelf.socket!.connect()
             } catch {
-                weakSelf.delegate?.session(weakSelf, didDisconnect: error)
+                DDLogError("socket connect error \(error)")
+                weakSelf.close(withError: error)
             }
             
             // send connect packet
@@ -99,15 +125,21 @@ extension Session {
             // active recv task
             weakSelf.startRecevie()
         }
+        
+        // exec block in `sendQueue`
+        sendQueue.async(execute: connectBlock)
     }
     
     func send(packet: Packet) {
+        
+        // append packet to `messageQueue` & schedule send task
         let sendBlock = { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.messageQueue.append(packet)
             weakSelf.scheduleSendMessage()
         }
         
+        // exec block in `sendQueue`
         sendQueue.async(execute: sendBlock)
     }
 
@@ -155,18 +187,31 @@ extension Session {
 extension Session {
     
     fileprivate func close(withError error: Error? = nil) {
-        // 1. close socket
-        try? socket?.close()
         
-        // 2. stop send/recv task
+        // close socket & stop send/recv task
+        let disconnectBlock = { [weak self] in
+            guard let weakSelf = self else { return }
         
+            guard weakSelf.state != .disconnected else { return }
+            
+            weakSelf.state = .disconnected
+            
+            // 1. close socket
+            try? weakSelf.socket?.close()
+            
+            // 2. stop send/recv task
+            
+            
+            // 3. save message to localstoage
+            // TODO:
+            
+            // 4. callback did disconnect
+            weakSelf.delegate?.session(weakSelf, didDisconnect: error)
+        }
         
-        // 3. save message to localstoage
-        // TODO:
-        
-        // 4. callback did disconnect
-        delegate?.session(self, didDisconnect: error)
-    }    
+        // exec disconnect bolck in sendQueue
+        sendQueue.async(execute: disconnectBlock)
+    }
 }
 
 // MARK: - Recevice
@@ -183,7 +228,6 @@ extension Session {
             backgroundReciveLoop()
         } catch {
             // occur a error, close the network connection
-            // XXX: 当出现 read error 时, 是否一定关闭连接？
             DDLogError("revoke recevie loop, read error \(error)")
             self.close(withError: error)
             return
@@ -200,9 +244,15 @@ extension Session {
             DDLogInfo("RECV \(header.type), return code \(conack.returnCode)")
             
             if conack.returnCode == .accepted {
+                sendQueue.async { [weak self] in
+                    self?.state = .accepted
+                }
                 delegate?.session(self, didConnect: "\(remoteAddres.hostname):\(remoteAddres.port)")
             } else {
-                assert(false)
+                sendQueue.async { [weak self] in
+                    self?.state = .denied
+                }
+                // FIXME: need report error
                 self.close()
             }
             
