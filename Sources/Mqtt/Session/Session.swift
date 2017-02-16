@@ -387,6 +387,7 @@ extension Session {
             
             delegate?.session(self, didPublish: sentPacket)
             
+            // discard from cahce & localstorage
             storedPacket.removeValue(forKey: puback.packetId)
             localStorage?.remove(packet: sentPacket)
             
@@ -404,24 +405,23 @@ extension Session {
             // XXX: 收到 pubrec 则告诉上层 qos2 的 publish 发送成功
             delegate?.session(self, didPublish: sentPacket)
             
-            // remove publish packet from cahce.
+            // discard from cahce & localstorage
             storedPacket.removeValue(forKey: pubrec.packetId)
             localStorage?.remove(packet: sentPacket)
             
-            // send & save rel in cahce.
+            // response pubrel (will save pubrel into localstorage in send method)
             self.send(packet: pubrel)
             
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
             DDLogInfo("RECV \(pubcmp)")
             
-            // 收到 PUBCOMP 时, storedPacket, 里面应该是保存的 PUBREL
             guard let sentMessage = storedPacket[pubcmp.packetId] as? PubRelPacket else {
                 DDLogError("should a pubrel packet saved in the cache, when recv pubcmp. but is \(storedPacket[pubcmp.packetId])")
                 return
             }
             
-            // remove pubrel packet from cahce
+            // discard from cahce & localstorage
             storedPacket.removeValue(forKey: sentMessage.packetId)
             localStorage?.remove(packet: sentMessage)
             
