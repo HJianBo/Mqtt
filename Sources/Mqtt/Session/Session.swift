@@ -51,6 +51,13 @@ enum SessionError: Error {
     case invaildPacket
 }
 
+private struct QueueSpecifi {
+    static let SendKey = DispatchSpecificKey<String>()
+    static let SendValue = "SEND_QUEUE_SPECIFI_VALUE"
+    static let ReadKey = DispatchSpecificKey<String>()
+    static let ReadValue = "READ_QUEUE_SPECIFI_VALUE"
+}
+
 // MQTT Clietn session 
 // implment send/recv
 final class Session {
@@ -90,6 +97,9 @@ final class Session {
         storedPacket = [:]
         
         state = .disconnected
+        
+        sendQueue.setSpecific(key: QueueSpecifi.SendKey, value: QueueSpecifi.SendValue)
+        readQueue.setSpecific(key: QueueSpecifi.ReadKey, value: QueueSpecifi.ReadValue)
     }
     
     deinit {
@@ -140,7 +150,9 @@ extension Session {
     }
 
     private func scheduleSendMessage() {
-        // TODO: exec in send queue
+        assert(DispatchQueue.getSpecific(key: QueueSpecifi.SendKey) == QueueSpecifi.SendValue,
+               "this method should only be run at sepcific queue")
+        
         guard let packet = messageQueue.first else {
             assert(false)
             return
@@ -362,8 +374,8 @@ extension Session {
     }
     
     private func tl_read() throws {
-        //assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
-        //       "this method should only be run at sepcific queue")
+        assert(DispatchQueue.getSpecific(key: QueueSpecifi.ReadKey) == QueueSpecifi.ReadValue,
+               "this method should only be run at sepcific queue")
         
         let header = try readHeader()
         let remainLength = try readLength()
@@ -377,8 +389,8 @@ extension Session {
     
     // sync method to read a header
     private func readHeader() throws -> FixedHeader {
-        //assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
-        //       "this method should only be run at sepcific queue")
+        assert(DispatchQueue.getSpecific(key: QueueSpecifi.ReadKey) == QueueSpecifi.ReadValue,
+               "this method should only be run at sepcific queue")
         
         guard let socket = socket else {
             throw SessionError.socketIsNil
@@ -400,8 +412,8 @@ extension Session {
     
     // sync method to read length
     private func readLength() throws -> Int {
-        //assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
-        //       "this method should only be run at sepcific queue")
+        assert(DispatchQueue.getSpecific(key: QueueSpecifi.ReadKey) == QueueSpecifi.ReadValue,
+               "this method should only be run at sepcific queue")
         
         guard let socket = socket else {
             throw SessionError.socketIsNil
@@ -433,8 +445,8 @@ extension Session {
     
     // read variable header and payload
     private func readPayload(len: Int) throws -> [UInt8] {
-        //assert(DispatchQueue.getSpecific(key: OP_QUEUE_SPECIFIC_KEY) == OP_QUEUE_SPECIFIC_VAL,
-        //       "this method should only be run at sepcific queue")
+        assert(DispatchQueue.getSpecific(key: QueueSpecifi.ReadKey) == QueueSpecifi.ReadValue,
+               "this method should only be run at sepcific queue")
         
         guard let socket = socket else {
             throw SessionError.socketIsNil
