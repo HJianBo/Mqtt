@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82423F991E55A85C009BE57B /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82423F981E55A85C009BE57B /* LocalStorage.swift */; };
 		82D0E49B1E532BF900C87560 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D0E49A1E532BF900C87560 /* Session.swift */; };
 		OBJ_103 /* DDLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* DDLog.swift */; };
 		OBJ_104 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* Extension.swift */; };
@@ -102,6 +103,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		82423F981E55A85C009BE57B /* LocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		82D0E49A1E532BF900C87560 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		OBJ_10 /* SynchronousTCPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronousTCPServer.swift; sourceTree = "<group>"; };
 		OBJ_11 /* SynchronousUDPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronousUDPServer.swift; sourceTree = "<group>"; };
@@ -188,6 +190,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		82423F971E55A837009BE57B /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				82423F981E55A85C009BE57B /* LocalStorage.swift */,
+			);
+			name = Storage;
+			sourceTree = "<group>";
+		};
 		8281D2211E496C2F00A20D3B /* Session */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +235,7 @@
 				OBJ_32 /* DDLog.swift */,
 				OBJ_33 /* Extension.swift */,
 				OBJ_34 /* MqttClient.swift */,
+				82423F971E55A837009BE57B /* Storage */,
 				8281D2211E496C2F00A20D3B /* Session */,
 				OBJ_37 /* Packet */,
 			);
@@ -423,6 +434,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_103 /* DDLog.swift in Sources */,
+				82423F991E55A85C009BE57B /* LocalStorage.swift in Sources */,
 				OBJ_104 /* Extension.swift in Sources */,
 				OBJ_105 /* MqttClient.swift in Sources */,
 				OBJ_108 /* ConnAckPacket.swift in Sources */,

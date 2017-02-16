@@ -89,3 +89,9 @@ extension PublishPacket {
         return String(bytes: payload, encoding: .utf8) ?? ""
     }
 }
+
+extension PublishPacket: CustomStringConvertible {
+    public var description: String {
+        return "Publish(packetId: \(packetId), qos: \(qos), topic: \(topicName), payload: \(payload.count) bytes)"
+    }
+}

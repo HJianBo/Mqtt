@@ -114,6 +114,8 @@ final class Session {
     
     var storedPacket: Dictionary<UInt16, Packet>
     
+    var localStorage: LocalStorage?
+    
     var connectPacket: ConnectPacket?
     
     var heartbeatTimer: Timer?
@@ -149,6 +151,7 @@ extension Session {
             guard let weakSelf = self else { return }
             weakSelf.state = .connecting
             weakSelf.connectPacket = packet
+            weakSelf.localStorage = LocalStorage(name: packet.clientId)
             do {
                 weakSelf.socket = try TCPInternetSocket(address: weakSelf.remoteAddres)
                 try weakSelf.socket!.connect()
@@ -199,6 +202,11 @@ extension Session {
         // stored packet when qos > 0
         if packet.qos != .qos0 {
             storedPacket[packet.packetIdIfExisted!] = packet
+            
+            // 协议规定只是 `publish` `pubrel` 需要持久化重发
+            if packet is PublishPacket || packet is PubRelPacket {
+                localStorage?.save(packet: packet)
+            }
         }
         
         do {
@@ -211,6 +219,8 @@ extension Session {
             if packet.qos == .qos0 && packet is PublishPacket {
                 delegate?.session(self, didPublish: packet as! PublishPacket)
             }
+            
+            DDLogVerbose("SEND \(packet)")
             
             // close connection, when sent DisconnectPacket
             if packet is DisconnectPacket {
@@ -308,18 +318,39 @@ extension Session {
     }
     
     private func handleRecvMessage(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
-        DDLogVerbose("RECV FH: \(header), RL: \(remainLen), PL: \(payload.count) bytes")
-        
         switch header.type {
         case .connack:
             let conack = try ConnAckPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(header.type), return code \(conack.returnCode)")
+            DDLogInfo("RECV \(conack)")
             
             if conack.returnCode == .accepted {
                 sendQueue.async { [weak self] in
                     self?.state = .accepted
                     self?.startHeartbeatTimer()
                 }
+                
+                DDLogInfo("clean sesion is \(connectPacket?.cleanSession)")
+                
+                // recover session if need
+                if connectPacket?.cleanSession == false {
+                    if let allStoredPacket = localStorage?.allPacket() {
+                        DDLogInfo("recover \(allStoredPacket.count) message")
+                        
+                        // XXX: packet id 作为排序依据是不正确的.
+                        let sortedPacket = allStoredPacket.sorted { p1, p2 in
+                            if let pid1 = p1.packetIdIfExisted, let pid2 = p2.packetIdIfExisted {
+                                return pid1 < pid2
+                            }
+                            return true
+                        }
+                        
+                        // 重新入队
+                        for p in sortedPacket {
+                            send(packet: p)
+                        }
+                    }
+                }
+                
                 delegate?.session(self, didConnect: "\(remoteAddres.hostname):\(remoteAddres.port)")
             } else {
                 sendQueue.async { [weak self] in
@@ -332,7 +363,7 @@ extension Session {
             
         case .publish:
             let publish = PublishPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(publish.type), topic: \(publish.topicName), payload: \(publish.payload.count) bytes")
+            DDLogInfo("RECV \(publish)")
             
             delegate?.session(self, didRecvPublish: publish)
             
@@ -348,7 +379,7 @@ extension Session {
             }
         case .puback:
             let puback = PubAckPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(puback.type), packet id \(puback.packetId)")
+            DDLogInfo("RECV \(puback)")
             
             guard let sentPacket = storedPacket[puback.packetId] as? PublishPacket else {
                 assert(false)
@@ -357,50 +388,53 @@ extension Session {
             delegate?.session(self, didPublish: sentPacket)
             
             storedPacket.removeValue(forKey: puback.packetId)
+            localStorage?.remove(packet: sentPacket)
             
         case .pubrec:
             let pubrec = PubRecPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(pubrec.type), pakcet id \(pubrec.packetId)")
+            DDLogInfo("RECV \(pubrec)")
             
             guard let sentPacket = storedPacket[pubrec.packetId] as? PublishPacket else {
-                DDLogError("no qos2 packet saved in the cache, when recv pubrec")
+                DDLogError("should a qos2 publich packet saved in the cache, when recv pubrec. but is \(storedPacket[pubrec.packetId])")
                 return
             }
             
             let pubrel = PubRelPacket(packetId: pubrec.packetId)
             
+            // XXX: 收到 pubrec 则告诉上层 qos2 的 publish 发送成功
+            delegate?.session(self, didPublish: sentPacket)
+            
             // remove publish packet from cahce.
             storedPacket.removeValue(forKey: pubrec.packetId)
+            localStorage?.remove(packet: sentPacket)
             
             // send & save rel in cahce.
             self.send(packet: pubrel)
             
-            // XXX: 收到 pubrec 则告诉上层 qos2 的 publish 发送成功
-            delegate?.session(self, didPublish: sentPacket)
-            
         case .pubcomp:
             let pubcmp = PubCompPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(pubcmp.type), packet id \(pubcmp)")
+            DDLogInfo("RECV \(pubcmp)")
             
             // 收到 PUBCOMP 时, storedPacket, 里面应该是保存的 PUBREL
             guard let sentMessage = storedPacket[pubcmp.packetId] as? PubRelPacket else {
-                DDLogError("no pubrel saved in the cahce, when recv pubcmp")
-                assert(false)
+                DDLogError("should a pubrel packet saved in the cache, when recv pubcmp. but is \(storedPacket[pubcmp.packetId])")
+                return
             }
             
             // remove pubrel packet from cahce
             storedPacket.removeValue(forKey: sentMessage.packetId)
+            localStorage?.remove(packet: sentMessage)
             
         case .pubrel:
             let pubrel = try PubRelPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(pubrel.type), packet id \(pubrel.packetId)")
+            DDLogInfo("RECV \(pubrel)")
             
             let pubcmp = PubCompPacket(packetId: pubrel.packetId)
             self.send(packet: pubcmp)
             
         case .suback:
             let suback = try SubAckPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(suback.type), return codes \(suback.returnCodes)")
+            DDLogInfo("RECV \(suback)")
             
             guard let sentPacket = storedPacket[suback.packetId] as? SubscribePacket else {
                 assert(false)
@@ -418,7 +452,7 @@ extension Session {
 
         case .unsuback:
             let unsuback = UnsubAckPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(unsuback.type), packet id \(unsuback.packetId)")
+            DDLogInfo("RECV \(unsuback)")
             
             guard let sentPacket = storedPacket[unsuback.packetId] as? UnsubscribePacket else {
                 assert(false)
@@ -430,16 +464,15 @@ extension Session {
             
         case .pingresp:
             let pingresp = PingRespPacket(header: header, bytes: payload)
-            DDLogInfo("RECV \(pingresp.type)")
+            DDLogInfo("RECV pong")
             
             delegate?.session(self, didRecvPong: pingresp)
         case .reserved, .reserved2:
-            // should disconnect
-            DDLogError("close the network connect, when recv reserved header type.")
+            DDLogError("close the network connect, when recv reserved header type")
             self.close(withError: SessionError.invaildPacket)
             break
         default:
-            assert(false, "recv a packet type \(header.type), should be handle.")
+            assert(false, "recv a packet type \(header.type), should be handle")
         }
     }
     

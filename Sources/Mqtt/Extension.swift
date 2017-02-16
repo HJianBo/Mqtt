@@ -56,6 +56,15 @@ extension UInt8 {
     }
 }
 
+extension Data {
+    
+    var bytes: [UInt8] {
+        var bys = Array<UInt8>(repeating: 0, count: count)
+        copyBytes(to: &bys, count: count)
+        return bys
+    }
+}
+
 
 extension String {
     
