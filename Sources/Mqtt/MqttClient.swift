@@ -67,11 +67,7 @@ public final class MqttClient {
     
     fileprivate var session: Session?
 
-    var mqttQueue: DispatchQueue
-    
     var delegateQueue: DispatchQueue
-    
-    var timer: Timer?
 
     public init(clientId: String,
                 cleanSession: Bool,
@@ -86,7 +82,6 @@ public final class MqttClient {
         self.username     = username
         self.password     = password
         self.willMessage  = willMessage
-        self.mqttQueue    = DispatchQueue(label: "com.mqtt.client")
         self.delegateQueue = DispatchQueue.main
     }
     
@@ -210,31 +205,6 @@ extension MqttClient {
     }
 }
 
-// MARK: - Private helper method
-extension MqttClient {
-    
-    fileprivate func startHeartbeatTimer() {
-        if timer != nil {
-            timer?.invalidate()
-            timer = nil
-        }
-        
-        timer = Timer(timeInterval: Double(keepAlive), target: self, selector: #selector(_heartbeatTimerArrive), userInfo: nil, repeats: true)
-        
-        RunLoop.main.add(timer!, forMode: .commonModes)
-    }
-    
-    fileprivate func stopHeartbeat() {
-        timer?.invalidate()
-        timer = nil
-    }
-    
-    @objc private func _heartbeatTimerArrive() {
-        let ping = PingReqPacket()
-        try? sessionSend(packet: ping)
-    }
-}
-
 // MARK: - SessionDelegate
 extension MqttClient: SessionDelegate {
     
@@ -249,8 +219,6 @@ extension MqttClient: SessionDelegate {
     
     func session(_ session: Session, didConnect address: String) {
         DDLogInfo("session did connect \(address)")
-        
-        startHeartbeatTimer()
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
@@ -297,7 +265,6 @@ extension MqttClient: SessionDelegate {
     func session(_ session: Session, didDisconnect error: Error?) {
         DDLogInfo("session did disconnect error: \(error)")
         
-        stopHeartbeat()
         self.session = nil
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }

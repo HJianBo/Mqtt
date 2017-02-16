@@ -92,6 +92,10 @@ final class Session {
     
     var storedPacket: Dictionary<UInt16, Packet>
     
+    var connectPacket: ConnectPacket?
+    
+    var heartbeatTimer: Timer?
+    
     init(host: String, port: UInt16, del: SessionDelegate?) {
         remoteAddres = InternetAddress(hostname: host, port: port)
         
@@ -122,6 +126,7 @@ extension Session {
         let connectBlock = { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.state = .connecting
+            weakSelf.connectPacket = packet
             do {
                 weakSelf.socket = try TCPInternetSocket(address: weakSelf.remoteAddres)
                 try weakSelf.socket!.connect()
@@ -198,6 +203,38 @@ extension Session {
     }
 }
 
+extension Session  {
+    
+    fileprivate func startHeartbeatTimer() {
+        guard state == .accepted else { return }
+        guard let keepAlive = connectPacket?.keepAlive else { return }
+        
+        if heartbeatTimer != nil {
+            heartbeatTimer?.invalidate()
+            heartbeatTimer = nil
+        }
+        
+        heartbeatTimer = Timer(timeInterval: Double(keepAlive),
+                               target: self,
+                               selector: #selector(_heartbeatTimerArrive),
+                               userInfo: nil,
+                               repeats: true)
+        
+        // XXX: 心跳线程是否应放到 sendQueue 当中
+        RunLoop.main.add(heartbeatTimer!, forMode: .commonModes)
+    }
+    
+    fileprivate func stopHeartbeatTimer() {
+        heartbeatTimer?.invalidate()
+        heartbeatTimer = nil
+    }
+    
+    @objc private func _heartbeatTimerArrive() {
+        let ping = PingReqPacket()
+        send(packet: ping)
+    }
+}
+
 // MARK: - Helper
 extension Session {
     
@@ -211,14 +248,13 @@ extension Session {
             
             weakSelf.state = .disconnected
             
-            // 1. close socket
+            // 1. stop send/recv task
+            weakSelf.stopHeartbeatTimer()
+            
+            // 2. close socket
             try? weakSelf.socket?.close()
             
-            // 2. stop send/recv task
-            
-            
             // 3. save message to localstoage
-            // TODO:
             
             // 4. callback did disconnect
             weakSelf.delegate?.session(weakSelf, didDisconnect: error)
@@ -260,6 +296,7 @@ extension Session {
             if conack.returnCode == .accepted {
                 sendQueue.async { [weak self] in
                     self?.state = .accepted
+                    self?.startHeartbeatTimer()
                 }
                 delegate?.session(self, didConnect: "\(remoteAddres.hostname):\(remoteAddres.port)")
             } else {
