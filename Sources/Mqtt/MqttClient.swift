@@ -23,7 +23,7 @@ public protocol MqttClientDelegate {
     
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?)
     
-    func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket)
+    func mqtt(_ mqtt: MqttClient, didRecvPong packet: PingRespPacket)
 }
 
 public enum ClientError: Error {
@@ -243,7 +243,7 @@ extension MqttClient: SessionDelegate {
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didRecvPingresp: pingresp)
+            weakSelf.delegate?.mqtt(weakSelf, didRecvPong: pingresp)
         }
     }
     

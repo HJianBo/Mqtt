@@ -106,16 +106,22 @@ class MqttClientTests: XCTestCase {
 }
 
 extension MqttClientTests: MqttClientDelegate {
-    func mqtt(_ mqtt: MqttClient, didRecvConnack packet: ConnAckPacket) {
-        if packet.returnCode == .accepted {
-            expConnect?.fulfill()
-            expConnect = nil
-            XCTAssertEqual(mqtt.sessionState, .connected)
-        } else {
-            XCTAssertEqual(mqtt.sessionState, .denied)
-        }
+    
+    func mqtt(_ mqtt: MqttClient, didSubscribe result: [String : SubsAckReturnCode]) {
+        expSubscribe?.fulfill()
+        expSubscribe = nil
+    }
+
+    func mqtt(_ mqtt: MqttClient, didUnsubscribe topics: [String]) {
+        expUnsubscribe?.fulfill()
+        expUnsubscribe = nil
+    }
+    
+    func mqtt(_ mqtt: MqttClient, didConnect address: String) {
+        expConnect?.fulfill()
+        expConnect = nil
         
-        XCTAssertEqual(packet.returnCode, .accepted)
+        XCTAssertEqual(address, "\(sDefaultHost):\(sDefaultPort)")
     }
     
     func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket) {
@@ -127,17 +133,7 @@ extension MqttClientTests: MqttClientDelegate {
         print("recv message: \(packet)")
     }
     
-    func mqtt(_ mqtt: MqttClient, didSubscribe packet: SubscribePacket) {
-        expSubscribe?.fulfill()
-        expSubscribe = nil
-    }
-    
-    func mqtt(_ mqtt: MqttClient, didUnsubscribe packet: UnsubscribePacket) {
-        expUnsubscribe?.fulfill()
-        expUnsubscribe = nil
-    }
-    
-    func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {
+    func mqtt(_ mqtt: MqttClient, didRecvPong packet: PingRespPacket) {
         expPing?.fulfill()
         expPing = nil
     }

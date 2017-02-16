@@ -40,9 +40,6 @@ extension UInt16 {
     }
 }
 
-
-// TODO: Rename?
-
 extension UInt8 {
     
     /// offset: 7~0

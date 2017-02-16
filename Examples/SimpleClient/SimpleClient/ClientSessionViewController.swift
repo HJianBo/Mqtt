@@ -117,7 +117,7 @@ extension ClientSessionViewController: MqttClientDelegate {
         log("did unsubscribe topics: \(topics)")
     }
     
-    func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {
+    func mqtt(_ mqtt: MqttClient, didRecvPong packet: PingRespPacket) {
         log("recevie pong")
     }
 }

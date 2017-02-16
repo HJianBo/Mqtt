@@ -49,12 +49,18 @@ enum SessionError: Error {
     case closeByServer
     
     case invaildPacket
+
 }
 
+// Queue specifi key/value
 private struct QueueSpecifi {
+    
     static let SendKey = DispatchSpecificKey<String>()
+    
     static let SendValue = "SEND_QUEUE_SPECIFI_VALUE"
+    
     static let ReadKey = DispatchSpecificKey<String>()
+    
     static let ReadValue = "READ_QUEUE_SPECIFI_VALUE"
 }
 
@@ -243,8 +249,7 @@ extension Session {
         }
     }
     
-    private func didReceviePacket(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
-        // handle packet, then callback to delegate
+    private func handleRecvMessage(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
         DDLogVerbose("RECV H: \(header), L: \(remainLen), P: \(payload)")
         
         switch header.type {
@@ -364,9 +369,11 @@ extension Session {
             let pingresp = PingRespPacket(header: header, bytes: payload)
             DDLogInfo("RECV \(pingresp.type)")
             
+            delegate?.session(self, didRecvPong: pingresp)
         case .reserved, .reserved2:
             // should disconnect
-            DDLogWarn("should close the network connect, when recv reserved header type.")
+            DDLogError("close the network connect, when recv reserved header type.")
+            self.close(withError: SessionError.invaildPacket)
             break
         default:
             assert(false, "recv a packet type \(header.type), should be handle.")
@@ -384,7 +391,7 @@ extension Session {
             payload = try readPayload(len: remainLength)
         }
         
-        try didReceviePacket(header: header, remainLen: remainLength, payload: payload)
+        try handleRecvMessage(header: header, remainLen: remainLength, payload: payload)
     }
     
     // sync method to read a header
@@ -406,7 +413,7 @@ extension Session {
         guard let header = FixedHeader(byte: buffer[0]) else {
             throw SessionError.invaildPacket
         }
-        DDLogVerbose("did recv header \(header)")
+        
         return header
     }
     
@@ -438,8 +445,6 @@ extension Session {
             }
         }
         
-        // when length equal 0, the payload is empty
-        DDLogVerbose("did recv length \(length)")
         return length
     }
     
