@@ -286,7 +286,7 @@ extension Session {
     }
     
     private func handleRecvMessage(header: FixedHeader, remainLen: Int, payload: [UInt8]) throws {
-        DDLogVerbose("RECV H: \(header), L: \(remainLen), P: \(payload)")
+        DDLogVerbose("RECV FH: \(header), RL: \(remainLen), PL: \(payload.count) bytes")
         
         switch header.type {
         case .connack:
@@ -360,10 +360,13 @@ extension Session {
             DDLogInfo("RECV \(pubcmp.type), packet id \(pubcmp)")
             
             // 收到 PUBCOMP 时, storedPacket, 里面应该是保存的 PUBREL
-            guard let _ = storedPacket[pubcmp.packetId] as? PubRelPacket else {
+            guard let sentMessage = storedPacket[pubcmp.packetId] as? PubRelPacket else {
                 DDLogError("no pubrel saved in the cahce, when recv pubcmp")
                 assert(false)
             }
+            
+            // remove pubrel packet from cahce
+            storedPacket.removeValue(forKey: sentMessage.packetId)
             
         case .pubrel:
             let pubrel = try PubRelPacket(header: header, bytes: payload)
