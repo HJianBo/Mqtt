@@ -29,7 +29,7 @@ public enum ETLogLevel: UInt8 {
     case verbose
 }
 
-var logLevel: ETLogLevel  = .verbose
+var logLevel: ETLogLevel  = .debug
 
 func DDLogVerbose(_ format: CustomStringConvertible) {
     if logLevel >= .verbose {
