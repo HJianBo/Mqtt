@@ -49,7 +49,29 @@ enum SessionError: Error {
     case closeByServer
     
     case invaildPacket
-
+    
+    case authenticateFailed(reason: String)
+    
+    static func authenticateError(by returnCode: ConnAckReturnCode) -> SessionError {
+        switch returnCode {
+        case .accepted:
+            assert(false)
+        case .badUsernameOrPassword:
+            return .authenticateFailed(reason: "the data in the user name or password is malformed")
+            
+        case .identifierRejected:
+            return .authenticateFailed(reason: "the client identifier is correct utf-8 but not allowed by the server")
+            
+        case .notAuthorized:
+            return .authenticateFailed(reason: "the client is not authorized to connect")
+            
+        case .serverUnavailable:
+            return .authenticateFailed(reason: "the network connection has been made but the mqtt service is unavailable")
+            
+        case.unAccepableProtocolVersion:
+            return .authenticateFailed(reason: "the server does not support the level of the mqtt protocol requested by the client")
+        }
+    }
 }
 
 // Queue specifi key/value
@@ -303,8 +325,9 @@ extension Session {
                 sendQueue.async { [weak self] in
                     self?.state = .denied
                 }
-                // FIXME: need report error
-                self.close()
+                
+                let error = SessionError.authenticateError(by: conack.returnCode)
+                self.close(withError: error)
             }
             
         case .publish:

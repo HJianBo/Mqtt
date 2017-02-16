@@ -31,7 +31,6 @@ extension PubAckPacket: InitializeWithResponse {
         fixedHeader = header
         
         packetId = UInt16(bytes[0])*256+UInt16(bytes[1])
-        DDLogInfo("--bytes: \(bytes), pacletId: \(packetId)")
     }
 }
 
