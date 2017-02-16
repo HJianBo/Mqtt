@@ -31,22 +31,14 @@ protocol SessionDelegate: class {
     
     func session(_ session: Session, didRecvPublish packet: PublishPacket)
     
-    // TODO: didSend 需要定义清楚！！！！ 消息从 socket 发送出去，还是这个消息流程完成
-    //func session(_ session: Session, didSend packet: Packet)
+    func session(_ session: Session, didPublish publish: PublishPacket)
     
-    // 所有 publish 成功的消息，回调从这里走
-    func session(_ session: Session, didPublish: PublishPacket)
+    func session(_ session: Session, didRecvPong pingresp: PingRespPacket)
     
-    // 收到 pong 从这里走
-    func session(_ session: Session, didRecvPong: PingRespPacket)
-    
-    // 订阅成功从这里走
     func session(_ session: Session, didSubscribe topics: [String: SubsAckReturnCode])
     
-    // 取消订阅成功从这里走
     func session(_ session: Session, didUnsubscribe topics: [String])
     
-    // 断开连接从这里走
     func session(_ session: Session, didDisconnect error: Error?)
 }
 
@@ -54,9 +46,9 @@ enum SessionError: Error {
     
     case socketIsNil
     
-    case closeByRemote
+    case closeByServer
     
-    case recvInvaildPacket
+    case invaildPacket
 }
 
 // MQTT Clietn session 
@@ -75,6 +67,8 @@ final class Session {
 
     weak fileprivate var delegate: SessionDelegate?
     
+    var sendQueueGroup: DispatchGroup
+    
     // send message & modify variabel property in this queue
     var sendQueue: DispatchQueue
     
@@ -91,6 +85,7 @@ final class Session {
         delegate = del
         sendQueue = DispatchQueue(label: "com.mqtt.session.send")
         readQueue = DispatchQueue(label: "com.mqtt.session.read")
+        sendQueueGroup = DispatchGroup()
         messageQueue = []
         storedPacket = [:]
         
@@ -120,14 +115,15 @@ extension Session {
             }
             
             // send connect packet
-            weakSelf.send(packet: packet)
+            weakSelf.messageQueue.append(packet)
+            weakSelf.scheduleSendMessage()
             
             // active recv task
             weakSelf.startRecevie()
         }
         
         // exec block in `sendQueue`
-        sendQueue.async(execute: connectBlock)
+        sendQueueGroup.notify(queue: sendQueue, execute: connectBlock)
     }
     
     func send(packet: Packet) {
@@ -140,7 +136,7 @@ extension Session {
         }
         
         // exec block in `sendQueue`
-        sendQueue.async(execute: sendBlock)
+        sendQueueGroup.notify(queue: sendQueue, execute: sendBlock)
     }
 
     private func scheduleSendMessage() {
@@ -151,6 +147,7 @@ extension Session {
         }
         
         guard let socket = socket else {
+            assert(false)
             return
         }
         
@@ -391,11 +388,11 @@ extension Session {
         
         var buffer = try socket.recv(maxBytes: readLength)
         guard readLength == buffer.count else {
-            throw SessionError.closeByRemote
+            throw SessionError.closeByServer
         }
         
         guard let header = FixedHeader(byte: buffer[0]) else {
-            throw SessionError.recvInvaildPacket
+            throw SessionError.invaildPacket
         }
         DDLogVerbose("did recv header \(header)")
         return header
@@ -417,7 +414,7 @@ extension Session {
         while true {
             let buffer = try socket.recv(maxBytes: readLength)
             guard readLength == buffer.count else {
-                throw SessionError.closeByRemote
+                throw SessionError.closeByServer
             }
             let byte = buffer[0]
             length += Int(byte & 127) * multiply
@@ -449,7 +446,7 @@ extension Session {
         
         let buffer = try socket.recv(maxBytes: len)
         guard buffer.count == len else {
-            throw SessionError.closeByRemote
+            throw SessionError.closeByServer
         }
         
         return buffer

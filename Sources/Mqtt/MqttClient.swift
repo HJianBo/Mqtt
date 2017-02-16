@@ -26,28 +26,16 @@ public protocol MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket)
 }
 
-// 扩展协议具有默认实现.
-// 当 `协议实现者` 实现该协议后, 实现了该方法. 
-// 那么调用者, 调用该方法时是调用的哪个实现？
-//extension MqttClientDelegate {
-//    public func mqtt(_ mqtt: MqttClient, didRecvPingresp packet: PingRespPacket) {}
-//}
-
 public enum ClientError: Error {
     
     case aleadryConnected
     
     case aleadryConnecting
     
-    case hasDisconnected
-    
     case notConnected
 }
 
-// TODO: 
-//  1. 再被远端断开连接后, 需要及时通知程序本身, 及时改变 client 状态, 以及返回码
-//  2. 
-//
+
 public final class MqttClient {
     
     private var _packetId: UInt16 = 0
@@ -114,11 +102,15 @@ public final class MqttClient {
         return _packetId
     }
     
+    // `connect` `send` 等操作, 应该进行排队处理
+    // 比如立刻的调用 `connect` `send` 应该有正确的返回
     fileprivate func sessionSend(packet: Packet) throws {
+        
         guard let session = session else {
             throw ClientError.notConnected
         }
-        guard sessionState == .accepted else {
+        
+        guard sessionState != .disconnected, sessionState != .denied else {
             throw ClientError.notConnected
         }
         
@@ -200,7 +192,6 @@ extension MqttClient {
         try sessionSend(packet: packet)
     }
     
-    // FIXME: disconnect 时应该 回调一个 error = nil 的结果
     public func disconnect() throws {
         guard sessionState == .accepted else {
             return
@@ -244,11 +235,16 @@ extension MqttClient {
     }
 }
 
-
+// MARK: - SessionDelegate
 extension MqttClient: SessionDelegate {
     
-    func session(_ session: Session, didRecvPong: PingRespPacket) {
+    func session(_ session: Session, didRecvPong pingresp: PingRespPacket) {
         DDLogInfo("session did recv pong")
+        
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didRecvPingresp: pingresp)
+        }
     }
     
     func session(_ session: Session, didConnect address: String) {
@@ -278,11 +274,6 @@ extension MqttClient: SessionDelegate {
             guard let weakSelf = self else { return }
             weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
         }
-    }
-    
-    func session(_ session: Session, didSend packet: Packet) {
-        DDLogVerbose("session did send packet \(packet)")
-        
     }
     
     func session(_ session: Session, didSubscribe topics: [String : SubsAckReturnCode]) {
