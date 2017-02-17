@@ -186,15 +186,15 @@ extension MqttClient {
         try sessionSend(packet: packet)
     }
     
-    public func unsubscribe(topics: [String]) throws {
-        for t in topics {
+    public func unsubscribe(topicFilters: [String]) throws {
+        for t in topicFilters {
             guard t.mq_isVaildateTopicFilter else {
                 throw ClientError.paramIllegal
             }
         }
         
         var packet = UnsubscribePacket(packetId: nextPacketId)
-        packet.topics = topics
+        packet.topics = topicFilters
         
         try sessionSend(packet: packet)
     }
@@ -226,8 +226,8 @@ extension MqttClient {
         try subscribe(topicFilters: [topicFilter: qos])
     }
     
-    public func unsubscribe(topic: String) throws {
-        try unsubscribe(topics: [topic])
+    public func unsubscribe(topicFilter: String) throws {
+        try unsubscribe(topicFilters: [topicFilter])
     }
 }
 

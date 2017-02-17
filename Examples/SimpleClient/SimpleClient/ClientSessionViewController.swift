@@ -84,7 +84,7 @@ extension ClientSessionViewController {
     @IBAction func touchedUnsubscribe(_ sender: Any) {
         do {
             let topic = txtTopic.text ?? ""
-            try mqtt.unsubscribe(topics: [topic])
+            try mqtt.unsubscribe(topicFilter: topic)
         } catch {
             log("\(#function) throw a error: \(error)")
         }
