@@ -33,6 +33,8 @@ public enum ClientError: Error {
     case aleadryConnecting
     
     case notConnected
+    
+    case paramIllegal
 }
 
 
@@ -162,7 +164,7 @@ extension MqttClient {
     
     public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1) throws {
         guard topic.mq_isVaildateTopic else {
-            return
+            throw ClientError.paramIllegal
         }
         
         let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload, qos: qos)
@@ -170,12 +172,15 @@ extension MqttClient {
         try sessionSend(packet: packet)
     }
     
-    public func subscribe(topics: Dictionary<String, Qos>) throws {
+    public func subscribe(topicFilters: Dictionary<String, Qos>) throws {
         var packet = SubscribePacket(packetId: nextPacketId)
         
-        for (k, v) in topics {
-            guard k.mq_isVaildateTopic else { continue }
-            packet.topics.append((k, v))
+        for (k, v) in topicFilters {
+            guard k.mq_isVaildateTopicFilter else {
+                throw ClientError.paramIllegal
+            }
+            
+            packet.topicFilters.append((k, v))
         }
         
         try sessionSend(packet: packet)
@@ -183,8 +188,8 @@ extension MqttClient {
     
     public func unsubscribe(topics: [String]) throws {
         for t in topics {
-            guard t.mq_isVaildateTopic else {
-                return
+            guard t.mq_isVaildateTopicFilter else {
+                throw ClientError.paramIllegal
             }
         }
         
@@ -217,8 +222,8 @@ extension MqttClient {
         try publish(topic: topic, payload: payload.toBytes(), qos: qos)
     }
     
-    public func subscribe(topic: String, qos: Qos) throws {
-        try subscribe(topics: [topic: qos])
+    public func subscribe(topicFilter: String, qos: Qos) throws {
+        try subscribe(topicFilters: [topicFilter: qos])
     }
     
     public func unsubscribe(topic: String) throws {

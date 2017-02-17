@@ -78,6 +78,15 @@ extension String {
     
     // vaildate topic for client
     var mq_isVaildateTopic: Bool {
+        guard self != "", !contains("+"), !contains("#") else {
+            return false
+        }
+        
+        return true
+    }
+    
+    // FIXME: topic filter should match with regx
+    var mq_isVaildateTopicFilter: Bool {
         guard self != "" else {
             return false
         }

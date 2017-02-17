@@ -444,8 +444,8 @@ extension Session {
                 assert(false)
             }
             var result = [String: SubsAckReturnCode]()
-            for i in 0 ..< sentPacket.topics.count {
-                let topic = sentPacket.topics[i].0
+            for i in 0 ..< sentPacket.topicFilters.count {
+                let topic = sentPacket.topicFilters[i].0
                 let retCode = suback.returnCodes[i]
                 result[topic] = retCode
             }

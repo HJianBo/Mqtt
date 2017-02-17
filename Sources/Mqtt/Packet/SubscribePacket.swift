@@ -41,11 +41,11 @@ public struct SubscribePacket: Packet {
     }
     
     // MARK: Payload
-    public var topics = Array<(String, Qos)>()
+    public var topicFilters = Array<(String, Qos)>()
     
     var payload: Array<UInt8> {
         var value = [UInt8]()
-        let tmp = topics.map { $0.0.mq_stringData + [$0.1.rawValue] }
+        let tmp = topicFilters.map { $0.0.mq_stringData + [$0.1.rawValue] }
         for d in tmp {
             value.append(contentsOf: d)
         }
@@ -64,6 +64,6 @@ public struct SubscribePacket: Packet {
 
 extension SubscribePacket {
     public var description: String {
-        return "Subscribe(packetId: \(packetId), topics: \(topics))"
+        return "Subscribe(packetId: \(packetId), topics filters: \(topicFilters))"
     }
 }

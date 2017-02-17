@@ -61,7 +61,7 @@ extension ClientSessionViewController {
         do {
             let topic = txtTopic.text ?? ""
             let qos   = Qos(rawValue: UInt8(segQos.selectedSegmentIndex)) ?? .qos0
-            try mqtt.subscribe(topic: topic, qos: qos)
+            try mqtt.subscribe(topicFilter: topic, qos: qos)
         } catch {
             log("\(#function) throw a error: \(error)")
         }
