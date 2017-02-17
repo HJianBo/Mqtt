@@ -6,7 +6,6 @@
 //  Copyright © 2016年 jianbo. All rights reserved.
 //
 
-import Socks
 import Foundation
 
 public protocol MqttClientDelegate {
@@ -270,21 +269,29 @@ extension MqttClient: SessionDelegate {
         }
     }
     
-    func session(_ session: Session, didSubscribe topics: [String : SubsAckReturnCode]) {
-        DDLogInfo("session did subscribe topics \(topics)")
+    func session(_ session: Session, didSubscribe subscribe: SubscribePacket, withAck suback: SubAckPacket) {
+        var subres = [String: SubsAckReturnCode]()
+        
+        for i in 0 ..< subscribe.topicFilters.count {
+            let topic = subscribe.topicFilters[i].0
+            let retCode = suback.returnCodes[i]
+            subres[topic] = retCode
+        }
+        
+        DDLogInfo("session did subscribe topics \(subres)")
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didSubscribe: topics)
+            weakSelf.delegate?.mqtt(weakSelf, didSubscribe: subres)
         }
     }
-    
-    func session(_ session: Session, didUnsubscribe topics: [String]) {
-        DDLogInfo("session did unsubscirbe topics \(topics)")
+
+    func session(_ session: Session, didUnsubscribe unsubs: UnsubscribePacket) {
+        DDLogInfo("session did unsubscirbe topics \(unsubs.topics)")
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didUnsubscribe: topics)
+            weakSelf.delegate?.mqtt(weakSelf, didUnsubscribe: unsubs.topics)
         }
     }
     

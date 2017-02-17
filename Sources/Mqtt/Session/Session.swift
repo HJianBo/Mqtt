@@ -35,9 +35,11 @@ protocol SessionDelegate: class {
     
     func session(_ session: Session, didRecvPong pingresp: PingRespPacket)
     
-    func session(_ session: Session, didSubscribe topics: [String: SubsAckReturnCode])
+    //func session(_ session: Session, didSubscribe topics: [String: SubsAckReturnCode])
     
-    func session(_ session: Session, didUnsubscribe topics: [String])
+    func session(_ session: Session, didSubscribe subscribe: SubscribePacket, withAck suback: SubAckPacket)
+    
+    func session(_ session: Session, didUnsubscribe unsubs: UnsubscribePacket)
     
     func session(_ session: Session, didDisconnect error: Error?)
 }
@@ -94,31 +96,35 @@ final class Session {
     
     fileprivate(set) var state: SessionState {
         didSet {
-            DDLogInfo("mqtt client session state did change to [\(state)]")
+            DDLogDebug("mqtt client session state did change to [\(state)]")
         }
     }
     
-    private(set) var remoteAddres: InternetAddress
-
     weak fileprivate var delegate: SessionDelegate?
     
-    var sendQueueGroup: DispatchGroup
+    fileprivate var remoteAddres: InternetAddress
+    
+    var serverAddress: String {
+        return "\(remoteAddres.hostname):\(remoteAddres.port)"
+    }
+    
+    fileprivate var sendQueueGroup: DispatchGroup
     
     // send message & modify variabel property in this queue
-    var sendQueue: DispatchQueue
+    fileprivate var sendQueue: DispatchQueue
     
     // read cicrle
-    var readQueue: DispatchQueue
+    fileprivate var readQueue: DispatchQueue
     
-    var messageQueue: Array<Packet>
+    fileprivate var messageQueue: Array<Packet>
     
-    var storedPacket: Dictionary<UInt16, Packet>
+    fileprivate var storedPacket: Dictionary<UInt16, Packet>
     
-    var localStorage: LocalStorage?
+    fileprivate var localStorage: LocalStorage?
     
-    var connectPacket: ConnectPacket?
+    fileprivate var heartbeatTimer: Timer?
     
-    var heartbeatTimer: Timer?
+    fileprivate(set) var connectPacket: ConnectPacket?
     
     init(host: String, port: UInt16, del: SessionDelegate?) {
         remoteAddres = InternetAddress(hostname: host, port: port)
@@ -443,15 +449,9 @@ extension Session {
             guard let sentPacket = storedPacket[suback.packetId] as? SubscribePacket else {
                 assert(false)
             }
-            var result = [String: SubsAckReturnCode]()
-            for i in 0 ..< sentPacket.topicFilters.count {
-                let topic = sentPacket.topicFilters[i].0
-                let retCode = suback.returnCodes[i]
-                result[topic] = retCode
-            }
-
-            delegate?.session(self, didSubscribe: result)
             
+            delegate?.session(self, didSubscribe: sentPacket, withAck: suback)
+                
             storedPacket.removeValue(forKey: sentPacket.packetId)
 
         case .unsuback:
@@ -462,7 +462,7 @@ extension Session {
                 assert(false)
             }
             
-            delegate?.session(self, didUnsubscribe: sentPacket.topics)
+            delegate?.session(self, didUnsubscribe: sentPacket)
             
             storedPacket.removeValue(forKey: sentPacket.packetId)
             
