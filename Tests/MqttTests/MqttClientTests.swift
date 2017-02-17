@@ -38,10 +38,15 @@ class MqttClientTests: XCTestCase {
         client = MqttClient(clientId: "macbookpro-test", cleanSession: false)
         client.delegate = self
         print("------------ clientId \(client.clientId)")
-        do {
-            try client.connect(host: sDefaultHost, port: sDefaultPort)
-        } catch {
-            XCTAssert(false, "\(error)")
+        client.connect(host: sDefaultHost, port: sDefaultPort) { (address, error) in
+            guard error == nil else {
+                XCTAssert(false, "\(error)")
+                return
+            }
+            
+            XCTAssertEqual(address, "\(sDefaultHost):\(sDefaultPort)")
+            self.expConnect?.fulfill()
+            self.expConnect = nil
         }
         
         waitForExpectations(timeout: 10, handler: nil)
@@ -64,32 +69,50 @@ class MqttClientTests: XCTestCase {
     func test001_Publish() {
         expPublish = expectation(description: "PUBLISH")
         
-        do {
-            try client.publish(topic: "topic2", payload: "hello mqtt server!", qos: .qos2)
-        } catch {
-            XCTAssert(false, "\(error)")
+        client.publish(topic: "topic2", payload: "hello mqtt server", qos: .qos2) { error in
+            guard error == nil else {
+                XCTAssert(false, "\(error)")
+                return
+            }
+            self.expPublish?.fulfill()
+            self.expPublish = nil
         }
+
         waitForExpectations(timeout: 10, handler: nil)
     }
     
     func test002_Subscribe() {
         expSubscribe = expectation(description: "SUBSCRIBE")
         
-        do {
-            try client.subscribe(topic: "topic2", qos: .qos1)
-        } catch {
-            XCTAssert(false, "\(error)")
+        client.subscribe(topicFilters: ["topic2": .qos1]) { (res, error) in
+            guard error == nil else {
+                XCTAssert(false)
+                return
+            }
+            
+            guard let authcatiedQos = res["topic2"] else {
+                XCTAssert(false)
+                return
+            }
+            
+            XCTAssertEqual(authcatiedQos, .maxQos1)
+            self.expSubscribe?.fulfill()
+            self.expSubscribe = nil
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
     
     func test003_Unsubscribe() {
         expUnsubscribe = expectation(description: "UNSUBSCRIBE")
-        do {
-            try client.unsubscribe(topics: ["topic1"])
-        } catch {
-            XCTAssert(false, "\(error)")
+        client.unsubscribe(topicFilters: ["topic1"]) { error in
+            guard error == nil else {
+                assert(false)
+                return
+            }
+            self.expUnsubscribe?.fulfill()
+            self.expUnsubscribe = nil
         }
+        
         waitForExpectations(timeout: 10, handler: nil)
     }
     
@@ -107,27 +130,6 @@ class MqttClientTests: XCTestCase {
 
 extension MqttClientTests: MqttClientDelegate {
     
-    func mqtt(_ mqtt: MqttClient, didSubscribe result: [String : SubsAckReturnCode]) {
-        expSubscribe?.fulfill()
-        expSubscribe = nil
-    }
-
-    func mqtt(_ mqtt: MqttClient, didUnsubscribe topics: [String]) {
-        expUnsubscribe?.fulfill()
-        expUnsubscribe = nil
-    }
-    
-    func mqtt(_ mqtt: MqttClient, didConnect address: String) {
-        expConnect?.fulfill()
-        expConnect = nil
-        
-        XCTAssertEqual(address, "\(sDefaultHost):\(sDefaultPort)")
-    }
-    
-    func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket) {
-        expPublish?.fulfill()
-        expPublish = nil
-    }
     
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket) {
         print("recv message: \(packet)")

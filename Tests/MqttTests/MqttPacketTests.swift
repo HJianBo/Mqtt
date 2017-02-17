@@ -393,7 +393,7 @@ extension MqttPacketTests {
         XCTAssert(subscribePacket.fixedHeader.flag == 0x02, "packet flag should be 0x02")
         
         XCTAssert(subscribePacket.packetId == packetId, "packet id should be \(packetId)")
-        XCTAssert(subscribePacket.topics.count == 0, "packet topics count should be 0")
+        XCTAssert(subscribePacket.topicFilters.count == 0, "packet topics count should be 0")
     }
     
     
@@ -404,16 +404,16 @@ extension MqttPacketTests {
         subscribePacket.packetId = packetId
         XCTAssert(subscribePacket.packetId == packetId, "packet id should be \(packetId)")
         
-        subscribePacket.topics.append(("topic1", .qos0))
-        subscribePacket.topics.append(("topic2", .qos1))
-        subscribePacket.topics.append(("topic3", .qos2))
-        XCTAssert(subscribePacket.topics.count == 3, "packet topics count should be 3")
-        XCTAssert(subscribePacket.topics[0].0 == "topic1", "packet topic should be topic1")
-        XCTAssert(subscribePacket.topics[1].0 == "topic2", "packet topic should be topic2")
-        XCTAssert(subscribePacket.topics[2].0 == "topic3", "packet topic should be topic3")
-        XCTAssert(subscribePacket.topics[0].1 == .qos0, "packet topic reqqos should be .qos0")
-        XCTAssert(subscribePacket.topics[1].1 == .qos1, "packet topic reqqos should be .qos1")
-        XCTAssert(subscribePacket.topics[2].1 == .qos2, "packet topic reqqos should be .qos2")
+        subscribePacket.topicFilters.append(("topic1", .qos0))
+        subscribePacket.topicFilters.append(("topic2", .qos1))
+        subscribePacket.topicFilters.append(("topic3", .qos2))
+        XCTAssert(subscribePacket.topicFilters.count == 3, "packet topics count should be 3")
+        XCTAssert(subscribePacket.topicFilters[0].0 == "topic1", "packet topic should be topic1")
+        XCTAssert(subscribePacket.topicFilters[1].0 == "topic2", "packet topic should be topic2")
+        XCTAssert(subscribePacket.topicFilters[2].0 == "topic3", "packet topic should be topic3")
+        XCTAssert(subscribePacket.topicFilters[0].1 == .qos0, "packet topic reqqos should be .qos0")
+        XCTAssert(subscribePacket.topicFilters[1].1 == .qos1, "packet topic reqqos should be .qos1")
+        XCTAssert(subscribePacket.topicFilters[2].1 == .qos2, "packet topic reqqos should be .qos2")
     }
 
 }

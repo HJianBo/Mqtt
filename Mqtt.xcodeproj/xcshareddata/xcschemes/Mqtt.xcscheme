@@ -60,7 +60,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_128"
+               BlueprintIdentifier = "OBJ_127"
                BuildableName = "MqttTests.xctest"
                BlueprintName = "MqttTests"
                ReferencedContainer = "container:Mqtt.xcodeproj">
