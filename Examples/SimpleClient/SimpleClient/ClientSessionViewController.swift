@@ -34,10 +34,13 @@ class ClientSessionViewController: UIViewController {
 extension ClientSessionViewController {
     
     @IBAction func touchedConnect(_ sender: Any) {
-        do {
-            try mqtt.connect(host: "q.emqtt.com")
-        } catch {
-            log("\(#function) throw a error: \(error)")
+        mqtt.connect(host: "q.emqtt.com") { [weak self] address, error in
+            guard let weakSelf = self else { return }
+            guard error == nil else {
+                weakSelf.log("connect \(address) error: \(error!)")
+                return
+            }
+            weakSelf.log("connect suceess \(address)")
         }
     }
     
@@ -58,22 +61,30 @@ extension ClientSessionViewController {
     }
     
     @IBAction func touchedSubscribe(_ sender: Any) {
-        do {
-            let topic = txtTopic.text ?? ""
-            let qos   = Qos(rawValue: UInt8(segQos.selectedSegmentIndex)) ?? .qos0
-            try mqtt.subscribe(topicFilter: topic, qos: qos)
-        } catch {
-            log("\(#function) throw a error: \(error)")
+        let topic = txtTopic.text ?? ""
+        let qos   = Qos(rawValue: UInt8(segQos.selectedSegmentIndex)) ?? .qos0
+        mqtt.subscribe(topicFilters: [topic: qos]) { [weak self] result, error in
+            guard let weakSelf = self else { return }
+            guard error == nil else {
+                weakSelf.log("subscribe error \(error)")
+                return
+            }
+            weakSelf.log("subscribe success \(result)")
         }
     }
+    
     @IBAction func touchedPublish(_ sender: Any) {
-        do {
-            let topic = txtTopic.text ?? ""
-            let payload = txtPayload.text ?? ""
-            let qos   = Qos(rawValue: UInt8(segQos.selectedSegmentIndex)) ?? .qos0
-            try mqtt.publish(topic: topic, payload: payload, qos: qos)
-        } catch {
-            log("\(#function) throw a error: \(error)")
+        let topic = txtTopic.text ?? ""
+        let payload = txtPayload.text ?? ""
+        let qos   = Qos(rawValue: UInt8(segQos.selectedSegmentIndex)) ?? .qos0
+        mqtt.publish(topic: topic, payload: payload, qos: qos) { [weak self] error in
+            guard let weakSelf = self else { return }
+            guard error == nil else {
+                weakSelf.log("publish error \(error)")
+                return
+            }
+            
+            weakSelf.log("publish success, topic: \(topic), payload: \(payload)")
         }
     }
     
@@ -82,11 +93,15 @@ extension ClientSessionViewController {
     }
     
     @IBAction func touchedUnsubscribe(_ sender: Any) {
-        do {
-            let topic = txtTopic.text ?? ""
-            try mqtt.unsubscribe(topicFilter: topic)
-        } catch {
-            log("\(#function) throw a error: \(error)")
+        let topic = txtTopic.text ?? ""
+        mqtt.unsubscribe(topicFilters: [topic]) { [weak self] error in
+            guard let weakSelf = self else { return }
+            guard error == nil else {
+                weakSelf.log("unsubscribe error \(error)")
+                return
+            }
+            
+            weakSelf.log("unsubscribe success \(topic)")
         }
     }
 }
@@ -111,7 +126,6 @@ extension ClientSessionViewController: MqttClientDelegate {
     func mqtt(_ mqtt: MqttClient, didSubscribe result: [String : SubsAckReturnCode]) {
         log("did subscribe: \(result)")
     }
-    
     
     func mqtt(_ mqtt: MqttClient, didUnsubscribe topics: [String]) {
         log("did unsubscribe topics: \(topics)")

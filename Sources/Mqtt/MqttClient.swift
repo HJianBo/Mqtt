@@ -10,15 +10,7 @@ import Foundation
 
 public protocol MqttClientDelegate {
     
-    func mqtt(_ mqtt: MqttClient, didConnect address: String)
-    
-    func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket)
-    
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket)
-    
-    func mqtt(_ mqtt: MqttClient, didSubscribe result: [String: SubsAckReturnCode])
-    
-    func mqtt(_ mqtt: MqttClient, didUnsubscribe topics: [String])
     
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?)
     
@@ -69,6 +61,16 @@ public final class MqttClient {
     fileprivate var session: Session?
 
     var delegateQueue: DispatchQueue
+    
+    public typealias ConnectHandler = (String, Error?) -> Void
+    public typealias MessageHandler = (Error?) -> Void
+    public typealias SubscribeHandler = (Dictionary<String, SubsAckReturnCode>, Error?) -> Void
+    
+    var connectCompelationHandler: ConnectHandler?
+    
+    var messageCallbacks: Dictionary<UInt16, MessageHandler>
+    
+    var subscriCallbacks: Dictionary<UInt16, SubscribeHandler>
 
     public init(clientId: String,
                 cleanSession: Bool,
@@ -84,6 +86,9 @@ public final class MqttClient {
         self.password     = password
         self.willMessage  = willMessage
         self.delegateQueue = DispatchQueue.main
+        
+        messageCallbacks = [:]
+        subscriCallbacks = [:]
     }
     
     deinit {
@@ -128,8 +133,6 @@ extension MqttClient {
     public convenience init(clientId: String, cleanSession: Bool, keepAlive: UInt16) {
         self.init(clientId: clientId, cleanSession: cleanSession, keepAlive: keepAlive, username: nil, password: nil, willMessage: nil)
     }
-    
-    
 }
 
 // MARK: MQTT method
@@ -139,76 +142,131 @@ extension MqttClient {
      
      - parameter port: TCP ports 8883 and 1883 are registered with IANA for MQTT TLS and non TLS communication respectively.
      */
-    public func connect(host: String, port: UInt16 = 1883) throws {
-        guard sessionState != .accepted else {
-            throw ClientError.aleadryConnected
+    public func connect(host: String, port: UInt16 = 1883, handler: ((String, Error?) -> Void)? = nil) {
+        do {
+            guard sessionState != .accepted else {
+                throw ClientError.aleadryConnected
+            }
+            
+            guard sessionState != .connecting else {
+                throw ClientError.aleadryConnecting
+            }
+            
+            session = Session(host: host, port: port, del: self)
+            connectCompelationHandler = handler
+            
+            // send connect packet
+            var packet = ConnectPacket(clientId: clientId)
+            
+            packet.username = username
+            packet.password = password
+            packet.cleanSession = cleanSession
+            packet.keepAlive = keepAlive
+            
+            session?.connect(packet: packet)
+        } catch {
+            delegateQueue.async {
+                handler?("\(host):\(port)", error)
+            }
+            
+            connectCompelationHandler = nil
         }
-        
-        guard sessionState != .connecting else {
-            throw ClientError.aleadryConnecting
-        }
-        
-        
-        session = Session(host: host, port: port, del: self)
-        
-        // send connect packet
-        var packet = ConnectPacket(clientId: clientId)
-        
-        packet.username = username
-        packet.password = password
-        packet.cleanSession = cleanSession
-        packet.keepAlive = keepAlive
-        session?.connect(packet: packet)
     }
     
-    public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1) throws {
-        guard topic.mq_isVaildateTopic else {
-            throw ClientError.paramIllegal
-        }
-        
-        let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload, qos: qos)
-        
-        try sessionSend(packet: packet)
-    }
     
-    public func subscribe(topicFilters: Dictionary<String, Qos>) throws {
-        var packet = SubscribePacket(packetId: nextPacketId)
-        
-        for (k, v) in topicFilters {
-            guard k.mq_isVaildateTopicFilter else {
+    /**
+     
+    */
+    public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1, handler: ((Error?) -> Void)? = nil) {
+        do {
+            guard topic.mq_isVaildateTopic else {
                 throw ClientError.paramIllegal
             }
             
-            packet.topicFilters.append((k, v))
-        }
-        
-        try sessionSend(packet: packet)
-    }
-    
-    public func unsubscribe(topicFilters: [String]) throws {
-        for t in topicFilters {
-            guard t.mq_isVaildateTopicFilter else {
-                throw ClientError.paramIllegal
+            let packetId = nextPacketId
+            
+            messageCallbacks[packetId] = handler
+            let packet = PublishPacket(packetId: packetId, topic: topic, payload: payload, qos: qos)
+            
+            // send packet
+            try sessionSend(packet: packet)
+        } catch {
+            delegateQueue.async {
+                handler?(error)
             }
+            
+            // XXX: should rm handler cache, while a error throwed from `sessionSend`,
         }
-        
-        var packet = UnsubscribePacket(packetId: nextPacketId)
-        packet.topics = topicFilters
-        
-        try sessionSend(packet: packet)
     }
     
+    /**
+     
+     */
+    public func subscribe(topicFilters: Dictionary<String, Qos>, handler: SubscribeHandler? = nil) {
+        do {
+            var convertedFilters = [(String, Qos)]()
+            for (k, v) in topicFilters {
+                guard k.mq_isVaildateTopicFilter else {
+                    throw ClientError.paramIllegal
+                }
+                convertedFilters.append((k, v))
+            }
+            let packetId = nextPacketId
+            var packet = SubscribePacket(packetId: packetId)
+            packet.topicFilters = convertedFilters
+            // cahce handler
+            subscriCallbacks[packetId] = handler
+            // send packet
+            try sessionSend(packet: packet)
+        } catch {
+            delegateQueue.async {
+                var subres = Dictionary<String, SubsAckReturnCode>()
+                for (k, _) in topicFilters {
+                    subres[k] = .failure
+                }
+                
+                handler?(subres, error)
+            }
+            // XXX: should rm hander from cache
+        }
+    }
+    
+    /**
+     
+     */
+    public func unsubscribe(topicFilters: [String], handler: ((Error?) -> Void)? = nil) {
+        do {
+            for t in topicFilters {
+                guard t.mq_isVaildateTopicFilter else {
+                    throw ClientError.paramIllegal
+                }
+            }
+            let packetId = nextPacketId
+            var packet = UnsubscribePacket(packetId: packetId)
+            packet.topics = topicFilters
+            
+            // cache handler
+            messageCallbacks[packetId] = handler
+            
+            // send packet
+            try sessionSend(packet: packet)
+        } catch {
+            delegateQueue.async {
+                handler?(error)
+            }
+            // XXX: should rm handler from cahce, when a error throwed from seesionSend
+        }
+    }
+    
+    
+    /// ping
     public func ping() throws {
         let packet = PingReqPacket()
-        
         try sessionSend(packet: packet)
     }
     
+    /// disconnect
     public func disconnect() throws {
-        guard sessionState == .accepted else {
-            return
-        }
-        
         let packet = DisconnectPacket()
         try sessionSend(packet: packet)
     }
@@ -217,37 +275,35 @@ extension MqttClient {
 // MARK: Public Helper Method
 extension MqttClient {
     
-    public func publish(topic: String, payload: String, qos: Qos = .qos1) throws {
-        try publish(topic: topic, payload: payload.toBytes(), qos: qos)
-    }
-    
-    public func subscribe(topicFilter: String, qos: Qos) throws {
-        try subscribe(topicFilters: [topicFilter: qos])
-    }
-    
-    public func unsubscribe(topicFilter: String) throws {
-        try unsubscribe(topicFilters: [topicFilter])
+    public func publish(topic: String, payload: String, qos: Qos = .qos1, handler: MessageHandler? = nil) {
+        publish(topic: topic, payload: payload.toBytes(), qos: qos, handler: handler)
     }
 }
 
 // MARK: - SessionDelegate
 extension MqttClient: SessionDelegate {
     
-    func session(_ session: Session, didRecvPong pingresp: PingRespPacket) {
-        DDLogInfo("session did recv pong")
-        
-        delegateQueue.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didRecvPong: pingresp)
-        }
-    }
-    
     func session(_ session: Session, didConnect address: String) {
         DDLogInfo("session did connect \(address)")
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didConnect: address)
+            // exec handler
+            weakSelf.connectCompelationHandler?(address, nil)
+            weakSelf.connectCompelationHandler = nil
+        }
+    }
+    
+    func session(_ session: Session, didDisconnect error: Error?) {
+        DDLogInfo("session did disconnect error: \(error)")
+        
+        self.session = nil
+        delegateQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)
+            // exec handler
+            weakSelf.connectCompelationHandler?(session.serverAddress, error)
+            weakSelf.connectCompelationHandler = nil
         }
     }
 
@@ -265,7 +321,13 @@ extension MqttClient: SessionDelegate {
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
+            
+            // exec handler
+            guard let msgHandler = weakSelf.messageCallbacks[publish.packetId] else {
+                return
+            }
+            msgHandler(nil)
+            weakSelf.messageCallbacks[publish.packetId] = nil
         }
     }
     
@@ -282,7 +344,13 @@ extension MqttClient: SessionDelegate {
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didSubscribe: subres)
+            
+            // exec message handler
+            guard let subsHandler = weakSelf.subscriCallbacks[subscribe.packetId] else {
+                assert(false)
+            }
+            subsHandler(subres, nil)
+            weakSelf.subscriCallbacks[subscribe.packetId] = nil
         }
     }
 
@@ -291,17 +359,21 @@ extension MqttClient: SessionDelegate {
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didUnsubscribe: unsubs.topics)
+            // exec message handler
+            guard let msgHandler = weakSelf.messageCallbacks[unsubs.packetId] else {
+                assert(false)
+            }
+            msgHandler(nil)
+            weakSelf.messageCallbacks[unsubs.packetId] = nil
         }
     }
     
-    func session(_ session: Session, didDisconnect error: Error?) {
-        DDLogInfo("session did disconnect error: \(error)")
+    func session(_ session: Session, didRecvPong pingresp: PingRespPacket) {
+        DDLogInfo("session did recv pong")
         
-        self.session = nil
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.delegate?.mqtt(weakSelf, didDisconnect: error)
+            weakSelf.delegate?.mqtt(weakSelf, didRecvPong: pingresp)
         }
     }
 }
