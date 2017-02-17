@@ -74,3 +74,15 @@ extension String {
     }
 }
 
+extension String {
+    
+    // vaildate topic for client
+    var mq_isVaildateTopic: Bool {
+        guard self != "" else {
+            return false
+        }
+        
+        return true
+    }
+}
+

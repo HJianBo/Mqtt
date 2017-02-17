@@ -86,7 +86,7 @@ public final class MqttClient {
     }
     
     deinit {
-        DDLogVerbose("MqttClient deinit")
+        DDLogVerbose("mqttclient deinit")
     }
     
     fileprivate var nextPacketId: UInt16 {
@@ -161,20 +161,33 @@ extension MqttClient {
     }
     
     public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1) throws {
+        guard topic.mq_isVaildateTopic else {
+            return
+        }
+        
         let packet = PublishPacket(packetId: nextPacketId, topic: topic, payload: payload, qos: qos)
         
         try sessionSend(packet: packet)
     }
     
-    public func subscribe(topic: String, qos: Qos = .qos1) throws {
+    public func subscribe(topics: Dictionary<String, Qos>) throws {
         var packet = SubscribePacket(packetId: nextPacketId)
         
-        packet.topics.append((topic, qos))
+        for (k, v) in topics {
+            guard k.mq_isVaildateTopic else { continue }
+            packet.topics.append((k, v))
+        }
         
         try sessionSend(packet: packet)
     }
     
     public func unsubscribe(topics: [String]) throws {
+        for t in topics {
+            guard t.mq_isVaildateTopic else {
+                return
+            }
+        }
+        
         var packet = UnsubscribePacket(packetId: nextPacketId)
         packet.topics = topics
         
@@ -202,6 +215,14 @@ extension MqttClient {
     
     public func publish(topic: String, payload: String, qos: Qos = .qos1) throws {
         try publish(topic: topic, payload: payload.toBytes(), qos: qos)
+    }
+    
+    public func subscribe(topic: String, qos: Qos) throws {
+        try subscribe(topics: [topic: qos])
+    }
+    
+    public func unsubscribe(topic: String) throws {
+        try unsubscribe(topics: [topic])
     }
 }
 

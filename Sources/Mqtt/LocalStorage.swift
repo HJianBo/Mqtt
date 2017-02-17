@@ -24,6 +24,10 @@ final class LocalStorage {
         
         userDefault = ud
     }
+    
+    deinit {
+        DDLogInfo("local storage deinit")
+    }
 }
 
 extension LocalStorage {

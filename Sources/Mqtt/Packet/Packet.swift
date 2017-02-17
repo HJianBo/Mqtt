@@ -189,7 +189,7 @@ extension FixedHeader: CustomStringConvertible {
 protocol Packet: CustomStringConvertible {
     
     // 1. Fixed header, require
-    var fixedHeader: FixedHeader { get }
+    var fixedHeader: FixedHeader { get set }
     
     // 2. Variable header, optional
     var varHeader: Array<UInt8> { get }

@@ -344,9 +344,13 @@ extension Session {
                             return true
                         }
                         
-                        // 重新入队
+                        // push packet to message queue & send it
                         for p in sortedPacket {
-                            send(packet: p)
+                            var p2 = p
+                            if p2.qos != .qos0 {
+                                p2.fixedHeader.dup = true
+                            }
+                            send(packet: p2)
                         }
                     }
                 }
