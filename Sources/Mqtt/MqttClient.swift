@@ -12,6 +12,8 @@ public protocol MqttClientDelegate {
     
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket)
     
+    func mqtt(_ mqtt: MqttClient, didPublish publish: PublishPacket)
+    
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?)
     
     func mqtt(_ mqtt: MqttClient, didRecvPong packet: PingRespPacket)
@@ -55,6 +57,10 @@ public final class MqttClient {
     public fileprivate(set) var username: String?
     
     public fileprivate(set) var password: String?
+    
+    public var serverAddress: String {
+        return session?.serverAddress ?? ""
+    }
     
     var willMessage: PublishPacket?
     
@@ -321,6 +327,8 @@ extension MqttClient: SessionDelegate {
         
         delegateQueue.async { [weak self] in
             guard let weakSelf = self else { return }
+            
+            weakSelf.delegate?.mqtt(weakSelf, didPublish: publish)
             
             // exec handler
             guard let msgHandler = weakSelf.messageCallbacks[publish.packetId] else {

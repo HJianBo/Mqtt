@@ -72,13 +72,26 @@ extension LocalStorage {
         
         return packets
     }
+    
+    func removeAll() -> Int {
+        let alldic = userDefault.dictionaryRepresentation()
+        var count = 0
+        for (k, _) in alldic {
+            // vaildate the key is correct
+            guard k.mq_isVaildationKey else { continue }
+            userDefault.removeObject(forKey: k)
+            count += 1
+        }
+        
+        return count
+    }
 }
 
 extension LocalStorage {
     
     // parse packet from all packet Data (fixedheader, remained len, variable header, payload)
     // current support only `publish` `pubrel` type
-    func parse(data: Data) -> Packet? {
+    fileprivate func parse(data: Data) -> Packet? {
         var remainedData = data
         
         let header = remainedData.removeFirst()

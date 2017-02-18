@@ -340,7 +340,7 @@ extension Session {
                 // recover session if need
                 if connectPacket?.cleanSession == false {
                     if let allStoredPacket = localStorage?.allPacket() {
-                        DDLogInfo("recover \(allStoredPacket.count) message")
+                        DDLogDebug("recover session, resend \(allStoredPacket.count) message")
                         
                         // XXX: packet id 作为排序依据是不正确的.
                         let sortedPacket = allStoredPacket.sorted { p1, p2 in
@@ -359,6 +359,9 @@ extension Session {
                             send(packet: p2)
                         }
                     }
+                } else {
+                    let count = localStorage?.removeAll()
+                    DDLogDebug("clean session, remove \(count) packet from localstorage")
                 }
                 
                 delegate?.session(self, didConnect: "\(remoteAddres.hostname):\(remoteAddres.port)")
