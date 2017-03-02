@@ -48,7 +48,7 @@ class MqttClientTests: XCTestCase {
             self.expConnect?.fulfill()
             self.expConnect = nil
         }
-        
+
         waitForExpectations(timeout: 10, handler: nil)
     }
     
@@ -130,6 +130,9 @@ class MqttClientTests: XCTestCase {
 
 extension MqttClientTests: MqttClientDelegate {
     
+    func mqtt(_ mqtt: MqttClient, didPublish publish: PublishPacket) {
+        print("did publish \(publish)")
+    }
     
     func mqtt(_ mqtt: MqttClient, didRecvMessage packet: PublishPacket) {
         print("recv message: \(packet)")
