@@ -263,6 +263,6 @@ extension ConnectPacket {
 
 extension ConnectPacket {
     public var description: String {
-        return "Connect(clientId: \(clientId), username: \(username), password: \(password), keepalive: \(keepAlive), cleanSession: \(cleanSession))"
+        return "Connect(clientId: \(clientId), username: \(String(describing: username)), password: \(String(describing: password)), keepalive: \(keepAlive), cleanSession: \(cleanSession))"
     }
 }

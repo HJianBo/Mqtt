@@ -66,7 +66,7 @@ extension ClientSessionViewController {
         mqtt.subscribe(topicFilters: [topic: qos]) { [weak self] result, error in
             guard let weakSelf = self else { return }
             guard error == nil else {
-                weakSelf.log("subscribe error \(error)")
+                weakSelf.log("subscribe error \(String(describing: error))")
                 return
             }
             weakSelf.log("subscribe success \(result)")
@@ -80,7 +80,7 @@ extension ClientSessionViewController {
         mqtt.publish(topic: topic, payload: payload, qos: qos) { [weak self] error in
             guard let weakSelf = self else { return }
             guard error == nil else {
-                weakSelf.log("publish error \(error)")
+                weakSelf.log("publish error \(String(describing: error))")
                 return
             }
             
@@ -97,7 +97,7 @@ extension ClientSessionViewController {
         mqtt.unsubscribe(topicFilters: [topic]) { [weak self] error in
             guard let weakSelf = self else { return }
             guard error == nil else {
-                weakSelf.log("unsubscribe error \(error)")
+                weakSelf.log("unsubscribe error \(String(describing: error))")
                 return
             }
             
@@ -112,7 +112,7 @@ extension ClientSessionViewController: MqttClientDelegate {
     }
     
     func mqtt(_ mqtt: MqttClient, didDisconnect error: Error?) {
-        log("did disconnect: \(error)")
+        log("did disconnect: \(String(describing: error))")
     }
     
     func mqtt(_ mqtt: MqttClient, didPublish packet: PublishPacket) {

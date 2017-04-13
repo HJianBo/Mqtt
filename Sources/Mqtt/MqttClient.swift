@@ -301,7 +301,7 @@ extension MqttClient: SessionDelegate {
     }
     
     func session(_ session: Session, didDisconnect error: Error?) {
-        DDLogInfo("session did disconnect error: \(error)")
+        DDLogInfo("session did disconnect error: \(String(describing: error))")
         
         self.session = nil
         delegateQueue.async { [weak self] in

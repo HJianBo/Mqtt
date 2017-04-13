@@ -40,7 +40,7 @@ class MqttClientTests: XCTestCase {
         print("------------ clientId \(client.clientId)")
         client.connect(host: sDefaultHost, port: sDefaultPort) { (address, error) in
             guard error == nil else {
-                XCTAssert(false, "\(error)")
+                XCTAssert(false, "\(String(describing: error))")
                 return
             }
             
@@ -71,7 +71,7 @@ class MqttClientTests: XCTestCase {
         
         client.publish(topic: "topic2", payload: "hello mqtt server", qos: .qos2) { error in
             guard error == nil else {
-                XCTAssert(false, "\(error)")
+                XCTAssert(false, "\(String(describing: error))")
                 return
             }
             self.expPublish?.fulfill()

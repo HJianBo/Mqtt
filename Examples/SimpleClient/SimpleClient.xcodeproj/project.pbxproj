@@ -13,44 +13,44 @@
 		8232AEE81E226C770038D429 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8232AEE61E226C770038D429 /* LaunchScreen.storyboard */; };
 		8232AF0F1E2271550038D429 /* ClientSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8232AF0E1E2271550038D429 /* ClientSessionViewController.swift */; };
 		8232AF111E22716F0038D429 /* ClientConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8232AF101E22716F0038D429 /* ClientConfigurationViewController.swift */; };
-		8284C7A71E45BB5B0097F6B6 /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8284C7A41E45B9450097F6B6 /* Mqtt.framework */; };
-		8284C7A81E45BB5B0097F6B6 /* Mqtt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8284C7A41E45B9450097F6B6 /* Mqtt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		826049541E9FAF2C00A9D88B /* Mqtt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826049511E9FAF1700A9D88B /* Mqtt.framework */; };
+		826049551E9FAF2C00A9D88B /* Mqtt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 826049511E9FAF1700A9D88B /* Mqtt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8284C79F1E45B9450097F6B6 /* PBXContainerItemProxy */ = {
+		8260494C1E9FAF1700A9D88B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = OBJ_59;
-			remoteInfo = Socks;
-		};
-		8284C7A11E45B9450097F6B6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = OBJ_60;
-			remoteInfo = SocksCore;
-		};
-		8284C7A31E45B9450097F6B6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */;
+			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = OBJ_61;
-			remoteInfo = Mqtt;
+			remoteInfo = Socks;
 		};
-		8284C7A51E45B9450097F6B6 /* PBXContainerItemProxy */ = {
+		8260494E1E9FAF1700A9D88B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */;
+			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = OBJ_62;
+			remoteInfo = SocksCore;
+		};
+		826049501E9FAF1700A9D88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = OBJ_63;
+			remoteInfo = Mqtt;
+		};
+		826049521E9FAF1700A9D88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = OBJ_64;
 			remoteInfo = MqttTests;
 		};
-		8284C7A91E45BB5B0097F6B6 /* PBXContainerItemProxy */ = {
+		826049561E9FAF2C00A9D88B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */;
+			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = OBJ_97;
+			remoteGlobalIDString = OBJ_99;
 			remoteInfo = Mqtt;
 		};
 /* End PBXContainerItemProxy section */
@@ -62,7 +62,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8284C7A81E45BB5B0097F6B6 /* Mqtt.framework in Embed Frameworks */,
+				826049551E9FAF2C00A9D88B /* Mqtt.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,7 +78,7 @@
 		8232AEE91E226C770038D429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8232AF0E1E2271550038D429 /* ClientSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientSessionViewController.swift; sourceTree = "<group>"; };
 		8232AF101E22716F0038D429 /* ClientConfigurationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationViewController.swift; sourceTree = "<group>"; };
-		8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mqtt.xcodeproj; path = ../../Mqtt.xcodeproj; sourceTree = "<group>"; };
+		826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mqtt.xcodeproj; path = ../../Mqtt.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8284C7A71E45BB5B0097F6B6 /* Mqtt.framework in Frameworks */,
+				826049541E9FAF2C00A9D88B /* Mqtt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +125,7 @@
 		8232AEEF1E226C8E0038D429 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */,
+				826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,13 +140,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8284C7991E45B9450097F6B6 /* Products */ = {
+		826049461E9FAF1700A9D88B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8284C7A01E45B9450097F6B6 /* Socks.framework */,
-				8284C7A21E45B9450097F6B6 /* SocksCore.framework */,
-				8284C7A41E45B9450097F6B6 /* Mqtt.framework */,
-				8284C7A61E45B9450097F6B6 /* MqttTests.xctest */,
+				8260494D1E9FAF1700A9D88B /* Socks.framework */,
+				8260494F1E9FAF1700A9D88B /* SocksCore.framework */,
+				826049511E9FAF1700A9D88B /* Mqtt.framework */,
+				826049531E9FAF1700A9D88B /* MqttTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -166,7 +166,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8284C7AA1E45BB5B0097F6B6 /* PBXTargetDependency */,
+				826049571E9FAF2C00A9D88B /* PBXTargetDependency */,
 			);
 			name = SimpleClient;
 			productName = SimpleClient;
@@ -185,7 +185,7 @@
 				TargetAttributes = {
 					8232AED91E226C770038D429 = {
 						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -202,8 +202,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 8284C7991E45B9450097F6B6 /* Products */;
-					ProjectRef = 8284C7981E45B9450097F6B6 /* Mqtt.xcodeproj */;
+					ProductGroup = 826049461E9FAF1700A9D88B /* Products */;
+					ProjectRef = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -214,32 +214,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		8284C7A01E45B9450097F6B6 /* Socks.framework */ = {
+		8260494D1E9FAF1700A9D88B /* Socks.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Socks.framework;
-			remoteRef = 8284C79F1E45B9450097F6B6 /* PBXContainerItemProxy */;
+			remoteRef = 8260494C1E9FAF1700A9D88B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8284C7A21E45B9450097F6B6 /* SocksCore.framework */ = {
+		8260494F1E9FAF1700A9D88B /* SocksCore.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SocksCore.framework;
-			remoteRef = 8284C7A11E45B9450097F6B6 /* PBXContainerItemProxy */;
+			remoteRef = 8260494E1E9FAF1700A9D88B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8284C7A41E45B9450097F6B6 /* Mqtt.framework */ = {
+		826049511E9FAF1700A9D88B /* Mqtt.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Mqtt.framework;
-			remoteRef = 8284C7A31E45B9450097F6B6 /* PBXContainerItemProxy */;
+			remoteRef = 826049501E9FAF1700A9D88B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8284C7A61E45B9450097F6B6 /* MqttTests.xctest */ = {
+		826049531E9FAF1700A9D88B /* MqttTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = file;
 			path = MqttTests.xctest;
-			remoteRef = 8284C7A51E45B9450097F6B6 /* PBXContainerItemProxy */;
+			remoteRef = 826049521E9FAF1700A9D88B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -271,10 +271,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8284C7AA1E45BB5B0097F6B6 /* PBXTargetDependency */ = {
+		826049571E9FAF2C00A9D88B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Mqtt;
-			targetProxy = 8284C7A91E45BB5B0097F6B6 /* PBXContainerItemProxy */;
+			targetProxy = 826049561E9FAF2C00A9D88B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -394,10 +394,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SimpleClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beidouapp.SimpleClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -407,10 +409,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SimpleClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beidouapp.SimpleClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

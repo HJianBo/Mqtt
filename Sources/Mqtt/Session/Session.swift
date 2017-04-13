@@ -335,7 +335,7 @@ extension Session {
                     self?.startHeartbeatTimer()
                 }
                 
-                DDLogInfo("clean sesion is \(connectPacket?.cleanSession)")
+                DDLogInfo("clean sesion is \(String(describing: connectPacket?.cleanSession))")
                 
                 // recover session if need
                 if connectPacket?.cleanSession == false {
@@ -361,7 +361,7 @@ extension Session {
                     }
                 } else {
                     let count = localStorage?.removeAll()
-                    DDLogDebug("clean session, remove \(count) packet from localstorage")
+                    DDLogDebug("clean session, remove \(String(describing: count)) packet from localstorage")
                 }
                 
                 delegate?.session(self, didConnect: "\(remoteAddres.hostname):\(remoteAddres.port)")
@@ -409,7 +409,7 @@ extension Session {
             DDLogInfo("RECV \(pubrec)")
             
             guard let sentPacket = storedPacket[pubrec.packetId] as? PublishPacket else {
-                DDLogError("should a qos2 publich packet saved in the cache, when recv pubrec. but is \(storedPacket[pubrec.packetId])")
+                DDLogError("should a qos2 publich packet saved in the cache, when recv pubrec. but is \(String(describing: storedPacket[pubrec.packetId]))")
                 return
             }
             
@@ -430,7 +430,7 @@ extension Session {
             DDLogInfo("RECV \(pubcmp)")
             
             guard let sentMessage = storedPacket[pubcmp.packetId] as? PubRelPacket else {
-                DDLogError("should a pubrel packet saved in the cache, when recv pubcmp. but is \(storedPacket[pubcmp.packetId])")
+                DDLogError("should a pubrel packet saved in the cache, when recv pubcmp. but is \(String(describing: storedPacket[pubcmp.packetId]))")
                 return
             }
             
