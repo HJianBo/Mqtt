@@ -56,8 +56,6 @@ enum SessionError: Error {
     
     static func authenticateError(by returnCode: ConnAckReturnCode) -> SessionError {
         switch returnCode {
-        case .accepted:
-            assert(false)
         case .badUsernameOrPassword:
             return .authenticateFailed(reason: "the data in the user name or password is malformed")
             
@@ -72,6 +70,9 @@ enum SessionError: Error {
             
         case.unAccepableProtocolVersion:
             return .authenticateFailed(reason: "the server does not support the level of the mqtt protocol requested by the client")
+        case .accepted:
+            assert(false)
+            return .authenticateFailed(reason: "accepted")
         }
     }
 }
@@ -396,6 +397,7 @@ extension Session {
             
             guard let sentPacket = storedPacket[puback.packetId] as? PublishPacket else {
                 assert(false)
+                return
             }
             
             delegate?.session(self, didPublish: sentPacket)
@@ -451,6 +453,7 @@ extension Session {
             
             guard let sentPacket = storedPacket[suback.packetId] as? SubscribePacket else {
                 assert(false)
+                return
             }
             
             delegate?.session(self, didSubscribe: sentPacket, withAck: suback)
@@ -463,6 +466,7 @@ extension Session {
             
             guard let sentPacket = storedPacket[unsuback.packetId] as? UnsubscribePacket else {
                 assert(false)
+                return
             }
             
             delegate?.session(self, didUnsubscribe: sentPacket)

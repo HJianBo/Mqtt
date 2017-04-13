@@ -35,6 +35,7 @@ extension LocalStorage {
     func save(packet: Packet) {
         guard let packetId = packet.packetIdIfExisted else {
             assert(false)
+            return
         }
         userDefault.set(packet.packToData, forKey: "\(defaultKeyPrefix)-\(packetId)")
         userDefault.synchronize()
@@ -45,6 +46,7 @@ extension LocalStorage {
     func remove(packet: Packet) {
         guard let packetId = packet.packetIdIfExisted else {
             assert(false)
+            return
         }
         userDefault.removeObject(forKey: "\(defaultKeyPrefix)-\(packetId)")
         userDefault.synchronize()

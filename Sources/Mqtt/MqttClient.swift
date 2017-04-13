@@ -356,6 +356,7 @@ extension MqttClient: SessionDelegate {
             // exec message handler
             guard let subsHandler = weakSelf.subscriCallbacks[subscribe.packetId] else {
                 assert(false)
+                return
             }
             subsHandler(subres, nil)
             weakSelf.subscriCallbacks[subscribe.packetId] = nil
@@ -370,6 +371,7 @@ extension MqttClient: SessionDelegate {
             // exec message handler
             guard let msgHandler = weakSelf.messageCallbacks[unsubs.packetId] else {
                 assert(false)
+                return
             }
             msgHandler(nil)
             weakSelf.messageCallbacks[unsubs.packetId] = nil
