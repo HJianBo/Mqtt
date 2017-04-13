@@ -21,6 +21,9 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
+# Carthage
+Mqtt.framework.zip
+
 ## Other
 *.moved-aside
 *.xccheckout
