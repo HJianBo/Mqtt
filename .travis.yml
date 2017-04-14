@@ -7,15 +7,28 @@ xcode_scheme: Mqtt
 # env:
 #   global: 
 #     - FRAMEWORK_NAME=<THIS_IS_A_PLACEHOLDER_REPLACE_ME>
-# before_install:
+
+
+# You can run custom commands before the installation step
+before_install:
 #   - brew update
 #   - brew outdated carthage || brew upgrade carthage
+
+# install any dependencies required
+install:
+  # request swift package manager depdencies
+  - swift package fetch
+
+
 before_script:
   # bootstrap the dependencies for the project
   # you can remove if you don't have dependencies
   # - carthage bootstrap  
-  # request swift package manager depdencies
-  - swift package fetch
+
+# run the build script
+# script:
+
+#   
 # before_deploy:
 #   - carthage build --no-skip-current
 #   - carthage archive $FRAMEWORK_NAME
