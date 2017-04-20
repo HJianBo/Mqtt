@@ -27,7 +27,7 @@ before_script:
 
 # run the build script
 # script:
-
+#   - swift build
 #   
 # before_deploy:
 #   - carthage build --no-skip-current
