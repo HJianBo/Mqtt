@@ -185,6 +185,7 @@
 				TargetAttributes = {
 					8232AED91E226C770038D429 = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -237,7 +238,7 @@
 		};
 		826049531E9FAF1700A9D88B /* MqttTests.xctest */ = {
 			isa = PBXReferenceProxy;
-			fileType = file;
+			fileType = wrapper.cfbundle;
 			path = MqttTests.xctest;
 			remoteRef = 826049521E9FAF1700A9D88B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -400,7 +401,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beidouapp.SimpleClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -415,7 +417,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beidouapp.SimpleClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
