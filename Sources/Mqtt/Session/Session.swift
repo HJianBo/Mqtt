@@ -257,7 +257,12 @@ extension Session  {
         }
         
         heartbeatTimer = DispatchSource.makeTimerSource(queue: heartbeatQueue)
-        heartbeatTimer?.schedule(deadline: .now(), repeating: .seconds(Int(keepAlive)), leeway: .milliseconds(100))
+        
+        // FIXME: follow line compile failed with cmd, but xcode is ok!!
+        //heartbeatTimer?.schedule(deadline: .now(), repeating: .seconds(Int(keepAlive)), leeway: .milliseconds(100))
+        // TO ->
+        heartbeatTimer?.scheduleRepeating(deadline: .now(), interval: .seconds(Int(keepAlive)))
+        
         heartbeatTimer?.setEventHandler { [weak self] in
             let ping = PingReqPacket()
             self?.send(packet: ping)
