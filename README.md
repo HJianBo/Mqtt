@@ -4,11 +4,12 @@ Swift mqtt client for ios or osx 【[中文介绍](https://github.com/HJianBo/Mq
 - [x] Clourse-style、asynchronous interface
 - [x] Keep alive
 - [x] Clean/Recover session state, when connected server
+- [x] Support Linux (Ubuntu)
 
 # Requirements
 - iOS 8.0+ | macOS 10.10+ | tvOS 9.0+ | watchOS 2.0+
-- Xcode 8
-- Swift 3.0
+- Xcode 9.x
+- Swift 4
 
 # Integration
 now, you can import this framework with **Swift Package Manager** only. **Carthage** and other tools support in the future version.
@@ -74,7 +75,6 @@ The more details of the use can refer to the Demo program: Examples/SimpleClient
 # TODO
 - [ ] In-flight Send Window, Message Ordering.
 - [ ] Support iOS background model
-- [ ] Support Linux
 
 # Dependencies
 - [Vapor/Socks](https://github.com/vapor/socks)

@@ -2,5 +2,6 @@ import XCTest
 @testable import MqttTests
 
 XCTMain([
-     testCase(MqttTests.allTests),
+    testCase(MqttClientTests.allTests),
+    testCase(MqttPacketTests.allTests),
 ])
