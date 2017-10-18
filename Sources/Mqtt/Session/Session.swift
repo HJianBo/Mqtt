@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Dispatch
 import SocksCore
 
 /// client session state
@@ -123,7 +124,8 @@ final class Session {
     
     fileprivate var localStorage: LocalStorage?
     
-    fileprivate var heartbeatTimer: Timer?
+    fileprivate var heartbeatTimer: DispatchSourceTimer?
+    fileprivate var heartbeatQueue: DispatchQueue
     
     fileprivate(set) var connectPacket: ConnectPacket?
     
@@ -133,6 +135,7 @@ final class Session {
         delegate = del
         sendQueue = DispatchQueue(label: "com.mqtt.session.send")
         readQueue = DispatchQueue(label: "com.mqtt.session.read")
+        heartbeatQueue = DispatchQueue(label: "com.mqtt.session.heartbeat", attributes: .concurrent)
         sendQueueGroup = DispatchGroup()
         messageQueue = []
         storedPacket = [:]
@@ -249,28 +252,28 @@ extension Session  {
         guard let keepAlive = connectPacket?.keepAlive else { return }
         
         if heartbeatTimer != nil {
-            heartbeatTimer?.invalidate()
+            heartbeatTimer?.cancel()
             heartbeatTimer = nil
         }
         
-        heartbeatTimer = Timer(timeInterval: Double(keepAlive),
-                               target: self,
-                               selector: #selector(_heartbeatTimerArrive),
-                               userInfo: nil,
-                               repeats: true)
+        heartbeatTimer = DispatchSource.makeTimerSource(queue: heartbeatQueue)
         
-        // XXX: 心跳线程是否应放到 sendQueue 当中
-        RunLoop.main.add(heartbeatTimer!, forMode: .commonModes)
+        // FIXME: follow line compile failed with cmd, but xcode is ok!!
+        //heartbeatTimer?.schedule(deadline: .now(), repeating: .seconds(Int(keepAlive)), leeway: .milliseconds(100))
+        // TO ->
+        heartbeatTimer?.scheduleRepeating(deadline: .now(), interval: .seconds(Int(keepAlive)))
+        
+        heartbeatTimer?.setEventHandler { [weak self] in
+            let ping = PingReqPacket()
+            self?.send(packet: ping)
+        }
+        
+        heartbeatTimer?.resume()
     }
     
     fileprivate func stopHeartbeatTimer() {
-        heartbeatTimer?.invalidate()
+        heartbeatTimer?.cancel()
         heartbeatTimer = nil
-    }
-    
-    @objc private func _heartbeatTimerArrive() {
-        let ping = PingReqPacket()
-        send(packet: ping)
     }
 }
 

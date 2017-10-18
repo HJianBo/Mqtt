@@ -120,10 +120,8 @@ extension LocalStorage {
         case .pubrel:
             return try? PubRelPacket(header: fixedHeader, bytes: remainedData.bytes)
         default:
-            assert(false)
+            return nil
         }
-        
-        return nil
     }
 }
 
