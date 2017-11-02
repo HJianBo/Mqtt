@@ -184,7 +184,7 @@ extension MqttClient {
     /**
      
     */
-    public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1, handler: ((Error?) -> Void)? = nil) {
+    public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1, retain: Bool = false, handler: ((Error?) -> Void)? = nil) {
         do {
             guard topic.mq_isVaildateTopic else {
                 throw ClientError.paramIllegal
@@ -193,7 +193,9 @@ extension MqttClient {
             let packetId = nextPacketId
             
             messageCallbacks[packetId] = handler
-            let packet = PublishPacket(packetId: packetId, topic: topic, payload: payload, qos: qos)
+            var packet = PublishPacket(packetId: packetId, topic: topic, payload: payload, qos: qos)
+            
+            packet.fixedHeader.retain = retain
             
             // send packet
             try sessionSend(packet: packet)
@@ -282,8 +284,8 @@ extension MqttClient {
 // MARK: Public Helper Method
 extension MqttClient {
     
-    public func publish(topic: String, payload: String, qos: Qos = .qos1, handler: MessageHandler? = nil) {
-        publish(topic: topic, payload: payload.toBytes(), qos: qos, handler: handler)
+    public func publish(topic: String, payload: String, qos: Qos = .qos1, retain: Bool = false, handler: MessageHandler? = nil) {
+        publish(topic: topic, payload: payload.toBytes(), qos: qos, retain: retain, handler: handler)
     }
 }
 
