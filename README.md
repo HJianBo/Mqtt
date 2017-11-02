@@ -75,6 +75,7 @@ The more details of the use can refer to the Demo program: Examples/SimpleClient
 # TODO
 - [ ] In-flight Send Window, Message Ordering.
 - [ ] Support iOS background model
+- [ ] SSL/TLS
 
 # Dependencies
 - [Vapor/Socks](https://github.com/vapor/socks)
