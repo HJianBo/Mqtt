@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		823000BB1FAFF27F000C3B53 /* SocksCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8260494F1E9FAF1700A9D88B /* SocksCore.framework */; };
+		823000BC1FAFF27F000C3B53 /* SocksCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8260494F1E9FAF1700A9D88B /* SocksCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		823000BF1FAFF282000C3B53 /* Socks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8260494D1E9FAF1700A9D88B /* Socks.framework */; };
+		823000C01FAFF282000C3B53 /* Socks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8260494D1E9FAF1700A9D88B /* Socks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8232AEDE1E226C770038D429 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8232AEDD1E226C770038D429 /* AppDelegate.swift */; };
 		8232AEE31E226C770038D429 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8232AEE11E226C770038D429 /* Main.storyboard */; };
 		8232AEE51E226C770038D429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8232AEE41E226C770038D429 /* Assets.xcassets */; };
@@ -18,6 +22,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		823000BD1FAFF27F000C3B53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = OBJ_78;
+			remoteInfo = SocksCore;
+		};
+		823000C11FAFF282000C3B53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = OBJ_65;
+			remoteInfo = Socks;
+		};
 		8260494C1E9FAF1700A9D88B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 826049451E9FAF1700A9D88B /* Mqtt.xcodeproj */;
@@ -62,7 +80,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				823000C01FAFF282000C3B53 /* Socks.framework in Embed Frameworks */,
 				826049551E9FAF2C00A9D88B /* Mqtt.framework in Embed Frameworks */,
+				823000BC1FAFF27F000C3B53 /* SocksCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +106,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				823000BF1FAFF282000C3B53 /* Socks.framework in Frameworks */,
 				826049541E9FAF2C00A9D88B /* Mqtt.framework in Frameworks */,
+				823000BB1FAFF27F000C3B53 /* SocksCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +189,8 @@
 			);
 			dependencies = (
 				826049571E9FAF2C00A9D88B /* PBXTargetDependency */,
+				823000BE1FAFF27F000C3B53 /* PBXTargetDependency */,
+				823000C21FAFF282000C3B53 /* PBXTargetDependency */,
 			);
 			name = SimpleClient;
 			productName = SimpleClient;
@@ -273,6 +297,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		823000BE1FAFF27F000C3B53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SocksCore;
+			targetProxy = 823000BD1FAFF27F000C3B53 /* PBXContainerItemProxy */;
+		};
+		823000C21FAFF282000C3B53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Socks;
+			targetProxy = 823000C11FAFF282000C3B53 /* PBXContainerItemProxy */;
+		};
 		826049571E9FAF2C00A9D88B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Mqtt;

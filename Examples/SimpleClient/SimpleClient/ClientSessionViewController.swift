@@ -55,9 +55,14 @@ extension ClientSessionViewController {
                               cleanSession: config.cleanSession,
                               keepAlive: config.keepAlive,
                               username: config.username,
-                              password: config.password, willMessage: nil)
+                              password: config.password)
+            
+            mqtt!.willTopic = "test"
+            mqtt!.willMessage = "This is will message"
+            //mqtt!.willRetain = true
+            
             mqtt!.delegate = self
-            mqtt!.connect(host: config.host) { [weak self] address, error in
+            mqtt!.connect(host: config.host, port: config.port) { [weak self] address, error in
                 guard let weakSelf = self else { return }
                 guard error == nil else {
                     weakSelf.log("connect \(address) error: \(error!)")

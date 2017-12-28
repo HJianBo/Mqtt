@@ -214,6 +214,7 @@ extension Session {
             storedPacket[packet.packetIdIfExisted!] = packet
             
             // 协议规定只是 `publish` `pubrel` 需要持久化重发
+            // 需要启动一个 timer 检测重发？
             if packet is PublishPacket || packet is PubRelPacket {
                 localStorage?.save(packet: packet)
             }

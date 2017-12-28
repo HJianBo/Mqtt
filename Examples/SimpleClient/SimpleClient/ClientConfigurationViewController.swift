@@ -12,6 +12,8 @@ struct Configuration {
     
     var host: String = ""
     
+    var port: UInt16 = 1883
+    
     var clientId = ""
     
     var cleanSession =  false

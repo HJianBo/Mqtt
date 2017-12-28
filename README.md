@@ -74,7 +74,7 @@ The more details of the use can refer to the Demo program: Examples/SimpleClient
 
 # TODO
 - [ ] In-flight Send Window, Message Ordering.
-- [ ] Support iOS background model
+- [ ] Support iOS background model (will disconnect, when lock screen)
 - [ ] SSL/TLS
 
 # Dependencies
