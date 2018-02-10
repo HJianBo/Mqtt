@@ -13,20 +13,45 @@ Mqtt 是完全使用 Swift 开发的轻量级 Mqtt 客户端框架
 - Swift 4
 
 # 集成
-目前，你仅能使用 **Swift Package Manager** 来导入本框架，在以后的版本会添加**Carthage**等工具的支持。
-
 ### Swift Packet Manager
 在 `Package.swift`中添加 Mqtt 依赖
-
 ```swift
+// swift-tools-version:4.0
 import PackageDescription
 
-let package = Package(name: "YourPackage",
+let package = Package(
+    // ...
     dependencies: [
-      .Package(url: "https://github.com/HJianBo/Mqtt", majorVersion: 0)
-    ]
-  )
+        .package(url: "https://github.com/HJianBo/Mqtt", from: "0.2.0"),
+    ],
+    // ...
+)
 ```
+
+### Carthage
+将以下内容加入到 `Cartflie`
+```
+github "HJianBo/Mqtt"
+```
+
+然后，签出该依赖
+```
+carthage build
+```
+
+但此时，**Carthage** 一定会编译失败，因为该库还使用 **Swift Package Manager** 依赖了其他的仓库
+
+这里有一个变通方法是:
+```
+# Manually checkout SwiftPM dependencies
+cd Carthage/Checkouts/Mqtt/ && swift build && cd ../../..
+
+# execute carthage build again
+carthage build
+```
+
+### CocoaPods
+...
 
 # 使用
 
