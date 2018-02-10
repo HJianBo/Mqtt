@@ -133,7 +133,7 @@ extension String {
             let reg = try NSRegularExpression(pattern: regxPattern,
                                               options: .caseInsensitive)
             
-            let range = NSMakeRange(0, characters.count)
+            let range = NSMakeRange(0, count)
             
             let result = reg.matches(in: self, options: .anchored, range: range)
             

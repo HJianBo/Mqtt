@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Mqtt::Mqtt"
+               BuildableName = "Mqtt.framework"
+               BlueprintName = "Mqtt"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "Socks::Socks"
                BuildableName = "Socks.framework"
                BlueprintName = "Socks"
@@ -31,20 +45,6 @@
                BlueprintIdentifier = "Socks::SocksCore"
                BuildableName = "SocksCore.framework"
                BlueprintName = "SocksCore"
-               ReferencedContainer = "container:Mqtt.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Mqtt::Mqtt"
-               BuildableName = "Mqtt.framework"
-               BlueprintName = "Mqtt"
                ReferencedContainer = "container:Mqtt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -85,9 +85,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Socks::Socks"
-            BuildableName = "Socks.framework"
-            BlueprintName = "Socks"
+            BlueprintIdentifier = "Mqtt::Mqtt"
+            BuildableName = "Mqtt.framework"
+            BlueprintName = "Mqtt"
             ReferencedContainer = "container:Mqtt.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
