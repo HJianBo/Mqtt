@@ -153,182 +153,182 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		824DFBD9202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4A6202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Sockets::Sockets";
 			remoteInfo = Sockets;
 		};
-		824DFBDA202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4A7202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Sockets::Transport";
 			remoteInfo = Transport;
 		};
-		824DFBDB202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4A8202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::Core";
 			remoteInfo = Core;
 		};
-		824DFBDC202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4A9202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Debugging::Debugging";
 			remoteInfo = Debugging;
 		};
-		824DFBDD202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4AA202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Bits::Bits";
 			remoteInfo = Bits;
 		};
-		824DFBDE202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4AB202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::libc";
 			remoteInfo = libc;
 		};
-		824DFBDF202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4AC202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Debugging::Debugging";
 			remoteInfo = Debugging;
 		};
-		824DFBE0202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4AD202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Bits::Bits";
 			remoteInfo = Bits;
 		};
-		824DFBE1202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4AE202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::libc";
 			remoteInfo = libc;
 		};
-		824DFBE2202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4AF202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::Core";
 			remoteInfo = Core;
 		};
-		824DFBE3202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B0202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Debugging::Debugging";
 			remoteInfo = Debugging;
 		};
-		824DFBE4202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B1202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Bits::Bits";
 			remoteInfo = Bits;
 		};
-		824DFBE5202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B2202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::libc";
 			remoteInfo = libc;
 		};
-		824DFBE6202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B3202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Sockets::Transport";
 			remoteInfo = Transport;
 		};
-		824DFBE7202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B4202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::Core";
 			remoteInfo = Core;
 		};
-		824DFBE8202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B5202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Debugging::Debugging";
 			remoteInfo = Debugging;
 		};
-		824DFBE9202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B6202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Bits::Bits";
 			remoteInfo = Bits;
 		};
-		824DFBEA202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B7202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::libc";
 			remoteInfo = libc;
 		};
-		824DFBEB202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B8202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Mqtt::Mqtt";
 			remoteInfo = Mqtt;
 		};
-		824DFBEC202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4B9202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Sockets::Sockets";
 			remoteInfo = Sockets;
 		};
-		824DFBED202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4BA202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Sockets::Transport";
 			remoteInfo = Transport;
 		};
-		824DFBEE202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4BB202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::Core";
 			remoteInfo = Core;
 		};
-		824DFBEF202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4BC202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Debugging::Debugging";
 			remoteInfo = Debugging;
 		};
-		824DFBF0202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4BD202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Bits::Bits";
 			remoteInfo = Bits;
 		};
-		824DFBF1202EE97D00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4BE202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Core::libc";
 			remoteInfo = libc;
 		};
-		824DFBF2202EE97F00723AEA /* PBXContainerItemProxy */ = {
+		82E9E4BF202F0969009952CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -431,7 +431,7 @@
 		OBJ_76 /* TCPSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPSocket.swift; sourceTree = "<group>"; };
 		OBJ_77 /* TCPWriteableSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPWriteableSocket.swift; sourceTree = "<group>"; };
 		OBJ_79 /* UDPSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPSocket.swift; sourceTree = "<group>"; };
-		OBJ_80 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/JianBo/Desktop/WorkSpace/GitRepos/Mqtt/.build/checkouts/socks--5125301266879703901/Package.swift"; sourceTree = "<group>"; };
+		OBJ_80 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/JianBo/Desktop/WorkSpace/GitRepos/Mqtt/.build/checkouts/sockets-2678105658646865563/Package.swift"; sourceTree = "<group>"; };
 		OBJ_83 /* libc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libc.swift; sourceTree = "<group>"; };
 		OBJ_85 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		OBJ_86 /* Bits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bits.swift; sourceTree = "<group>"; };
@@ -685,7 +685,7 @@
 				OBJ_46 /* Streams */,
 			);
 			name = Transport;
-			path = ".build/checkouts/socks--5125301266879703901/Sources/Transport";
+			path = ".build/checkouts/sockets-2678105658646865563/Sources/Transport";
 			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_41 /* Internet */ = {
@@ -735,7 +735,7 @@
 				OBJ_78 /* UDP */,
 			);
 			name = Sockets;
-			path = ".build/checkouts/socks--5125301266879703901/Sources/Sockets";
+			path = ".build/checkouts/sockets-2678105658646865563/Sources/Sockets";
 			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_53 /* Address */ = {
@@ -1332,132 +1332,132 @@
 		OBJ_190 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Mqtt::Mqtt" /* Mqtt */;
-			targetProxy = 824DFBEB202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B8202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_192 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Sockets::Sockets" /* Sockets */;
-			targetProxy = 824DFBEC202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B9202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_194 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Sockets::Transport" /* Transport */;
-			targetProxy = 824DFBED202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4BA202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_196 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::Core" /* Core */;
-			targetProxy = 824DFBEE202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4BB202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_198 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Debugging::Debugging" /* Debugging */;
-			targetProxy = 824DFBEF202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4BC202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_200 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Bits::Bits" /* Bits */;
-			targetProxy = 824DFBF0202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4BD202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_202 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::libc" /* libc */;
-			targetProxy = 824DFBF1202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4BE202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_235 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Sockets::Sockets" /* Sockets */;
-			targetProxy = 824DFBD9202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4A6202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_236 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Sockets::Transport" /* Transport */;
-			targetProxy = 824DFBE6202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B3202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_237 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::Core" /* Core */;
-			targetProxy = 824DFBE7202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B4202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_238 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Debugging::Debugging" /* Debugging */;
-			targetProxy = 824DFBE8202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B5202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_239 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Bits::Bits" /* Bits */;
-			targetProxy = 824DFBE9202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B6202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_240 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::libc" /* libc */;
-			targetProxy = 824DFBEA202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B7202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_273 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Sockets::Transport" /* Transport */;
-			targetProxy = 824DFBDA202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4A7202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_274 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::Core" /* Core */;
-			targetProxy = 824DFBE2202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4AF202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_275 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Debugging::Debugging" /* Debugging */;
-			targetProxy = 824DFBE3202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B0202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_276 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Bits::Bits" /* Bits */;
-			targetProxy = 824DFBE4202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B1202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_277 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::libc" /* libc */;
-			targetProxy = 824DFBE5202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4B2202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_297 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::Core" /* Core */;
-			targetProxy = 824DFBDB202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4A8202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_298 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Debugging::Debugging" /* Debugging */;
-			targetProxy = 824DFBDF202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4AC202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_299 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Bits::Bits" /* Bits */;
-			targetProxy = 824DFBE0202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4AD202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_300 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::libc" /* libc */;
-			targetProxy = 824DFBE1202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4AE202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_332 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Debugging::Debugging" /* Debugging */;
-			targetProxy = 824DFBDC202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4A9202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_333 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Bits::Bits" /* Bits */;
-			targetProxy = 824DFBDD202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4AA202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_334 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Core::libc" /* libc */;
-			targetProxy = 824DFBDE202EE97D00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4AB202F0969009952CF /* PBXContainerItemProxy */;
 		};
 		OBJ_375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Mqtt::MqttTests" /* MqttTests */;
-			targetProxy = 824DFBF2202EE97F00723AEA /* PBXContainerItemProxy */;
+			targetProxy = 82E9E4BF202F0969009952CF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1730,6 +1730,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DXcode";
@@ -1738,7 +1739,9 @@
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				USE_HEADERMAP = NO;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1939,6 +1942,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = s;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1946,7 +1950,9 @@
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				USE_HEADERMAP = NO;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
