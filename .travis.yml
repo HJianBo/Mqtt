@@ -1,5 +1,5 @@
-language: objective-c
-osx_image: xcode8.3
+language: swift
+osx_image: xcode9.2
 xcode_project: Mqtt.xcodeproj
 # xcode_workspace: <WORKSPACE_PLACEHOLDER>
 xcode_scheme: Mqtt
