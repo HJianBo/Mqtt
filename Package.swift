@@ -10,12 +10,12 @@ let package = Package(
             targets: ["Mqtt"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/socks", from: "1.2.0")
+        .package(url: "https://github.com/vapor/sockets", from: "2.2.0")
     ],
     targets: [
         .target(
             name: "Mqtt",
-            dependencies: ["Socks"],
+            dependencies: ["Sockets"],
             exclude: ["Examples"]),
         .testTarget(
             name: "MqttTests",

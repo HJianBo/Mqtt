@@ -297,7 +297,7 @@ extension MqttClient {
 extension MqttClient {
     
     public func publish(topic: String, payload: String, qos: Qos = .qos1, retain: Bool = false, handler: MessageHandler? = nil) {
-        publish(topic: topic, payload: payload.toBytes(), qos: qos, retain: retain, handler: handler)
+        publish(topic: topic, payload: payload.bytes, qos: qos, retain: retain, handler: handler)
     }
 }
 

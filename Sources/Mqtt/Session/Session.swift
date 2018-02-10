@@ -8,7 +8,7 @@
 
 import Foundation
 import Dispatch
-import SocksCore
+import Sockets
 
 /// client session state
 public enum SessionState: Int {
@@ -163,7 +163,7 @@ extension Session {
             weakSelf.connectPacket = packet
             weakSelf.localStorage = LocalStorage(name: packet.clientId)
             do {
-                weakSelf.socket = try TCPInternetSocket(address: weakSelf.remoteAddres)
+                weakSelf.socket = try TCPInternetSocket(weakSelf.remoteAddres)
                 try weakSelf.socket!.connect()
             } catch {
                 DDLogError("socket connect error \(error)")
@@ -221,7 +221,7 @@ extension Session {
         }
         
         do {
-            try socket.send(data: packet.packToBytes)
+            let _ = try socket.write(packet.packToBytes)
             
             // remove
             messageQueue.removeFirst()
@@ -512,7 +512,7 @@ extension Session {
         
         let readLength = 1
         
-        var buffer = try socket.recv(maxBytes: readLength)
+        var buffer = try socket.read(max: readLength)
         guard readLength == buffer.count else {
             throw SessionError.closeByServer
         }
@@ -538,7 +538,7 @@ extension Session {
         var multiply = 1
         var length = 0
         while true {
-            let buffer = try socket.recv(maxBytes: readLength)
+            let buffer = try socket.read(max: readLength)
             guard readLength == buffer.count else {
                 throw SessionError.closeByServer
             }
@@ -568,7 +568,7 @@ extension Session {
             return []
         }
         
-        let buffer = try socket.recv(maxBytes: len)
+        let buffer = try socket.read(max: len)
         guard buffer.count == len else {
             throw SessionError.closeByServer
         }

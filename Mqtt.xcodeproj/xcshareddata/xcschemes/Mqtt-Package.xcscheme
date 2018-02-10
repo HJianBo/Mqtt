@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Socks::Socks"
-               BuildableName = "Socks.framework"
-               BlueprintName = "Socks"
+               BlueprintIdentifier = "Sockets::Sockets"
+               BuildableName = "Sockets.framework"
+               BlueprintName = "Sockets"
                ReferencedContainer = "container:Mqtt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,65 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Socks::SocksCore"
-               BuildableName = "SocksCore.framework"
-               BlueprintName = "SocksCore"
+               BlueprintIdentifier = "Sockets::Transport"
+               BuildableName = "Transport.framework"
+               BlueprintName = "Transport"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Core::Core"
+               BuildableName = "Core.framework"
+               BlueprintName = "Core"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Debugging::Debugging"
+               BuildableName = "Debugging.framework"
+               BlueprintName = "Debugging"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Bits::Bits"
+               BuildableName = "Bits.framework"
+               BlueprintName = "Bits"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Core::libc"
+               BuildableName = "libc.framework"
+               BlueprintName = "libc"
                ReferencedContainer = "container:Mqtt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
