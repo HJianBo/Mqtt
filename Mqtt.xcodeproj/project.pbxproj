@@ -75,49 +75,49 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		82EBD53B202EE35500D1E2B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "Socks::SocksCore";
-			remoteInfo = SocksCore;
-		};
-		82EBD53C202EE35500D1E2B0 /* PBXContainerItemProxy */ = {
+		82EBD542202EE54600D1E2B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Socks::Socks";
 			remoteInfo = Socks;
 		};
-		82EBD53D202EE35500D1E2B0 /* PBXContainerItemProxy */ = {
+		82EBD543202EE54600D1E2B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Socks::SocksCore";
 			remoteInfo = SocksCore;
 		};
-		82EBD53E202EE35500D1E2B0 /* PBXContainerItemProxy */ = {
+		82EBD544202EE54600D1E2B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Socks::SocksCore";
+			remoteInfo = SocksCore;
+		};
+		82EBD545202EE54600D1E2B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Mqtt::Mqtt";
 			remoteInfo = Mqtt;
 		};
-		82EBD53F202EE35500D1E2B0 /* PBXContainerItemProxy */ = {
+		82EBD546202EE54600D1E2B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Socks::Socks";
 			remoteInfo = Socks;
 		};
-		82EBD540202EE35500D1E2B0 /* PBXContainerItemProxy */ = {
+		82EBD547202EE54600D1E2B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "Socks::SocksCore";
 			remoteInfo = SocksCore;
 		};
-		82EBD541202EE35700D1E2B0 /* PBXContainerItemProxy */ = {
+		82EBD548202EE54700D1E2B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -128,7 +128,7 @@
 
 /* Begin PBXFileReference section */
 		"Mqtt::Mqtt::Product" /* Mqtt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mqtt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"Mqtt::MqttTests::Product" /* MqttTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"Mqtt::MqttTests::Product" /* MqttTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = MqttTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		OBJ_11 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		OBJ_12 /* MqttClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MqttClient.swift; sourceTree = "<group>"; };
@@ -473,7 +473,7 @@
 		OBJ_1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 9999;
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Mqtt" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -592,37 +592,37 @@
 		OBJ_124 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Socks::Socks" /* Socks */;
-			targetProxy = 82EBD53C202EE35500D1E2B0 /* PBXContainerItemProxy */;
+			targetProxy = 82EBD542202EE54600D1E2B0 /* PBXContainerItemProxy */;
 		};
 		OBJ_125 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Socks::SocksCore" /* SocksCore */;
-			targetProxy = 82EBD53D202EE35500D1E2B0 /* PBXContainerItemProxy */;
+			targetProxy = 82EBD544202EE54600D1E2B0 /* PBXContainerItemProxy */;
 		};
 		OBJ_137 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Socks::SocksCore" /* SocksCore */;
-			targetProxy = 82EBD53B202EE35500D1E2B0 /* PBXContainerItemProxy */;
+			targetProxy = 82EBD543202EE54600D1E2B0 /* PBXContainerItemProxy */;
 		};
 		OBJ_162 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Mqtt::MqttTests" /* MqttTests */;
-			targetProxy = 82EBD541202EE35700D1E2B0 /* PBXContainerItemProxy */;
+			targetProxy = 82EBD548202EE54700D1E2B0 /* PBXContainerItemProxy */;
 		};
 		OBJ_91 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Mqtt::Mqtt" /* Mqtt */;
-			targetProxy = 82EBD53E202EE35500D1E2B0 /* PBXContainerItemProxy */;
+			targetProxy = 82EBD545202EE54600D1E2B0 /* PBXContainerItemProxy */;
 		};
 		OBJ_93 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Socks::Socks" /* Socks */;
-			targetProxy = 82EBD53F202EE35500D1E2B0 /* PBXContainerItemProxy */;
+			targetProxy = 82EBD546202EE54600D1E2B0 /* PBXContainerItemProxy */;
 		};
 		OBJ_95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Socks::SocksCore" /* SocksCore */;
-			targetProxy = 82EBD540202EE35500D1E2B0 /* PBXContainerItemProxy */;
+			targetProxy = 82EBD547202EE54600D1E2B0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -731,36 +731,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DXcode";
@@ -777,34 +753,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -855,7 +808,7 @@
 		OBJ_81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -873,7 +826,7 @@
 		OBJ_82 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
