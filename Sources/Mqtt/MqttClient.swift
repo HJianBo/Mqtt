@@ -63,7 +63,11 @@ public final class MqttClient {
         return session?.serverAddress ?? ""
     }
     
-    var willMessage: PublishPacket?
+    // will message set
+    public var willTopic: String?
+    public var willMessage: String?
+    public var willQos: Qos = .qos0
+    public var willRetain = false
     
     fileprivate var session: Session?
 
@@ -83,15 +87,13 @@ public final class MqttClient {
                 cleanSession: Bool,
                 keepAlive: UInt16,
                 username: String?,
-                password: String?,
-                willMessage: PublishPacket?
+                password: String?
         ) {
         self.clientId     = clientId
         self.cleanSession = cleanSession
         self.keepAlive    = keepAlive
         self.username     = username
         self.password     = password
-        self.willMessage  = willMessage
         self.delegateQueue = DispatchQueue.main
         
         messageCallbacks = [:]
@@ -130,15 +132,15 @@ public final class MqttClient {
 extension MqttClient {
     
     public convenience init(clientId: String) {
-        self.init(clientId: clientId, cleanSession: false, keepAlive: 60, username: nil, password: nil, willMessage: nil)
+        self.init(clientId: clientId, cleanSession: false, keepAlive: 60, username: nil, password: nil)
     }
     
     public convenience init(clientId: String, cleanSession: Bool) {
-        self.init(clientId: clientId, cleanSession: cleanSession, keepAlive: 60, username: nil, password: nil, willMessage: nil)
+        self.init(clientId: clientId, cleanSession: cleanSession, keepAlive: 60, username: nil, password: nil)
     }
     
     public convenience init(clientId: String, cleanSession: Bool, keepAlive: UInt16) {
-        self.init(clientId: clientId, cleanSession: cleanSession, keepAlive: keepAlive, username: nil, password: nil, willMessage: nil)
+        self.init(clientId: clientId, cleanSession: cleanSession, keepAlive: keepAlive, username: nil, password: nil)
     }
 }
 
@@ -146,6 +148,7 @@ extension MqttClient {
 extension MqttClient {
     
     /**
+     Connect mqtt server
      
      - parameter port: TCP ports 8883 and 1883 are registered with IANA for MQTT TLS and non TLS communication respectively.
      */
@@ -170,6 +173,15 @@ extension MqttClient {
             packet.cleanSession = cleanSession
             packet.keepAlive = keepAlive
             
+            // set will message
+            if let willTopic = self.willTopic, let willMessage = self.willMessage {
+                packet.willTopic   = willTopic
+                packet.willMessage = willMessage
+                packet.willQos     = willQos
+                packet.willRetain  = willRetain
+                packet.willFlag    = true
+            }
+            
             session?.connect(packet: packet)
         } catch {
             delegateQueue.async {
@@ -184,7 +196,7 @@ extension MqttClient {
     /**
      
     */
-    public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1, handler: ((Error?) -> Void)? = nil) {
+    public func publish(topic: String, payload: [UInt8], qos: Qos = .qos1, retain: Bool = false, handler: ((Error?) -> Void)? = nil) {
         do {
             guard topic.mq_isVaildateTopic else {
                 throw ClientError.paramIllegal
@@ -193,7 +205,9 @@ extension MqttClient {
             let packetId = nextPacketId
             
             messageCallbacks[packetId] = handler
-            let packet = PublishPacket(packetId: packetId, topic: topic, payload: payload, qos: qos)
+            var packet = PublishPacket(packetId: packetId, topic: topic, payload: payload, qos: qos)
+            
+            packet.fixedHeader.retain = retain
             
             // send packet
             try sessionSend(packet: packet)
@@ -282,8 +296,8 @@ extension MqttClient {
 // MARK: Public Helper Method
 extension MqttClient {
     
-    public func publish(topic: String, payload: String, qos: Qos = .qos1, handler: MessageHandler? = nil) {
-        publish(topic: topic, payload: payload.toBytes(), qos: qos, handler: handler)
+    public func publish(topic: String, payload: String, qos: Qos = .qos1, retain: Bool = false, handler: MessageHandler? = nil) {
+        publish(topic: topic, payload: payload.bytes, qos: qos, retain: retain, handler: handler)
     }
 }
 

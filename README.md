@@ -12,19 +12,46 @@ Swift mqtt client for ios or osx 【[中文介绍](https://github.com/HJianBo/Mq
 - Swift 4
 
 # Integration
-now, you can import this framework with **Swift Package Manager** only. **Carthage** and other tools support in the future version.
-
 ### Swift Packet Manager
-add this dependencies in the `Package.swift`
+Add this dependencies in the `Package.swift`
 ```swift
+// swift-tools-version:4.0
 import PackageDescription
 
-let package = Package(name: "YourPackage",
+let package = Package(
+    // ...
     dependencies: [
-      .Package(url: "https://github.com/HJianBo/Mqtt", majorVersion: 0)
-    ]
-  )
+        .package(url: "https://github.com/HJianBo/Mqtt", from: "0.2.0"),
+    ],
+    // ...
+)
 ```
+
+### Carthage
+Put the following line to your `Cartfile`
+```
+github "HJianBo/Mqtt"
+```
+
+Then checkout this repos
+```
+carthage build
+```
+
+But it will occur compile error because the Mqtt has some others dependencies with **Swift Package Manager**
+
+There is a workaround as the following:
+```bash
+# Manually checkout SwiftPM dependencies
+cd Carthage/Checkouts/Mqtt/ && swift build && cd ../../..
+
+# execute carthage build again
+carthage build
+```
+
+### CocoaPods
+
+come soon..
 
 # Usage
 first, you should import the framework in `.swift` file header
@@ -74,7 +101,8 @@ The more details of the use can refer to the Demo program: Examples/SimpleClient
 
 # TODO
 - [ ] In-flight Send Window, Message Ordering.
-- [ ] Support iOS background model
+- [ ] Support iOS background model (will disconnect, when lock screen)
+- [ ] SSL/TLS
 
 # Dependencies
 - [Vapor/Socks](https://github.com/vapor/socks)

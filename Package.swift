@@ -1,14 +1,24 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
     name: "Mqtt",
-    targets: [
-        Target(name: "Mqtt")
+    products: [
+        // Products define the executables and libraries produced by a package, and make them visible to other packages.
+        .library(
+            name: "Mqtt",
+            targets: ["Mqtt"]),
     ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/socks", majorVersion: 1, minor: 2)
+        .package(url: "https://github.com/vapor/sockets", from: "2.2.0")
     ],
-    exclude: [
-        "Examples"
+    targets: [
+        .target(
+            name: "Mqtt",
+            dependencies: ["Sockets"],
+            exclude: ["Examples"]),
+        .testTarget(
+            name: "MqttTests",
+            dependencies: ["Mqtt"]),
     ]
 )

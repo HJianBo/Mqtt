@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0900"
+   LastUpgradeVersion = "9999"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,37 +14,93 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_65"
-               BuildableName = "Socks.framework"
-               BlueprintName = "Socks"
-               ReferencedContainer = "container:Mqtt.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_78"
-               BuildableName = "SocksCore.framework"
-               BlueprintName = "SocksCore"
-               ReferencedContainer = "container:Mqtt.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_99"
+               BlueprintIdentifier = "Mqtt::Mqtt"
                BuildableName = "Mqtt.framework"
                BlueprintName = "Mqtt"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Sockets::Sockets"
+               BuildableName = "Sockets.framework"
+               BlueprintName = "Sockets"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Sockets::Transport"
+               BuildableName = "Transport.framework"
+               BlueprintName = "Transport"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Core::Core"
+               BuildableName = "Core.framework"
+               BlueprintName = "Core"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Debugging::Debugging"
+               BuildableName = "Debugging.framework"
+               BlueprintName = "Debugging"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Bits::Bits"
+               BuildableName = "Bits.framework"
+               BlueprintName = "Bits"
+               ReferencedContainer = "container:Mqtt.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Core::libc"
+               BuildableName = "libc.framework"
+               BlueprintName = "libc"
                ReferencedContainer = "container:Mqtt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -61,7 +117,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_129"
+               BlueprintIdentifier = "Mqtt::MqttTests"
                BuildableName = "MqttTests.xctest"
                BlueprintName = "MqttTests"
                ReferencedContainer = "container:Mqtt.xcodeproj">
@@ -85,9 +141,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "OBJ_65"
-            BuildableName = "Socks.framework"
-            BlueprintName = "Socks"
+            BlueprintIdentifier = "Mqtt::Mqtt"
+            BuildableName = "Mqtt.framework"
+            BlueprintName = "Mqtt"
             ReferencedContainer = "container:Mqtt.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
