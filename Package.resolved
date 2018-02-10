@@ -1,0 +1,43 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Bits",
+        "repositoryURL": "https://github.com/vapor/bits.git",
+        "state": {
+          "branch": null,
+          "revision": "c32f5e6ae2007dccd21a92b7e33eba842dd80d2f",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "Core",
+        "repositoryURL": "https://github.com/vapor/core.git",
+        "state": {
+          "branch": null,
+          "revision": "f9f3a585ab0ea5764b46d7a36d9c0d9d508b9c63",
+          "version": "2.2.0"
+        }
+      },
+      {
+        "package": "Debugging",
+        "repositoryURL": "https://github.com/vapor/debugging.git",
+        "state": {
+          "branch": null,
+          "revision": "fc5a27d6eb236141dc24e5f14eedaa2e035ae7b3",
+          "version": "1.1.1"
+        }
+      },
+      {
+        "package": "Sockets",
+        "repositoryURL": "https://github.com/vapor/sockets",
+        "state": {
+          "branch": null,
+          "revision": "a77816695630a44d5d1393fc71eac37ac3d082ca",
+          "version": "2.2.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
